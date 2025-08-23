@@ -30,29 +30,26 @@ import { toast } from "sonner";
 
 const registerSchema = z.object({
   name: z
-    .string({ message: "Name must be string" })
+    .string({ error: "Name must be string" })
     .min(2, { message: "Name must be at least 2 characters long." })
     .max(50, { message: "Name cannot exceed 50 characters." }),
   email: z
-    .string({ message: "Email must be string" })
+    .string({ error: "Email must be string" })
     .email({ message: "Invalid email address format." })
     .min(5, { message: "Email must be at least 5 characters long." })
     .max(100, { message: "Email cannot exceed 100 characters." }),
   password: z
-    .string({ message: "Password must be string" })
+    .string({ error: "Password must be string" })
     .regex(/^\d{6}$/, "Password must be string of exactly 6 digits"),
   phone: z
-    .string({ message: "Phone number must be string" })
+    .string({ error: "Phone number must be string" })
     .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
       message:
         "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
     }),
-  role: z
-    .enum(Object.values(Role) as [string])
-    .default(Role.USER)
-    .optional(),
+  role: z.enum([Role.USER, Role.AGENT]).default(Role.USER).optional(),
   nidNumber: z
-    .string({ message: "nidNumber must be a string of digits" })
+    .string({ error: "nidNumber must be a string of digits" })
     .regex(
       /^([0-9]{10}|[0-9]{17})$/,
       "nidNumber must be a string of exactly 10 or 17 digits long"
@@ -72,7 +69,7 @@ export function RegisterForm({
       email: "",
       phone: "",
       nidNumber: "",
-      role: "",
+      role: Role.USER,
       password: "",
     },
   });
@@ -91,7 +88,7 @@ export function RegisterForm({
       await register(userInfo).unwrap();
       toast.success("Your acccount registered successfully", { id: toastId });
       form.reset();
-        navigate("/verify");
+      navigate("/verify", { state: userInfo.email });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
@@ -100,7 +97,10 @@ export function RegisterForm({
   };
 
   return (
-    <div className={cn("flex flex-col xl:gap-4 gap-3 w-full", className)} {...props}>
+    <div
+      className={cn("flex flex-col xl:gap-4 gap-3 w-full", className)}
+      {...props}
+    >
       <Card className="overflow-hidden p-0 w-full ">
         <CardContent className="grid p-0 md:grid-cols-2 w-full ">
           <div className="xl:p-6 lg:p-5 md:p-4 p-5">
@@ -246,7 +246,11 @@ export function RegisterForm({
                     )}
                   /> */}
 
-                  <Button disabled={isLoading} type="submit" className="w-full font-semibold">
+                  <Button
+                    disabled={isLoading}
+                    type="submit"
+                    className="w-full font-semibold"
+                  >
                     {isLoading ? "Registering...." : "Submit"}
                   </Button>
                 </form>

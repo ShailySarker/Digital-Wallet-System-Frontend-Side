@@ -3,7 +3,6 @@ import { createBrowserRouter } from "react-router";
 import App from "@/App";
 import LazyLoader from "@/components/shared/LazyLoader";
 
-
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
 const Contact = React.lazy(() => import("../pages/Contact"));
@@ -12,6 +11,7 @@ const Features = React.lazy(() => import("../pages/Features"));
 const Pricing = React.lazy(() => import("../pages/Pricing"));
 const Login = React.lazy(() => import("../pages/Login"));
 const Register = React.lazy(() => import("../pages/Register"));
+const Verify = React.lazy(() => import("../pages/Verify"));
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +81,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LazyLoader />}>
         <Register />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/verify",
+    element: (
+      <Suspense fallback={<LazyLoader />}>
+        <Verify />
       </Suspense>
     ),
   },
