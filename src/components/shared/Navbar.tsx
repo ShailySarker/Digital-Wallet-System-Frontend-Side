@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { Link } from "react-router";
 import Logo from "@/assets/icons/Logo";
+import { ModeToggle } from "./ModeToggler";
 
 const Navbar = () => {
   // const features = [
@@ -51,7 +52,7 @@ const Navbar = () => {
   //     href: "#",
   //   },
   // ];
-// #7f22fe
+  // #7f22fe
   return (
     <div className="sticky top-0 z-50 bg-accent xl:px-8 lg:px-6 md:px-7 px-5 xl:py-6 md:py-5 py-4">
       <nav className="flex items-center justify-between">
@@ -133,32 +134,41 @@ const Navbar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
-          <Link to="/login">
-            <Button className="xl:text-base lg:text-[14.5px]">Login</Button>
-          </Link>
-          <Link to="/register">
-            <Button className="xl:text-base lg:text-[14.5px]" variant="outline">
-              Register
-            </Button>
-          </Link>
-        </div>
-        <Sheet>
-          <SheetTrigger asChild className="lg:hidden">
-            <Button variant="outline" size="icon">
-              <MenuIcon className="md:h-4 md:w-4 w-3 h-3" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="top" className="max-h-screen overflow-auto md:px-2 px-1 pt-2">
-            <SheetHeader>
-              <SheetTitle>
-                <Link to="/">
-                  <Logo />
-                </Link>
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col md:px-4 px-4 md:pb-6 pb-5 md:pt-2">
-              {/* <Accordion type="single" collapsible className="mt-4 mb-2">
+        <div className="flex lg:gap-3 gap-2">
+          <ModeToggle />
+
+          <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
+            <Link to="/login">
+              <Button className="xl:text-base lg:text-[14.5px]">Login</Button>
+            </Link>
+            <Link to="/register">
+              <Button
+                className="xl:text-base lg:text-[14.5px]"
+                variant="outline"
+              >
+                Register
+              </Button>
+            </Link>
+          </div>
+          <Sheet>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="outline" size="icon">
+                <MenuIcon className="md:h-4 md:w-4 w-3 h-3" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="top"
+              className="max-h-screen overflow-auto md:px-2 px-1 pt-2"
+            >
+              <SheetHeader>
+                <SheetTitle>
+                  <Link to="/">
+                    <Logo />
+                  </Link>
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col md:px-4 px-4 md:pb-6 pb-5 md:pt-2">
+                {/* <Accordion type="single" collapsible className="mt-4 mb-2">
                 <AccordionItem value="solutions" className="border-none">
                   <AccordionTrigger className="text-base hover:no-underline">
                     Features
@@ -185,56 +195,59 @@ const Navbar = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion> */}
-              <div className="flex flex-col md:gap-[22px] gap-5">
-                <Link
-                  to="/"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/about"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  About
-                </Link>
-                <Link
-                  to="/features"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  Features
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  Pricing
-                </Link>
-                <Link
-                  to="/contact"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  Contact
-                </Link>
-                <Link
-                  to="/faq"
-                  className="md:text-[15px] text-[14.5px] font-medium"
-                >
-                  FAQ
-                </Link>
+                <div className="flex flex-col md:gap-[22px] gap-5">
+                  <Link
+                    to="/"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    to="/features"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    Features
+                  </Link>
+                  <Link
+                    to="/pricing"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    Pricing
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    Contact
+                  </Link>
+                  <Link
+                    to="/faq"
+                    className="md:text-[15px] text-[14.5px] font-medium"
+                  >
+                    FAQ
+                  </Link>
+                </div>
+                <div className="md:mt-10 mt-8 flex flex-col gap-3">
+                  <Button className="md:text-[15px] text-[14.5px]">
+                    Login
+                  </Button>
+                  <Button
+                    className="md:text-[15px] text-[14.5px]"
+                    variant="outline"
+                  >
+                    Register
+                  </Button>
+                </div>
               </div>
-              <div className="md:mt-10 mt-8 flex flex-col gap-3">
-                <Button className="md:text-[15px] text-[14.5px]">Login</Button>
-                <Button
-                  className="md:text-[15px] text-[14.5px]"
-                  variant="outline"
-                >
-                  Register
-                </Button>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
     </div>
   );
