@@ -233,16 +233,20 @@ const Navbar = () => {
                     FAQ
                   </Link>
                 </div>
-                <div className="md:mt-10 mt-8 flex flex-col gap-3">
-                  <Button className="md:text-[15px] text-[14.5px]">
-                    Login
-                  </Button>
-                  <Button
-                    className="md:text-[15px] text-[14.5px]"
-                    variant="outline"
-                  >
-                    Register
-                  </Button>
+                <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
+                  <Link to="/login">
+                    <Button className="md:text-[15px] text-[14.5px] w-full">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button
+                      className="md:text-[15px] text-[14.5px] w-full"
+                      variant="outline"
+                    >
+                      Register
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </SheetContent>
