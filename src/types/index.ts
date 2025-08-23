@@ -3,6 +3,8 @@ export type {
   IRegisterResponse,
   ISendOTPRequest,
   IVerifyOTPRequest,
+  ILoginRequest,
+  ILoginResponse
 } from "./auth.type";
 
 export type { IErrorResponse } from "./error.type";
