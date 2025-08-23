@@ -39,8 +39,28 @@ export const authApi = baseApi.injectEndpoints({
         data: userInfo,
       }),
     }),
+    myProfile: builder.query({
+      query: () => ({
+        url: "/user/my-profile",
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
-export const { useRegisterMutation, useSendOTPMutation, useVerifyOTPMutation, useLoginMutation } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useSendOTPMutation,
+  useVerifyOTPMutation,
+  useLoginMutation,
+  useMyProfileQuery,
+  useLogoutMutation,
+} = authApi;

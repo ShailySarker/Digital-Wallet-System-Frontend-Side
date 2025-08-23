@@ -18,8 +18,24 @@ import {
 import { Link } from "react-router";
 import Logo from "@/assets/icons/Logo";
 import { ModeToggle } from "./ModeToggler";
+import {
+  authApi,
+  useLogoutMutation,
+  useMyProfileQuery,
+} from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
+import ProfileLogo from "./ProfileLogo";
 
 const Navbar = () => {
+  const { data } = useMyProfileQuery(undefined);
+  // console.log(data.data.name);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
   // const features = [
   //   {
   //     title: "Dashboard",
@@ -134,21 +150,39 @@ const Navbar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="flex lg:gap-3 gap-2">
+        <div className="flex lg:gap-2 gap-2">
+          {/* {data?.data?.email && <ProfileLogo initial={data?.data?.name} />} */}
           <ModeToggle />
 
           <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
-            <Link to="/login">
-              <Button className="xl:text-base lg:text-[14.5px]">Login</Button>
-            </Link>
-            <Link to="/register">
-              <Button
-                className="xl:text-base lg:text-[14.5px]"
-                variant="outline"
-              >
-                Register
-              </Button>
-            </Link>
+            {data?.data?.email ? (
+              <div className="flex gap-3">
+                {/* <ProfileLogo initial={data?.data?.name} /> */}
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  className="text-sm"
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className=" items-center xl:gap-3 lg:gap-2 lg:flex">
+                <Link to="/login">
+                  <Button className="xl:text-base lg:text-[14.5px]">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button
+                    className="xl:text-base lg:text-[14.5px]"
+                    variant="outline"
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
           <Sheet>
             <SheetTrigger asChild className="lg:hidden">
