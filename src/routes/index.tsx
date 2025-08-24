@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "@/App";
 import LazyLoader from "@/components/shared/LazyLoader";
+import ChangePassword from "@/pages/ChangePassword";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
@@ -58,6 +59,22 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "change-password",
+        element: (
+          <Suspense fallback={<LazyLoader />}>
+            <ChangePassword />
+          </Suspense>
+        ),
+      },
+      // {
+      //   path: "edit-profile",
+      //   element: (
+      //     <Suspense fallback={<LazyLoader />}>
+      //       <Edit />
+      //     </Suspense>
+      //   ),
+      // },
       {
         path: "faq",
         element: (

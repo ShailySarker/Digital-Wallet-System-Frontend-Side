@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -25,12 +26,20 @@ import {
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hook";
 import ProfileLogo from "./ProfileLogo";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const Navbar = () => {
   const { data } = useMyProfileQuery(undefined);
-  // console.log(data.data.name);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+
+  const firstLetter = data?.data?.name.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     await logout(undefined);
@@ -157,17 +166,49 @@ const Navbar = () => {
           <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
             {data?.data?.email ? (
               <div className="flex gap-3">
+                {/* <Avatar className="h-10 w-10" onClick={handleLoginModal}>
+                  <AvatarFallback className="bg-[#7f22fe] text-white font-semibold">
+                    {firstLetter}
+                  </AvatarFallback>
+                </Avatar> */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="h-10 w-10 cursor-pointer">
+                      <AvatarFallback className="bg-[#7f22fe] text-white font-semibold">
+                        {firstLetter}
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-48 xl:mr-8 lg:mr-6 md:mr-7 mr-5">
+                    <DropdownMenuItem asChild>
+                      <Link to="/edit-profile">Edit Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/change-password">Change Password</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Button
+                        onClick={handleLogout}
+                        // variant="outline"
+                        className="w-full justify-center xl:text-base lg:text-[14.5px]"
+                      >
+                        Logout
+                      </Button>
+                    </DropdownMenuItem>{" "}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
                 {/* <ProfileLogo initial={data?.data?.name} /> */}
-                <Button
+                {/* <Button
                   onClick={handleLogout}
                   variant="outline"
-                  className="text-sm"
+                  className="xl:text-base lg:text-[14.5px]"
                 >
                   Logout
-                </Button>
+                </Button> */}
               </div>
             ) : (
-              <div className=" items-center xl:gap-3 lg:gap-2 lg:flex">
+              <div className="items-center xl:gap-3 lg:gap-2 lg:flex">
                 <Link to="/login">
                   <Button className="xl:text-base lg:text-[14.5px]">
                     Login
@@ -186,9 +227,17 @@ const Navbar = () => {
           </div>
           <Sheet>
             <SheetTrigger asChild className="lg:hidden">
-              <Button variant="outline" size="icon">
-                <MenuIcon className="md:h-4 md:w-4 w-3 h-3" />
-              </Button>
+              {data?.data?.email ? (
+                <Avatar className="h-10 w-10 cursor-pointer">
+                  <AvatarFallback className="bg-[#7f22fe] text-white font-semibold">
+                    {firstLetter}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <Button variant="outline" size="icon">
+                  <MenuIcon className="md:h-4 md:w-4 w-3 h-3" />
+                </Button>
+              )}
             </SheetTrigger>
             <SheetContent
               side="top"
@@ -230,58 +279,102 @@ const Navbar = () => {
                 </AccordionItem>
               </Accordion> */}
                 <div className="flex flex-col md:gap-[22px] gap-5">
-                  <Link
-                    to="/"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/about"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    About
-                  </Link>
-                  <Link
-                    to="/features"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    Features
-                  </Link>
-                  <Link
-                    to="/pricing"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    Pricing
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    Contact
-                  </Link>
-                  <Link
-                    to="/faq"
-                    className="md:text-[15px] text-[14.5px] font-medium"
-                  >
-                    FAQ
-                  </Link>
-                </div>
-                <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
-                  <Link to="/login">
-                    <Button className="md:text-[15px] text-[14.5px] w-full">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/register">
-                    <Button
-                      className="md:text-[15px] text-[14.5px] w-full"
-                      variant="outline"
+                  <SheetClose asChild>
+                    <Link
+                      to="/"
+                      className="md:text-[15px] text-[14.5px] font-medium"
                     >
-                      Register
-                    </Button>
-                  </Link>
+                      Home
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      to="/about"
+                      className="md:text-[15px] text-[14.5px] font-medium"
+                    >
+                      About
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      to="/features"
+                      className="md:text-[15px] text-[14.5px] font-medium"
+                    >
+                      Features
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      to="/pricing"
+                      className="md:text-[15px] text-[14.5px] font-medium"
+                    >
+                      Pricing
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      to="/contact"
+                      className="md:text-[15px] text-[14.5px] font-medium"
+                    >
+                      Contact
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      to="/faq"
+                      className="md:text-[15px] text-[14.5px] font-medium"
+                    >
+                      FAQ
+                    </Link>
+                  </SheetClose>
                 </div>
+                {data?.data?.email ? (
+                  <div>
+                    <div className="flex flex-col md:gap-[22px] gap-5 md:pt-[22px] pt-5">
+                      <SheetClose asChild>
+                        <Link
+                          to="/edit-profile"
+                          className="md:text-[15px] text-[14.5px] font-medium"
+                        >
+                          Edit Profile
+                        </Link>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link
+                          to="/change-password"
+                          className="md:text-[15px] text-[14.5px] font-medium"
+                        >
+                          Change Password
+                        </Link>
+                      </SheetClose>
+                    </div>
+                    <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
+                      <Button
+                        className="md:text-[15px] text-[14.5px] w-full"
+                        // variant="outline"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
+                    <Link to="/login">
+                      <Button className="md:text-[15px] text-[14.5px] w-full">
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to="/register">
+                      <Button
+                        className="md:text-[15px] text-[14.5px] w-full"
+                        variant="outline"
+                      >
+                        Register
+                      </Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </SheetContent>
           </Sheet>
