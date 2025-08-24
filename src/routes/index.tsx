@@ -9,7 +9,7 @@ import userSidebar from "./userSidebar";
 import agentSidebar from "./agentSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import NotFound from "@/pages/NotFound";
-
+import Unauthorized from "@/pages/Unauthorized";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
@@ -195,6 +195,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LazyLoader />}>
         <ResetPassword />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/unauthorized",
+    element: (
+      <Suspense fallback={<LazyLoader />}>
+        <Unauthorized />
       </Suspense>
     ),
   },
