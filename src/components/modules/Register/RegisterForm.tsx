@@ -249,7 +249,7 @@ export function RegisterForm({
                   <Button
                     disabled={isLoading}
                     type="submit"
-                    className="w-full font-semibold"
+                    className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
                   >
                     {isLoading ? "Registering...." : "Submit"}
                   </Button>

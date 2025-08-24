@@ -88,7 +88,7 @@ const Navbar = () => {
                     isActive(route.path) ? "text-primary" : ""
                   }`}
                 >
-                  <span className="xl:text-base lg:text-[14.5px]">
+                  <span className="xl:text-base lg:text-[14.5px] hover:text-primary">
                     {route.name}
                   </span>
                 </NavigationMenuLink>
@@ -97,7 +97,6 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex lg:gap-2 gap-2">
-          {/* {data?.data?.email && <ProfileLogo initial={data?.data?.name} />} */}
           <ModeToggle />
 
           <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
@@ -106,20 +105,18 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Avatar className="h-10 w-10 cursor-pointer">
-                      <AvatarFallback className="bg-[#7f22fe] text-white font-semibold">
+                      <AvatarFallback className="bg-primary text-white font-semibold">
                         {firstLetter}
                       </AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-48 xl:mr-8 lg:mr-6 md:mr-7 mr-5">
+                  <DropdownMenuContent className="xl:w-56 xl:p-3 p-2 lg:w-48 xl:mr-8 lg:mr-6 md:mr-7 mr-5 flex flex-col gap-2">
                     {privateRoutes?.map((route) => (
                       <DropdownMenuItem asChild key={route.path}>
                         <Link
                           to={route.path}
-                          className={`hover:text-primary hover:scale-105 transition-all duration-300 ease-in-out ${
-                            isActive(route.path)
-                              ? "text-primary font-semibold"
-                              : ""
+                          className={`hover:text-primary xl:text-base lg:text-[14.5px] font-medium ${
+                            isActive(route.path) ? "text-primary" : ""
                           }`}
                         >
                           {route.name}
@@ -130,7 +127,7 @@ const Navbar = () => {
                       <Button
                         onClick={handleLogout}
                         // variant="outline"
-                        className="w-full justify-center xl:text-base lg:text-[14.5px]"
+                        className="cursor-pointer w-full justify-center xl:text-base lg:text-[14.5px]"
                       >
                         Logout
                       </Button>
@@ -140,12 +137,12 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="items-center xl:gap-3 lg:gap-2 lg:flex">
-                <Link to="/login">
-                  <Button className="xl:text-base lg:text-[14.5px]">
+                <Link to="/login" className="cursor-pointer">
+                  <Button className="xl:text-base lg:text-[14.5px] ">
                     Login
                   </Button>
                 </Link>
-                <Link to="/register">
+                <Link to="/register" className="cursor-pointer">
                   <Button
                     className="xl:text-base lg:text-[14.5px]"
                     variant="outline"
@@ -160,7 +157,7 @@ const Navbar = () => {
             <SheetTrigger asChild className="lg:hidden">
               {data?.data?.email ? (
                 <Avatar className="h-10 w-10 cursor-pointer">
-                  <AvatarFallback className="bg-[#7f22fe] text-white font-semibold">
+                  <AvatarFallback className="bg-primary text-white font-semibold">
                     {firstLetter}
                   </AvatarFallback>
                 </Avatar>
@@ -188,9 +185,9 @@ const Navbar = () => {
                       <Link
                         key={route.path}
                         to={route.path}
-                        className={`md:text-[15px] text-[14.5px] font-medium ${
+                        className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary ${
                           isActive(route.path)
-                            ? "text-primary font-semibold"
+                            ? "text-primary"
                             : ""
                         }`}
                       >
@@ -206,7 +203,7 @@ const Navbar = () => {
                         <SheetClose asChild key={route.path}>
                           <Link
                             to={route.path}
-                            className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary hover:scale-105 transition-all duration-300 ease-in-out ${
+                            className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary ${
                               isActive(route.path)
                                 ? "text-primary font-semibold"
                                 : ""
@@ -219,7 +216,7 @@ const Navbar = () => {
                     </div>
                     <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
                       <Button
-                        className="md:text-[15px] text-[14.5px] w-full"
+                        className="md:text-[15px] text-[14.5px] w-full cursor-pointer"
                         // variant="outline"
                         onClick={handleLogout}
                       >
@@ -229,12 +226,12 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
-                    <Link to="/login">
+                    <Link to="/login" className="cursor-pointer">
                       <Button className="md:text-[15px] text-[14.5px] w-full">
                         Login
                       </Button>
                     </Link>
-                    <Link to="/register">
+                    <Link to="/register" className="cursor-pointer">
                       <Button
                         className="md:text-[15px] text-[14.5px] w-full"
                         variant="outline"

@@ -8,6 +8,8 @@ export type {
   ILoginRequest,
   ILoginResponse,
   IChangePasswordRequest,
+  IForgetPasswordRequest,
+  IResetPasswordRequest,
 } from "./auth.type";
 
 export type { IErrorResponse } from "./error.type";

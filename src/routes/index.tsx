@@ -2,13 +2,13 @@ import React, { Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 import App from "@/App";
 import LazyLoader from "@/components/shared/LazyLoader";
-import ChangePassword from "@/pages/ChangePassword";
 import { withAuth } from "@/utils/withAuth";
-import adminSidebar from "./adminSidebar";
 import { generateRoutes } from "@/utils/generateRoutes";
+import adminSidebar from "./adminSidebar";
 import userSidebar from "./userSidebar";
 import agentSidebar from "./agentSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+
 
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
@@ -19,6 +19,9 @@ const Pricing = React.lazy(() => import("../pages/Pricing"));
 const Login = React.lazy(() => import("../pages/Login"));
 const Register = React.lazy(() => import("../pages/Register"));
 const Verify = React.lazy(() => import("../pages/Verify"));
+const ChangePassword = React.lazy(() => import("../pages/ChangePassword"));
+const ForgetPassword = React.lazy(() => import("../pages/ForgetPassword"));
+const ResetPassword = React.lazy(() => import("../pages/ResetPassword"));
 
 export const router = createBrowserRouter([
   {
@@ -175,6 +178,22 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LazyLoader />}>
         <Verify />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/forget-password",
+    element: (
+      <Suspense fallback={<LazyLoader />}>
+        <ForgetPassword />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/reset-password",
+    element: (
+      <Suspense fallback={<LazyLoader />}>
+        <ResetPassword />
       </Suspense>
     ),
   },

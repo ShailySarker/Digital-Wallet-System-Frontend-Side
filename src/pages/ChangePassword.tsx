@@ -31,7 +31,6 @@ const changePasswordSchema = z
 
 export default function ChangePassword() {
   const [changePassword, { isLoading }] = useChangePasswordMutation();
-  // const navigate = useNavigate();
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: {
@@ -108,7 +107,7 @@ export default function ChangePassword() {
             <Button
               disabled={isLoading}
               type="submit"
-              className="w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
+              className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
             >
               {isLoading ? "Changing password...." : "Submit"}
             </Button>

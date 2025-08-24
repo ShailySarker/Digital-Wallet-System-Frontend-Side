@@ -75,9 +75,6 @@ export default function LoginForm({
         <CardContent className="grid p-0 md:grid-cols-2 w-full ">
           <div className="xl:px-6 xl:py-32 lg:px-5 lg:py-20 md:px-4 md:py-16 p-5">
             <div className="flex flex-col gap-3 items-center">
-              {/* <Link to="/">
-                <Logo />
-              </Link> */}
               <h1 className="text-center italic font-semibold xl:text-xl lg:text-[16.5px] md:text-[16.5px] text-[15.5px]">
                 Login to your account
               </h1>
@@ -110,7 +107,14 @@ export default function LoginForm({
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel className="flex justify-between">
+                          <span>Password</span>
+                          <span className="opacity-70 font-medium">
+                            <Link to="/forget-password">
+                              Forgot your password?
+                            </Link>
+                          </span>
+                        </FormLabel>
                         <FormControl>
                           <PasswordToggle {...field} />
                         </FormControl>
@@ -124,7 +128,7 @@ export default function LoginForm({
                   <Button
                     disabled={isLoading}
                     type="submit"
-                    className="w-full font-semibold"
+                    className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
                   >
                     {isLoading ? "Login...." : "Submit"}
                   </Button>
