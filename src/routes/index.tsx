@@ -1,8 +1,14 @@
 import React, { Suspense } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import App from "@/App";
 import LazyLoader from "@/components/shared/LazyLoader";
 import ChangePassword from "@/pages/ChangePassword";
+import { withAuth } from "@/utils/withAuth";
+import adminSidebar from "./adminSidebar";
+import { generateRoutes } from "@/utils/generateRoutes";
+import userSidebar from "./userSidebar";
+import agentSidebar from "./agentSidebar";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const About = React.lazy(() => import("../pages/About"));
@@ -83,6 +89,69 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
+    ],
+  },
+  {
+    path: "/admin",
+    Component: () => (
+      <Suspense fallback={<LazyLoader />}>
+        {React.createElement(withAuth(DashboardLayout, "ADMIN"))}
+      </Suspense>
+    ),
+    children: [
+      { index: true, element: <Navigate to="/admin/overview" /> },
+      ...generateRoutes(adminSidebar).map(({ path, Component }) => ({
+        path,
+        Component: Component
+          ? () => (
+              <Suspense fallback={<LazyLoader />}>
+                {React.createElement(withAuth(Component, "ADMIN"))}
+              </Suspense>
+            )
+          : undefined,
+      })),
+    ],
+  },
+  {
+    path: "/user",
+    Component: () => (
+      <Suspense fallback={<LazyLoader />}>
+        {React.createElement(withAuth(DashboardLayout, "USER"))}
+      </Suspense>
+    ),
+    children: [
+      { index: true, element: <Navigate to="/user/overview" /> },
+      ...generateRoutes(userSidebar).map(({ path, Component }) => ({
+        path,
+        Component: Component
+          ? () => (
+              <Suspense fallback={<LazyLoader />}>
+                {React.createElement(withAuth(Component, "USER"))}
+              </Suspense>
+            )
+          : undefined,
+      })),
+    ],
+  },
+  {
+    path: "/agent",
+    Component: () => (
+      <Suspense fallback={<LazyLoader />}>
+        {React.createElement(withAuth(DashboardLayout, "AGENT"))}
+      </Suspense>
+    ),
+    children: [
+      { index: true, element: <Navigate to="/agent/overview" /> },
+      ...generateRoutes(agentSidebar).map(({ path, Component }) => ({
+        path,
+        Component: Component
+          ? () => (
+              <Suspense fallback={<LazyLoader />}>
+                {React.createElement(withAuth(Component, "AGENT"))}
+              </Suspense>
+            )
+          : undefined,
+      })),
     ],
   },
   {
