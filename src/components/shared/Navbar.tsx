@@ -88,7 +88,7 @@ const Navbar = () => {
                     isActive(route.path) ? "text-primary" : ""
                   }`}
                 >
-                  <span className="xl:text-base lg:text-[14.5px] hover:text-primary">
+                  <span className="xl:text-base lg:text-[14.5px] hover:text-primary cursor-pointer">
                     {route.name}
                   </span>
                 </NavigationMenuLink>
@@ -105,7 +105,7 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Avatar className="h-10 w-10 cursor-pointer">
-                      <AvatarFallback className="bg-primary text-white font-semibold">
+                      <AvatarFallback className="bg-primary text-white font-medium">
                         {firstLetter}
                       </AvatarFallback>
                     </Avatar>
@@ -115,7 +115,7 @@ const Navbar = () => {
                       <DropdownMenuItem asChild key={route.path}>
                         <Link
                           to={route.path}
-                          className={`hover:text-primary xl:text-base lg:text-[14.5px] font-medium ${
+                          className={`hover:text-primary xl:text-base lg:text-[14.5px] font-medium cursor-pointer ${
                             isActive(route.path) ? "text-primary" : ""
                           }`}
                         >
@@ -162,7 +162,11 @@ const Navbar = () => {
                   </AvatarFallback>
                 </Avatar>
               ) : (
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="cursor-pointer"
+                >
                   <MenuIcon className="md:h-4 md:w-4 w-3 h-3" />
                 </Button>
               )}
@@ -185,10 +189,8 @@ const Navbar = () => {
                       <Link
                         key={route.path}
                         to={route.path}
-                        className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary ${
-                          isActive(route.path)
-                            ? "text-primary"
-                            : ""
+                        className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary cursor-pointer ${
+                          isActive(route.path) ? "text-primary" : ""
                         }`}
                       >
                         {route.name}
@@ -203,10 +205,8 @@ const Navbar = () => {
                         <SheetClose asChild key={route.path}>
                           <Link
                             to={route.path}
-                            className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary ${
-                              isActive(route.path)
-                                ? "text-primary font-semibold"
-                                : ""
+                            className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary cursor-pointer ${
+                              isActive(route.path) ? "text-primary" : ""
                             }`}
                           >
                             {route.name}

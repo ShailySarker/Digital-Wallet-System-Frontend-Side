@@ -53,14 +53,12 @@ export default function ResetPassword() {
       id: userId!,
       newPassword: data.newPassword,
     };
-    console.log(userInfo);
     if (token) {
       Cookies.set("accessToken", token);
     }
     const toastId = toast.loading("Reseting your password ...");
     try {
       const result = await forgetPassword(userInfo).unwrap();
-      console.log(result);
       if (result?.success) {
         toast.success("Password reset successfully", { id: toastId });
         Cookies.remove("accessToken");

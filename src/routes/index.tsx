@@ -8,6 +8,7 @@ import adminSidebar from "./adminSidebar";
 import userSidebar from "./userSidebar";
 import agentSidebar from "./agentSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import NotFound from "@/pages/NotFound";
 
 
 const Home = React.lazy(() => import("../pages/Home"));
@@ -194,6 +195,14 @@ export const router = createBrowserRouter([
     element: (
       <Suspense fallback={<LazyLoader />}>
         <ResetPassword />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/*",
+    element: (
+      <Suspense fallback={<LazyLoader />}>
+        <NotFound />
       </Suspense>
     ),
   },
