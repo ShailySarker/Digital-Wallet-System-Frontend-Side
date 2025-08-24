@@ -56,11 +56,7 @@ export default function About() {
 
   return (
     <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12">
-      {/* <h1 className="text-center italic font-bold xl:text-2xl lg:text-[19px] md:text-lg text-[17px]">
-        Are your want to change your password?
-      </h1>
-      <div className="xl:mt-16 lg:mt-12 md:mt-11 mt-8 lg:w-1/2 md:w-3/4 w-full mx-auto"> */}
-
+      
       {/* Hero Section */}
       <section className="text-center">
         <h1 className="xl:text-4xl lg:text-3xl md:text-2xl text-xl italic font-bold xl:mb-4 lg:mb-3 mb-2">
