@@ -39,12 +39,12 @@ export interface ISendOTPRequest {
 export interface IVerifyOTPRequest {
   email: string;
   otp: string;
-};
+}
 
 export interface ILoginRequest {
   phone: string;
   password: string;
-};
+}
 
 export interface ILoginResponse {
   accessToken: string;
@@ -66,4 +66,9 @@ export interface ILoginResponse {
     createdAt: string;
     updatedAt: string;
   };
+}
+
+export interface IChangePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
 }

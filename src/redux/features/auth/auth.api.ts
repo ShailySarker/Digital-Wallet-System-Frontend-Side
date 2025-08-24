@@ -1,6 +1,7 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse } from "@/types";
 import type {
+  IChangePasswordRequest,
   ILoginRequest,
   ILoginResponse,
   IRegisterRequest,
@@ -53,6 +54,14 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
+    changePassword: builder.mutation<IResponse<null>, IChangePasswordRequest>({
+      query: (passwordInfo) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        data: passwordInfo,
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
@@ -63,4 +72,5 @@ export const {
   useLoginMutation,
   useMyProfileQuery,
   useLogoutMutation,
+  useChangePasswordMutation,
 } = authApi;
