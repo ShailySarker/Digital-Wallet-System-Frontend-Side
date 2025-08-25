@@ -12,6 +12,8 @@ export type {
   IResetPasswordRequest,
 } from "./auth.type";
 
+export type { IContactRequest, IContactResponse } from "./constact.type";
+
 export type { IErrorResponse } from "./error.type";
 
 export type TRole = "ADMIN" | "USER" | "AGENT";
