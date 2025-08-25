@@ -9,6 +9,7 @@ import {
   CreditCard,
   Shield,
   Smartphone,
+  Gem,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,6 +48,32 @@ export default function FAQ() {
           question: "Is there an age requirement?",
           answer:
             "Yes, you must be at least 18 years old to create an account and use our services.",
+        },
+      ],
+    },
+    {
+      icon: Gem,
+      title: "Pricing",
+      questions: [
+        {
+          question: "Can I change my plan later?",
+          answer:
+            "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
+        },
+        {
+          question: "Are there any hidden fees?",
+          answer:
+            "No hidden fees. All charges are clearly displayed before you confirm any transaction.",
+        },
+        {
+          question: "Do you offer discounts for nonprofits?",
+          answer:
+            "Yes, we offer special pricing for registered nonprofit organizations. Contact our sales team for details.",
+        },
+        {
+          question: "What payment methods do you accept?",
+          answer:
+            "We accept credit cards, debit cards, bank transfers, and mobile money payments.",
         },
       ],
     },
@@ -265,7 +292,9 @@ export default function FAQ() {
                 </Link>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button className=" bg-white/10" variant="outline">Live Chat</Button>
+                    <Button className=" bg-white/10" variant="outline">
+                      Live Chat
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Coming Soon</p>
