@@ -85,10 +85,12 @@ export function RegisterForm({
     };
     const toastId = toast.loading("Registering to your account ...");
     try {
-      await register(userInfo).unwrap();
-      toast.success("Your acccount registered successfully", { id: toastId });
-      form.reset();
-      navigate("/verify", { state: userInfo.email });
+      const result = await register(userInfo).unwrap();
+      if (result?.success) {
+        toast.success("Your acccount registered successfully", { id: toastId });
+        form.reset();
+        navigate("/verify", { state: userInfo.email });
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
@@ -105,9 +107,6 @@ export function RegisterForm({
         <CardContent className="grid p-0 md:grid-cols-2 w-full ">
           <div className="xl:p-6 lg:p-5 md:p-4 p-5">
             <div className="flex flex-col gap-3 items-center">
-              {/* <Link to="/">
-                <Logo />
-              </Link> */}
               <h1 className="text-center italic font-semibold xl:text-xl lg:text-[16.5px] md:text-[16.5px] text-[15.5px]">
                 Register to your account
               </h1>

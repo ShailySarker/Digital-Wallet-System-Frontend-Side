@@ -16,7 +16,7 @@ export default function Newsletter() {
             <h2 className="xl:text-4xl lg:text-3xl md:text-[27px] text-2xl italic font-bold xl:mb-4 lg:mb-3 mb-[6px]">
               Stay Updated
             </h2>
-            <p className="xl:text-xl lg:text-lg md:text-base text-[15px] opacity-60 max-w-3xl mx-auto">
+            <p className="xl:text-xl lg:text-lg md:text-base text-[15px] opacity-80 max-w-3xl mx-auto">
               Subscribe to our newsletter for the latest updates, features, and
               financial tips
             </p>

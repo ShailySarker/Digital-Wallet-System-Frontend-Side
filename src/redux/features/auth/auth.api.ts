@@ -70,7 +70,6 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: emailInfo,
       }),
-      invalidatesTags: ["USER"],
     }),
     resetPassword: builder.mutation<IResponse<null>, IResetPasswordRequest>({
       query: (userInfo) => ({
@@ -78,7 +77,6 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: userInfo,
       }),
-      invalidatesTags: ["USER"],
     }),
   }),
 });

@@ -23,6 +23,7 @@ const Verify = React.lazy(() => import("../pages/Verify"));
 const ChangePassword = React.lazy(() => import("../pages/ChangePassword"));
 const ForgetPassword = React.lazy(() => import("../pages/ForgetPassword"));
 const ResetPassword = React.lazy(() => import("../pages/ResetPassword"));
+const EditProfile = React.lazy(() => import("../pages/EditProfile"));
 
 export const router = createBrowserRouter([
   {
@@ -71,20 +72,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "change-password",
-        element: (
+        Component: () => (
           <Suspense fallback={<LazyLoader />}>
-            <ChangePassword />
+            {React.createElement(withAuth(ChangePassword))}
           </Suspense>
         ),
       },
-      // {
-      //   path: "edit-profile",
-      //   element: (
-      //     <Suspense fallback={<LazyLoader />}>
-      //       <Edit />
-      //     </Suspense>
-      //   ),
-      // },
+      {
+        path: "edit-profile",
+        Component: () => (
+          <Suspense fallback={<LazyLoader />}>
+            {React.createElement(withAuth(EditProfile))}
+          </Suspense>
+        ),
+      },
       {
         path: "faq",
         element: (

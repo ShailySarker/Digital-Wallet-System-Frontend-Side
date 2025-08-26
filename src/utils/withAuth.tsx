@@ -7,7 +7,7 @@ import { Navigate } from "react-router";
 export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
   return function AuthWrapper() {
     const { isLoading, data } = useMyProfileQuery(undefined);
-    
+
     if (isLoading) {
       return <LazyLoader />;
     }
@@ -16,7 +16,7 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
       return <Navigate to="/login" />;
     }
 
-    if (!isLoading && !data?.data?.role.includes(requiredRole)) {
+    if (requiredRole && !isLoading && !data?.data?.role.includes(requiredRole)) {
       return <Navigate to="/unauthorized" />;
     }
 
