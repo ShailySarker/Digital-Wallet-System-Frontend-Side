@@ -11,19 +11,25 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import NotFound from "@/pages/NotFound";
 import Unauthorized from "@/pages/Unauthorized";
 
-const Home = React.lazy(() => import("../pages/Home"));
-const About = React.lazy(() => import("../pages/About"));
-const Contact = React.lazy(() => import("../pages/Contact"));
-const FAQ = React.lazy(() => import("../pages/FAQ"));
-const Features = React.lazy(() => import("../pages/Features"));
-const Pricing = React.lazy(() => import("../pages/Pricing"));
-const Login = React.lazy(() => import("../pages/Login"));
-const Register = React.lazy(() => import("../pages/Register"));
-const Verify = React.lazy(() => import("../pages/Verify"));
-const ChangePassword = React.lazy(() => import("../pages/ChangePassword"));
-const ForgetPassword = React.lazy(() => import("../pages/ForgetPassword"));
-const ResetPassword = React.lazy(() => import("../pages/ResetPassword"));
-const EditProfile = React.lazy(() => import("../pages/EditProfile"));
+const Home = React.lazy(() => import("../pages/Public/Home"));
+const About = React.lazy(() => import("../pages/Public/About"));
+const Pricing = React.lazy(() => import("../pages/Public/Pricing"));
+const Features = React.lazy(() => import("../pages/Public/Features"));
+const Contact = React.lazy(() => import("../pages/Public/Contact"));
+const FAQ = React.lazy(() => import("../pages/Public/FAQ"));
+const Login = React.lazy(() => import("../pages/Authentication/Login"));
+const Register = React.lazy(() => import("../pages/Authentication/Register"));
+const Verify = React.lazy(() => import("../pages/Authentication/Verify"));
+const ChangePassword = React.lazy(
+  () => import("../pages/Private/ChangePassword")
+);
+const ForgetPassword = React.lazy(
+  () => import("../pages/Authentication/ForgetPassword")
+);
+const ResetPassword = React.lazy(
+  () => import("../pages/Authentication/ResetPassword")
+);
+const EditProfile = React.lazy(() => import("../pages/Private/EditProfile"));
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +77,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "faq",
+        element: (
+          <Suspense fallback={<LazyLoader />}>
+            <FAQ />
+          </Suspense>
+        ),
+      },
+      {
         path: "change-password",
         Component: () => (
           <Suspense fallback={<LazyLoader />}>
@@ -83,14 +97,6 @@ export const router = createBrowserRouter([
         Component: () => (
           <Suspense fallback={<LazyLoader />}>
             {React.createElement(withAuth(EditProfile))}
-          </Suspense>
-        ),
-      },
-      {
-        path: "faq",
-        element: (
-          <Suspense fallback={<LazyLoader />}>
-            <FAQ />
           </Suspense>
         ),
       },
