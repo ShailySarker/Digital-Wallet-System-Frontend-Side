@@ -10,7 +10,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
+    allCategoriesOfUser: builder.query({
+      query: () => ({
+        url: "/user/all-category-user",
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
   }),
 });
 
-export const { useEditUserMutation } = userApi;
+export const { useEditUserMutation, useAllCategoriesOfUserQuery } = userApi;

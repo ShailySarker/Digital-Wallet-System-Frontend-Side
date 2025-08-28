@@ -17,7 +17,7 @@ import { AvatarFallback } from "./ui/avatar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: loggedInUserInfo } = useMyProfileQuery({});
-  console.log(loggedInUserInfo);
+  // console.log(loggedInUserInfo);
   const firstLetter = loggedInUserInfo?.data?.name.charAt(0).toUpperCase();
 
   const location = useLocation();
@@ -74,7 +74,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <p className="font-semibold capitalize">
               {loggedInUserInfo?.data?.name}
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="opacity-70 text-sm">
               {loggedInUserInfo?.data?.email}
             </p>
           </div>

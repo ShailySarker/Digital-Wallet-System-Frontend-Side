@@ -99,7 +99,7 @@ export default function EditProfile() {
       if (result.success) {
         // form.reset();
         toast.success("Your profile updated successfully", { id: toastId });
-        refetch();
+        await refetch();
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

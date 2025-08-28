@@ -7,10 +7,10 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="overflow-hidden">
-        <div>
-          <SidebarTrigger className="h-10 w-14 bg-[#7f22fe] text-white m-2 rounded-sm hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center hover:outline-2" />
+        <div className="bg-accent xl:py-3 lg:py-2 md:py-[7px] py-2">
+          <SidebarTrigger className="h-10 w-10 bg-primary text-white m-2 rounded-sm hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center hover:outline-2" />
         </div>
-        <div className="w-full p-5 lg:p-6">
+        <div className="w-full ">
           <Outlet />
         </div>
       </SidebarInset>

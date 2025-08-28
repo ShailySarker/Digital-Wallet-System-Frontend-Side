@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   const { data: isAuthenticated } = useMyProfileQuery({});
+  const roleOfUser = isAuthenticated?.data?.role.toLowerCase();
   return (
     <div>
       {/* Hero Section */}
@@ -43,7 +44,7 @@ export default function HeroSection() {
                     size="lg"
                     className="bg-white text-blue-600 xl:text-lg hover:bg-white"
                   >
-                    <Link to="/dashboard">Go to Dashboard</Link>
+                    <Link to={`/${roleOfUser}/overview`}>Go to Dashboard</Link>
                   </Button>
                   <Button
                     size="lg"
