@@ -136,7 +136,7 @@ const Navbar = () => {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="items-center xl:gap-3 lg:gap-2 lg:flex">
+              <div className="items-center xl:gap-2 lg:gap-2 lg:flex">
                 <Link to="/login" className="cursor-pointer">
                   <Button className="xl:text-base lg:text-[14.5px] ">
                     Login
