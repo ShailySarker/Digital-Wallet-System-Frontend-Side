@@ -43,9 +43,9 @@ const registerSchema = z.object({
     .regex(/^\d{6}$/, "Password must be string of exactly 6 digits"),
   phone: z
     .string({ error: "Phone number must be string" })
-    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
+    .regex(/^(?:\+8801\d{9})$/, {
       message:
-        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
     }),
   role: z.enum([Role.USER, Role.AGENT]).default(Role.USER).optional(),
   nidNumber: z

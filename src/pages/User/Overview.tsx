@@ -16,8 +16,8 @@ export default function Overview() {
     data: myTransaction,
     isLoading: transactionsLoading,
     isError: transactionError,
-  } = useMyTransactionQuery({ limit: 5});
-  // console.log(myTransaction);
+  } = useMyTransactionQuery({ limit: 5 });
+  console.log(myTransaction);
   return (
     <div>
       <div className="md:p-6 p-5 space-y-6">
@@ -73,68 +73,73 @@ export default function Overview() {
             {myTransaction?.data?.length === 0 ? (
               <></>
             ) : (
-              <Card className="rounded-md">
-                <CardHeader>
-                  <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
-                    <span>Recent Transactions History</span>
-                    <Link to="/user/transactions" className="md:block hidden">
-                      <Button className="bg-primary">View All</Button>
-                    </Link>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="overflow-x-scroll w-full">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="py-2 px-3">Type</th>
-                        <th className="py-2 px-3">Sender</th>
-                        <th className="py-2 px-3">Receiver</th>
-                        <th className="py-2 px-3">Amount</th>
-                        <th className="py-2 px-3">Status</th>
-                        <th className="py-2 px-3">Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {myTransaction?.data?.map((transaction?: any) => (
-                        <tr
-                          key={transaction?._id}
-                          className="border-b hover:bg-primary/60 cursor-pointer"
-                        >
-                          <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.type}
-                          </td>
-                          <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.fromWallet}
-                          </td>
-                          <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.toWallet}
-                          </td>
-                          <td className="p-3 font-semibold lg:text-sm text-xs">
-                            {transaction?.amount} BDT
-                          </td>
-                          <td
-                            className={`p-3 capitalize lg:text-sm text-xs ${
-                              transaction?.status === "completed"
-                                ? "text-green-600"
-                                : "text-yellow-600"
-                            }`}
-                          >
-                            {transaction?.status}
-                          </td>
-                          <td className="py-2 px-3 lg:text-sm text-xs">
-                            {new Date(
-                              transaction?.createdAt
-                            ).toLocaleDateString()}
-                          </td>
+              <>
+                <Card className="rounded-md">
+                  <CardHeader>
+                    <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
+                      <span>Recent Transactions History</span>
+                      <Link to="/user/transactions" className="md:block hidden">
+                        <Button className="bg-primary">View All</Button>
+                      </Link>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="overflow-x-scroll w-full">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="py-2 px-3">Type</th>
+                          <th className="py-2 px-3">Sender</th>
+                          <th className="py-2 px-3">Receiver</th>
+                          <th className="py-2 px-3">Amount</th>
+                          <th className="py-2 px-3">Status</th>
+                          <th className="py-2 px-3">Date</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </CardContent>
-                <Link to="/user/transactions" className="md:hidden flex justify-center">
-                  <Button className="bg-primary">View All</Button>
-                </Link>
-              </Card>
+                      </thead>
+                      <tbody>
+                        {myTransaction?.data?.map((transaction?: any) => (
+                          <tr
+                            key={transaction?._id}
+                            className="border-b hover:bg-primary/60 cursor-pointer"
+                          >
+                            <td className="p-3 capitalize font-medium lg:text-sm text-xs">
+                              {transaction?.type}
+                            </td>
+                            <td className="p-3 capitalize font-medium lg:text-sm text-xs">
+                              {transaction?.fromWalletSender}
+                            </td>
+                            <td className="p-3 capitalize font-medium lg:text-sm text-xs">
+                              {transaction?.toWalletReceiver}
+                            </td>
+                            <td className="p-3 font-semibold lg:text-sm text-xs">
+                              {transaction?.amount} BDT
+                            </td>
+                            <td
+                              className={`p-3 capitalize font-medium lg:text-sm text-xs ${
+                                transaction?.status === "SUCCESS"
+                                  ? "text-green-600"
+                                  : "text-yellow-600"
+                              }`}
+                            >
+                              {transaction?.status}
+                            </td>
+                            <td className="py-2 px-3 lg:text-sm text-xs">
+                              {new Date(
+                                transaction?.createdAt
+                              ).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </CardContent>
+                  <Link
+                    to="/user/transactions"
+                    className="md:hidden flex justify-center"
+                  >
+                    <Button className="bg-primary">View All</Button>
+                  </Link>
+                </Card>
+              </>
             )}
           </>
         )}
