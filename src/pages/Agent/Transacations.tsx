@@ -106,7 +106,9 @@ export default function Transactions() {
                               className={`p-3 capitalize font-medium lg:text-sm text-xs ${
                                 transaction?.status === "SUCCESS"
                                   ? "text-green-600"
-                                  : "text-yellow-300"
+                                  : transaction?.status === "FAILED"
+                                  ? "text-red-600"
+                                  : "text-yellow-600"
                               }`}
                             >
                               {transaction?.status}

@@ -13,16 +13,23 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { Button } from "@/components/ui/button";
-import { useWithdrawMutation } from "@/redux/features/wallet/wallet.api";
-const withdrawSchema = z.object({
-  amount: z
-    .number({ message: "Withdraw must be a number" })
-    .positive({ message: "Withdraw amount must be a positive number" })
-    .min(100, { message: "Miniumum withdraw amount 100 TK" }),
-});
+import {
+  useMyWalletQuery,
+  useWithdrawMutation,
+} from "@/redux/features/wallet/wallet.api";
 
 export default function Withdraw() {
+  const { data: myWallet } = useMyWalletQuery({});
   const [withdraw, { isLoading: withdrawMoneyLoading }] = useWithdrawMutation();
+  const withdrawSchema = z.object({
+    amount: z
+      .number({ message: "Withdraw must be a number" })
+      .positive({ message: "Withdraw amount must be a positive number" })
+      .min(100, { message: "Miniumum withdraw amount 100 TK" })
+      .refine((val) => val <= myWallet?.data?.balance, {
+        message: "Your wallet has insufficient balance",
+      }),
+  });
   const form = useForm<z.infer<typeof withdrawSchema>>({
     resolver: zodResolver(withdrawSchema),
     defaultValues: {
@@ -72,7 +79,7 @@ export default function Withdraw() {
                   <FormLabel>Withdraw Amount</FormLabel>
                   <FormControl>
                     <Input
-                      className="border-2 border-white"
+                      className="border border-primary"
                       type="number"
                       placeholder="Enter your amount"
                       {...field}
@@ -89,7 +96,7 @@ export default function Withdraw() {
             <Button
               type="submit"
               className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
-                disabled={withdrawMoneyLoading}
+              disabled={withdrawMoneyLoading}
             >
               {withdrawMoneyLoading
                 ? "Withdrawing Money ...."

@@ -73,7 +73,7 @@ export default function Deposit() {
                   <FormLabel>Deposit Amount</FormLabel>
                   <FormControl>
                     <Input
-                      className="border-2 border-white"
+                      className="border border-primary"
                       type="number"
                       placeholder="Enter your amount"
                       {...field}

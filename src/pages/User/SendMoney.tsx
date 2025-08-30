@@ -13,23 +13,29 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useSendMoneyMutation } from "@/redux/features/wallet/wallet.api";
-
-const sendMoneySchema = z.object({
-  phone: z
-    .string({ error: "Phone number must be string" })
-    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
-      message:
-        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
-    }),
-  amount: z
-    .number({ message: "Withdraw must be a number" })
-    .positive({ message: "Withdraw amount must be a positive number" })
-    .min(100, { message: "Miniumum sendMoney amount 100 TK" }),
-});
+import {
+  useMyWalletQuery,
+  useSendMoneyMutation,
+} from "@/redux/features/wallet/wallet.api";
 
 export default function SendMoney() {
+  const { data: myWallet } = useMyWalletQuery({});
   const [sendMoney, { isLoading: sendMoneyLoading }] = useSendMoneyMutation();
+  const sendMoneySchema = z.object({
+    phone: z
+      .string({ error: "Phone number must be string" })
+      .regex(/^(?:\+8801\d{9})$/, {
+        message:
+          "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
+      }),
+    amount: z
+      .number({ message: "Withdraw must be a number" })
+      .positive({ message: "Withdraw amount must be a positive number" })
+      .min(100, { message: "Miniumum sendMoney amount 100 TK" })
+      .refine((val) => val <= myWallet?.data?.balance, {
+        message: "Your wallet has insufficient balance",
+      }),
+  });
 
   const form = useForm<z.infer<typeof sendMoneySchema>>({
     resolver: zodResolver(sendMoneySchema),
@@ -49,7 +55,6 @@ export default function SendMoney() {
       if (result?.success) {
         toast.success("Your money send successfully", { id: toastId });
         form.reset();
-        
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -78,12 +83,12 @@ export default function SendMoney() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Receiver Mobile Number</FormLabel>
+                  <FormLabel>Receiver Mobile</FormLabel>
                   <FormControl>
                     <Input
-                      className="border-2 border-white"
+                      className="border border-primary"
                       type="tel"
-                      placeholder="Enter your phone number"
+                      placeholder="Enter receiver mobile number"
                       {...field}
                       //   onChange={(e) => field.onChange(e.target.valueAsNumber)} // force number
                     />
@@ -100,10 +105,10 @@ export default function SendMoney() {
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel></FormLabel>
+                  <FormLabel>Amount</FormLabel>
                   <FormControl>
                     <Input
-                      className="border-2 border-white"
+                      className="border border-primary"
                       type="number"
                       placeholder="Enter your amount"
                       {...field}
