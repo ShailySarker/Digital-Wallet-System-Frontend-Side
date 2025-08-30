@@ -17,7 +17,6 @@ import { AvatarFallback } from "./ui/avatar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: loggedInUserInfo } = useMyProfileQuery({});
-  // console.log(loggedInUserInfo);
   const firstLetter = loggedInUserInfo?.data?.name.charAt(0).toUpperCase();
 
   const location = useLocation();
@@ -44,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive}
-                  className="text-[1rem]"
+                  className="xl:text-lg text-base xl:mt-1"
                 >
                   <Link
                     to={item.url}

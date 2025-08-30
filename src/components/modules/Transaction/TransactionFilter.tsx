@@ -145,7 +145,7 @@ export default function TransactionFilter() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-4">
         {/* Transaction Type Filter */}
         <div>
           <Label className="mb-2">Transaction Type</Label>
@@ -196,7 +196,7 @@ export default function TransactionFilter() {
       {/* Admin-only detailed filters */}
       {data?.data?.role === "ADMIN" && (
         <>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid lg:grid-cols-2 gap-4">
             {/* Sender Name Filter */}
             <div>
               <Label className="mb-2">Sender Name</Label>

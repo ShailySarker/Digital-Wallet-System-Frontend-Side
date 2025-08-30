@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/pagination";
 import TransactionFilter from "@/components/modules/Transaction/TransactionFilter";
 
-
 export default function Transactions() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [limit] = useState(10);
@@ -62,6 +61,7 @@ export default function Transactions() {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
     setSearchParams(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     type,
     status,
@@ -96,9 +96,9 @@ export default function Transactions() {
             <TransactionFilter />
             <Card className="rounded-md xl:mt-12 lg:mt-10 md:mt-8 mt-6">
               <CardHeader>
-                <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
+                <CardTitle className="flex md:flex-row flex-col md:justify-between md:items-center justify-center items-center md:gap-3 gap-2">
                   <span>Transactions History:</span>
-                  <span className="text-sm font-normal">
+                  <span className="text-sm font-medium italic opacity-80">
                     {totalItems} transactions found
                   </span>
                 </CardTitle>
