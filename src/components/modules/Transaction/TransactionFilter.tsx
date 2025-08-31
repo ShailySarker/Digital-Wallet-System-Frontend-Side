@@ -134,17 +134,18 @@ export default function TransactionFilter() {
           Clear All
         </Button>
       </div>
-
-      {/* Search Input - Uses searchTerm parameter */}
-      <div>
-        <Label className="mb-2">Search</Label>
-        <Input
-          placeholder="Search by type, status....."
-          value={searchTerm}
-          onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
-        />
-      </div>
-
+      {/* Admin-only detailed filters */}
+      {data?.data?.role === "ADMIN" && (
+        // {/* Search Input - Uses searchTerm parameter */}
+        <div>
+          <Label className="mb-2">Search</Label>
+          <Input
+            placeholder="Search by type, status....."
+            value={searchTerm}
+            onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
+          />
+        </div>
+      )}
       <div className="grid lg:grid-cols-2 gap-4">
         {/* Transaction Type Filter */}
         <div>
@@ -352,29 +353,31 @@ export default function TransactionFilter() {
           </div>
         </>
       )}
-
-      {/* Sorting Options */}
-      <div>
-        <Label className="mb-2">Sort By</Label>
-        <Select
-          value={sort}
-          onValueChange={(value) => handleFilterChange("sort", value)}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select sort order" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Sort Order</SelectLabel>
-              {sortOptions?.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Admin-only detailed filters */}
+      {data?.data?.role === "ADMIN" && (
+        // {/* Sorting Options */}
+        <div>
+          <Label className="mb-2">Sort By</Label>
+          <Select
+            value={sort}
+            onValueChange={(value) => handleFilterChange("sort", value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select sort order" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Sort Order</SelectLabel>
+                {sortOptions?.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
     </div>
   );
 }
