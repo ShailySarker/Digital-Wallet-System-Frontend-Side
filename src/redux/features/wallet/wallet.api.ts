@@ -33,8 +33,30 @@ export const walletApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["WALLET", "USER"],
     }),
+    cashIn: builder.mutation({
+      query: (userData) => ({
+        url: "/wallet/cash-in",
+        method: "POST",
+        data: userData,
+      }),
+      invalidatesTags: ["WALLET", "USER"],
+    }),
+    cashOut: builder.mutation({
+      query: (agentData) => ({
+        url: "/wallet/cash-out",
+        method: "POST",
+        data: agentData,
+      }),
+      invalidatesTags: ["WALLET", "USER"],
+    }),
   }),
 });
 
-export const {useMyWalletQuery, useDepositMutation, useWithdrawMutation, useSendMoneyMutation } =
-  walletApi;
+export const {
+  useMyWalletQuery,
+  useDepositMutation,
+  useWithdrawMutation,
+  useSendMoneyMutation,
+  useCashInMutation,
+  useCashOutMutation,
+} = walletApi;

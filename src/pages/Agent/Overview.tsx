@@ -3,7 +3,10 @@ import { useMyWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
-import { useAgentStatsQuery, useMyTransactionQuery } from "@/redux/features/transaction/transaction.api";
+import {
+  useAgentStatsQuery,
+  useMyTransactionQuery,
+} from "@/redux/features/transaction/transaction.api";
 import ErrorPage from "@/components/shared/ErrorPage";
 import LazyLoader from "@/components/shared/LazyLoader";
 import { Button } from "@/components/ui/button";
@@ -12,9 +15,9 @@ export default function Overview() {
   const { data } = useMyProfileQuery(undefined);
   const { data: myWallet, isLoading: walletLoading } = useMyWalletQuery({});
   // console.log(myWallet)
-  
+
   const { data: agentStats } = useAgentStatsQuery({});
-// console.log(agentStats)
+  console.log(agentStats)
   const {
     data: myTransaction,
     isLoading: transactionsLoading,
@@ -76,7 +79,7 @@ export default function Overview() {
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>
-                    <Link to="/user/transactions" className="md:block hidden">
+                    <Link to="/agent/transactions" className="md:block hidden">
                       <Button className="bg-primary">View All</Button>
                     </Link>
                   </CardTitle>
@@ -89,6 +92,7 @@ export default function Overview() {
                         <th className="py-2 px-3">Sender</th>
                         <th className="py-2 px-3">Receiver</th>
                         <th className="py-2 px-3">Amount</th>
+                        <th className="py-2 px-3">Commission</th>
                         <th className="py-2 px-3">Status</th>
                         <th className="py-2 px-3">Date</th>
                       </tr>
@@ -103,13 +107,16 @@ export default function Overview() {
                             {transaction?.type}
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.fromWallet}
+                            {transaction?.fromWalletSender}
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.toWallet}
+                            {transaction?.toWalletReceiver}
                           </td>
                           <td className="p-3 font-semibold lg:text-sm text-xs">
                             {transaction?.amount} BDT
+                          </td>
+                          <td className="p-3 font-semibold lg:text-sm text-xs">
+                            {transaction?.commission} BDT
                           </td>
                           <td
                             className={`p-3 capitalize lg:text-sm text-xs ${
@@ -131,7 +138,7 @@ export default function Overview() {
                   </table>
                 </CardContent>
                 <Link
-                  to="/user/transactions"
+                  to="/agent/transactions"
                   className="md:hidden flex justify-center"
                 >
                   <Button className="bg-primary">View All</Button>

@@ -2,6 +2,7 @@ import HeroSection from "@/components/modules/About/HeroSection";
 import Story from "@/components/modules/About/Story";
 import Mission from "@/components/modules/About/Mission";
 import Features from "@/components/modules/About/Features";
+import Team from "@/components/modules/About/Team";
 
 export default function About() {
   return (
@@ -10,6 +11,7 @@ export default function About() {
       <Story />
       <Mission />
       <Features />
+      <Team/>
     </div>
   );
 }

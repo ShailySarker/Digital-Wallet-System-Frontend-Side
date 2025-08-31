@@ -20,10 +20,8 @@ export default function Transactions() {
   const [limit] = useState(10);
   const [searchParams] = useSearchParams();
 
-  // Get all filter parameters
   const type = searchParams.get("type") || undefined;
   const status = searchParams.get("status") || undefined;
-  // const role = searchParams.get("role") || undefined;
 
   const {
     data: myTransaction,
