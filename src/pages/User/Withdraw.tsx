@@ -26,6 +26,7 @@ export default function Withdraw() {
       .number({ message: "Withdraw must be a number" })
       .positive({ message: "Withdraw amount must be a positive number" })
       .min(100, { message: "Miniumum withdraw amount 100 TK" })
+      .max(50000, { message: "Maximum withdraw amount 50,000 TK" })
       .refine((val) => val <= myWallet?.data?.balance, {
         message: "Your wallet has insufficient balance",
       }),

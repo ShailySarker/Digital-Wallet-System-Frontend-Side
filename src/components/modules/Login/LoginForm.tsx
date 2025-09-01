@@ -25,10 +25,10 @@ const loginSchema = z.object({
     .string({ error: "Password must be string" })
     .regex(/^\d{6}$/, "Password must be string of exactly 6 digits"),
   phone: z
-    .string({ error: "Phone number must be string" })
-    .regex(/^(?:\+8801\d{9})$/, {
+    .string({ message: "Phone number must be string" })
+    .regex(/^(?:01\d{9})$/, {
       message:
-        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
+        "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
     }),
 });
 

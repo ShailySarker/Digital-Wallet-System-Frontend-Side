@@ -17,7 +17,18 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"],
     }),
+    getSpecificUser: builder.query({
+      query: (userInfo) => ({
+        url: "/user/get-user",
+        method: "GET",
+        params: userInfo.toString(),
+      }),
+    }),
   }),
 });
 
-export const { useEditUserMutation, useAllCategoriesOfUserQuery } = userApi;
+export const {
+  useEditUserMutation,
+  useAllCategoriesOfUserQuery,
+  useGetSpecificUserQuery,
+} = userApi;

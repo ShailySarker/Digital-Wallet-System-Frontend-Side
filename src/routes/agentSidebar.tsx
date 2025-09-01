@@ -1,5 +1,6 @@
 import CashIn from "@/pages/Agent/CashIn";
 import CashOut from "@/pages/Agent/CashOut";
+import Commission from "@/pages/Agent/Commission";
 import Overview from "@/pages/Agent/Overview";
 import Transacations from "@/pages/Agent/Transacations";
 
@@ -20,8 +21,13 @@ const agentSidebar = [
     component: CashOut,
   },
   {
+    title: "Commission",
+    url: "/agent/my-commission-history",
+    component: Commission,
+  },
+  {
     title: "Transactions",
-    url: "/agent/transactions",
+    url: "/agent/my-transactions",
     component: Transacations,
   },
 ];

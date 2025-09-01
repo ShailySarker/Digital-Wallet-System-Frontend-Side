@@ -1,4 +1,7 @@
-import { useCashOutMutation, useMyWalletQuery } from "@/redux/features/wallet/wallet.api";
+import {
+  useCashOutMutation,
+  useMyWalletQuery,
+} from "@/redux/features/wallet/wallet.api";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -17,47 +20,48 @@ import { Input } from "@/components/ui/input";
 
 export default function CashOut() {
   const { data: myWallet } = useMyWalletQuery({});
-  const [cashIn, { isLoading: cashInLoading }] = useCashOutMutation();
-  const cashInSchema = z.object({
+  const [cashOut, { isLoading: cashOutLoading }] = useCashOutMutation();
+  const cashOutSchema = z.object({
     phone: z
-      .string({ error: "Phone number must be string" })
-      .regex(/^(?:\+8801\d{9})$/, {
+      .string({ message: "Phone number must be string" })
+      .regex(/^(?:01\d{9})$/, {
         message:
-          "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
+          "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
       }),
     amount: z
-      .number({ message: "Withdraw must be a number" })
-      .positive({ message: "Withdraw amount must be a positive number" })
-      .min(100, { message: "Miniumum send Money amount 100 TK" })
+      .number({ message: "Cash out amount must be a number" })
+      .positive({ message: "Cash out amount must be a positive number" })
+      .min(100, { message: "Miniumum cash out amount 100 TK" })
+      .max(50000, { message: "Maximum cash out amount 50,000 TK" })
       .refine((val) => val <= myWallet?.data?.balance, {
         message: "Your wallet has insufficient balance",
       }),
   });
 
-  const form = useForm<z.infer<typeof cashInSchema>>({
-    resolver: zodResolver(cashInSchema),
+  const form = useForm<z.infer<typeof cashOutSchema>>({
+    resolver: zodResolver(cashOutSchema),
     defaultValues: {
       phone: "",
       amount: 0,
     },
   });
-  const onSubmit = async (data: z.infer<typeof cashInSchema>) => {
+  const onSubmit = async (data: z.infer<typeof cashOutSchema>) => {
     try {
-      const cashInInfo = {
+      const cashOutInfo = {
         phone: data?.phone,
         amount: Number(data?.amount),
       };
-      const toastId = toast.loading("Procesing cash in ....");
-      const result = await cashIn(cashInInfo).unwrap();
+      const toastId = toast.loading("Procesing cash out ....");
+      const result = await cashOut(cashOutInfo).unwrap();
       if (result?.success) {
-        toast.success("Your cashIn processed successfully", { id: toastId });
+        toast.success("Your cashOut processed successfully", { id: toastId });
         form.reset();
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Your cashIn process failed: ${error?.data?.message || error?.data}`
+        `Your cashOut process failed: ${error?.data?.message || error?.data}`
       );
     }
   };
@@ -65,7 +69,7 @@ export default function CashOut() {
   return (
     <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12 xl:px-20 lg:px-14 md:px-10 px-5">
       <h1 className="text-center xl:text-4xl lg:text-3xl md:text-2xl text-xl italic font-bold">
-        Cash In
+        Cash Out
       </h1>
       <div className="bg-accent/50 xl:mt-12 lg:mt-10 md:mt-8 mt-6 border-2 border-primary  rounded-2xl xl:p-20 lg:p-10 md:p-8 p-5 lg:w-1/2 md:w-2/3 w-full mx-auto">
         {/* {userData && <UserBalance balance={userData.balance} />} */}
@@ -121,9 +125,9 @@ export default function CashOut() {
             <Button
               type="submit"
               className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
-              disabled={cashInLoading}
+              disabled={cashOutLoading}
             >
-              {cashInLoading ? "Processing Cash In ...." : "Cash In Now!"}
+              {cashOutLoading ? "Processing Cash Out ...." : "Cash Out Now!"}
             </Button>
           </form>
         </Form>

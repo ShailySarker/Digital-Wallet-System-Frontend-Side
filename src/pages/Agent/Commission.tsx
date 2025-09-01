@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ErrorPage from "@/components/shared/ErrorPage";
 import LazyLoader from "@/components/shared/LazyLoader";
+import { useMyCommissionQuery } from "@/redux/features/transaction/transaction.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMyTransactionQuery } from "@/redux/features/transaction/transaction.api";
-import { useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -12,59 +11,48 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import TransactionFilter from "@/components/modules/Transaction/TransactionFilter";
-import { useSearchParams } from "react-router";
+import { useState } from "react";
 
-export default function Transactions() {
+export default function Commission() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(10);
-  const [searchParams] = useSearchParams();
-
-  const type = searchParams.get("type") || undefined;
-  const status = searchParams.get("status") || undefined;
+  const [limit] = useState(5);
 
   const {
-    data: myTransaction,
-    isLoading: transactionsLoading,
-    isError: transactionError,
-  } = useMyTransactionQuery({
-    page: currentPage,
-    limit,
-    type,
-    status,
-  });
-  console.log(myTransaction);
+    data: myCommission,
+    isError: myCommissionError,
+    isLoading: myCommissionLoading,
+  } = useMyCommissionQuery({ page: currentPage, limit });
+  console.log(myCommission);
 
-  const totalPage = myTransaction?.meta?.totalPage || 1;
-  const totalItems = myTransaction?.meta?.total || 0;
+  const totalPage = myCommission?.meta?.totalPage || 1;
+  const totalItems = myCommission?.meta?.total || 0;
 
   return (
     <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12 xl:px-20 lg:px-14 md:px-10 px-5">
       <h1 className="text-center xl:text-4xl lg:text-3xl md:text-2xl text-xl italic font-bold">
-        My Transaction History
+        My Commission History
       </h1>
       <div>
-        {transactionError ? (
+        {myCommissionError ? (
           <ErrorPage />
-        ) : transactionsLoading ? (
+        ) : myCommissionLoading ? (
           <LazyLoader />
         ) : (
           <div className="bg-accent/50 xl:mt-12 lg:mt-10 md:mt-8 mt-6 border-2 border-primary rounded-2xl md:p-6 p-3 w-full mx-auto">
-            <TransactionFilter />
             <Card className="rounded-md xl:mt-12 lg:mt-10 md:mt-8 mt-6">
               <CardHeader>
                 <CardTitle className="flex md:flex-row flex-col md:justify-between md:items-center justify-center items-center md:gap-3 gap-2">
                   <span>Transactions History:</span>
                   <span className="text-sm font-medium italic opacity-80">
-                    {totalItems} transactions found
+                    {/* {totalItems} transactions found */}
                   </span>
                 </CardTitle>
               </CardHeader>
-              {myTransaction?.data?.length === 0 ? (
+              {myCommission?.data?.length === 0 ? (
                 <>
                   <div className="xl:py-44 lg:py-36 md:py-32 py-28 w-full mx-auto">
                     <h1 className="italic text-center font-semibold xl:text-lg lg:text-[16.5px] md:text-[15px] text-sm">
-                      No transaction history is available now!
+                      No commission history is available now!
                     </h1>
                   </div>
                 </>
@@ -84,40 +72,40 @@ export default function Transactions() {
                         </tr>
                       </thead>
                       <tbody>
-                        {myTransaction?.data?.map((transaction?: any) => (
+                        {myCommission?.data?.map((commission?: any) => (
                           <tr
-                            key={transaction?._id}
+                            key={commission?._id}
                             className="border-b hover:bg-primary/60 cursor-pointer"
                           >
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                              {transaction?.type}
+                              {commission?.type}
                             </td>
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                              {transaction?.fromWalletSender}
+                              {commission?.fromWalletSender}
                             </td>
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                              {transaction?.toWalletReceiver}
+                              {commission?.toWalletReceiver}
                             </td>
                             <td className="p-3 font-semibold lg:text-sm text-xs">
-                              {transaction?.amount} BDT
+                              {commission?.amount} BDT
                             </td>
                             <td className="p-3 font-semibold lg:text-sm text-xs">
-                              {transaction?.commission} BDT
+                              {commission?.commission} BDT
                             </td>
                             <td
                               className={`p-3 capitalize font-medium lg:text-sm text-xs ${
-                                transaction?.status === "SUCCESS"
+                                commission?.status === "SUCCESS"
                                   ? "text-green-600"
-                                  : transaction?.status === "FAILED"
+                                  : commission?.status === "FAILED"
                                   ? "text-red-600"
                                   : "text-yellow-600"
                               }`}
                             >
-                              {transaction?.status}
+                              {commission?.status}
                             </td>
                             <td className="py-2 px-3 lg:text-sm text-xs">
                               {new Date(
-                                transaction?.createdAt
+                                commission?.createdAt
                               ).toLocaleDateString()}
                             </td>
                           </tr>

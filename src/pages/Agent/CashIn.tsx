@@ -23,15 +23,16 @@ export default function CashIn() {
   const [cashIn, { isLoading: cashInLoading }] = useCashInMutation();
   const cashInSchema = z.object({
     phone: z
-      .string({ error: "Phone number must be string" })
-      .regex(/^(?:\+8801\d{9})$/, {
+      .string({ message: "Phone number must be string" })
+      .regex(/^(?:01\d{9})$/, {
         message:
-          "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
+          "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
       }),
     amount: z
-      .number({ message: "Withdraw must be a number" })
-      .positive({ message: "Withdraw amount must be a positive number" })
-      .min(100, { message: "Miniumum send Money amount 100 TK" })
+      .number({ message: "Cash in must be a number" })
+      .positive({ message: "Cash in amount must be a positive number" })
+      .min(100, { message: "Miniumum cash in amount 100 TK" })
+      .max(50000, { message: "Maximum cash in amount 50,000 TK" })
       .refine((val) => val <= myWallet?.data?.balance, {
         message: "Your wallet has insufficient balance",
       }),

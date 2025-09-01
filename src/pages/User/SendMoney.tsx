@@ -23,15 +23,16 @@ export default function SendMoney() {
   const [sendMoney, { isLoading: sendMoneyLoading }] = useSendMoneyMutation();
   const sendMoneySchema = z.object({
     phone: z
-      .string({ error: "Phone number must be string" })
-      .regex(/^(?:\+8801\d{9})$/, {
+      .string({ message: "Phone number must be string" })
+      .regex(/^(?:01\d{9})$/, {
         message:
-          "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX",
+          "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
       }),
     amount: z
-      .number({ message: "Withdraw must be a number" })
-      .positive({ message: "Withdraw amount must be a positive number" })
-      .min(100, { message: "Miniumum sendMoney amount 100 TK" })
+      .number({ message: "Send money must be a number" })
+      .positive({ message: "Send money amount must be a positive number" })
+      .min(100, { message: "Miniumum send money amount 100 TK" })
+      .max(50000, { message: "Maximum send money amount 50,000 TK" })
       .refine((val) => val <= myWallet?.data?.balance, {
         message: "Your wallet has insufficient balance",
       }),

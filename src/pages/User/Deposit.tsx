@@ -19,7 +19,8 @@ const depositSchema = z.object({
   amount: z
     .number({ message: "Deposit must be a number" })
     .positive({ message: "Deposit amount must be a positive number" })
-    .min(200, { message: "Miniumum deposit amount 200 TK" }),
+    .min(200, { message: "Miniumum deposit amount 200 TK" })
+    .max(50000, { message: "Maximum deposit amount 50,000 TK" }),
 });
 
 export default function Deposit() {
@@ -90,7 +91,7 @@ export default function Deposit() {
             <Button
               type="submit"
               className="cursor-pointer w-full xl:mt-5 lg:mt-4 md:mt-3 mt-2 font-semibold xl:text-base lg:text-[14.5px] md:text-[15px] text-[14.5px]"
-                disabled={depositMoneyLoading}
+              disabled={depositMoneyLoading}
             >
               {depositMoneyLoading ? "Depositing Money ...." : "Deposit Money"}
             </Button>
