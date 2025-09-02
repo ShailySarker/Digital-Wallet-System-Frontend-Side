@@ -64,9 +64,8 @@ const contactSchema = z.object({
     .max(100, { message: "Email cannot exceed 100 characters." }),
   phone: z
     .string({ message: "Phone number must be string" })
-    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
-      message:
-        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+    .regex(/^(?:01\d{9})$/, {
+      message: "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
     }),
   subject: z
     .string({ message: "Subject must be string" })

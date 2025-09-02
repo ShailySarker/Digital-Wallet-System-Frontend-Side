@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMyWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
@@ -13,17 +12,15 @@ import { Button } from "@/components/ui/button";
 
 export default function Overview() {
   const { data } = useMyProfileQuery(undefined);
-  const { data: myWallet, isLoading: walletLoading } = useMyWalletQuery({});
-  // console.log(myWallet)
-
-  const { data: agentStats } = useAgentStatsQuery({});
-  console.log(agentStats)
+  const { data: agentStats, isLoading: agentStatsLoading } = useAgentStatsQuery(
+    {}
+  );
   const {
     data: myTransaction,
     isLoading: transactionsLoading,
     isError: transactionError,
   } = useMyTransactionQuery({ limit: 5 });
-  // console.log(myTransaction);
+
   return (
     <div>
       <div className="md:p-6 p-5 space-y-6">
@@ -35,33 +32,35 @@ export default function Overview() {
             <p className="lg:text-lg text-base lg:pt-5 pt-4">
               Your Wallet Balance
             </p>
-            <h2 className="text-2xl md:text-4xl font-bold mt-2">
-              {walletLoading ? "Waiting..." : myWallet?.data?.balance} BDT
+            <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
+              {agentStatsLoading ? "...." : agentStats?.data?.balance} BDT
             </h2>
           </CardContent>
         </Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
           <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Total Cash In</p>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2">
-                {agentStats?.data?.totalCashIn} BDT
+              <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
+                {agentStatsLoading ? "...." : agentStats?.data?.totalCashIn} BDT
               </h2>
             </CardContent>
           </Card>
           <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Total Cash Out</p>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2">
-                {agentStats?.data?.totalCashOut} BDT
+              <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
+                {agentStatsLoading ? "...." : agentStats?.data?.totalCashOut}{" "}
+                BDT
               </h2>
             </CardContent>
           </Card>
           <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Commission Earned</p>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2">
-                {agentStats?.data?.totalCommission} BDT
+              <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
+                {agentStatsLoading ? "...." : agentStats?.data?.totalCommission}{" "}
+                BDT
               </h2>
             </CardContent>
           </Card>
