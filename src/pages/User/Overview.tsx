@@ -21,12 +21,12 @@ export default function Overview() {
   return (
     <div>
       <div className="md:p-6 p-5 space-y-6">
-        <Card className="bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-xl rounded-md">
-          <CardContent className="flex flex-col items-center lg:p-6 p-5">
-            <h2 className="text-center font-bold italic lg:text-base text-[15px]">
+        <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-xl rounded-xl">
+          <CardContent className="flex flex-col items-center xl:p-8 lg:p-6 p-5">
+            <h2 className="text-center font-bold italic xl:text-lg lg:text-base text-[15px]">
               Hello, {data?.data?.name}. Welcome to your dashboard!
             </h2>
-            <p className="lg:text-lg text-base lg:pt-5 pt-4">
+            <p className="lg:text-lg text-base xl:pt-6 lg:pt-5 pt-4">
               Your Wallet Balance
             </p>
             <h2 className="text-2xl md:text-4xl font-bold mt-2">
@@ -37,7 +37,7 @@ export default function Overview() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Link to="/user/deposit" className="w-full">
-            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
               <CardContent className="flex flex-col items-center md:p-4">
                 <ArrowDownCircle className="w-9 h-9 text-indigo-500 mb-2" />
                 <p className="font-semibold">Deposit Money</p>
@@ -46,7 +46,7 @@ export default function Overview() {
           </Link>
 
           <Link to="/user/withdraw" className="w-full">
-            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
               <CardContent className="flex flex-col items-center md:p-4">
                 <ArrowUpCircle className="w-9 h-9 text-green-500 mb-2" />
                 <p className="font-semibold">Withdraw Money</p>
@@ -55,7 +55,7 @@ export default function Overview() {
           </Link>
 
           <Link to="/user/send-money" className="w-full">
-            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+            <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
               <CardContent className="flex flex-col items-center md:p-4">
                 <Send className="w-9 h-9 text-blue-500 mb-2" />
                 <p className="font-semibold">Send Money</p>
@@ -74,7 +74,7 @@ export default function Overview() {
               <></>
             ) : (
               <>
-                <Card className="rounded-md">
+                <Card className="rounded-xl shadow border-primary bg-primary/5">
                   <CardHeader>
                     <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                       <span>Recent Transactions History</span>

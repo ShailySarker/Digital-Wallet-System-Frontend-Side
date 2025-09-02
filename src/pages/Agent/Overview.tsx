@@ -24,12 +24,12 @@ export default function Overview() {
   return (
     <div>
       <div className="md:p-6 p-5 space-y-6">
-        <Card className="bg-gradient-to-r from-blue-400 to-purple-400 text-white shadow-xl rounded-md">
-          <CardContent className="flex flex-col items-center lg:p-6 p-5">
-            <h2 className="text-center font-bold italic lg:text-base text-[15px]">
+        <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-xl rounded-xl">
+          <CardContent className="flex flex-col items-center xl:p-8 lg:p-6 p-5">
+            <h2 className="text-center font-bold italic xl:text-lg lg:text-base text-[15px]">
               Hello, {data?.data?.name}. Welcome to your dashboard!
             </h2>
-            <p className="lg:text-lg text-base lg:pt-5 pt-4">
+            <p className="lg:text-lg text-base xl:pt-6 lg:pt-5 pt-4">
               Your Wallet Balance
             </p>
             <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
@@ -38,7 +38,7 @@ export default function Overview() {
           </CardContent>
         </Card>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Total Cash In</p>
               <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
@@ -46,7 +46,7 @@ export default function Overview() {
               </h2>
             </CardContent>
           </Card>
-          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Total Cash Out</p>
               <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
@@ -55,7 +55,7 @@ export default function Overview() {
               </h2>
             </CardContent>
           </Card>
-          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-accent/50 border-primary">
+          <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
             <CardContent className="flex flex-col items-center">
               <p className="font-semibold">Commission Earned</p>
               <h2 className="text-2xl xl:text-4xl lg:text-3xl font-bold md:mt-2 mt-1">
@@ -74,7 +74,7 @@ export default function Overview() {
             {myTransaction?.data?.length === 0 ? (
               <></>
             ) : (
-              <Card className="rounded-md">
+              <Card className="rounded-xl shadow border-primary bg-primary/5">
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>

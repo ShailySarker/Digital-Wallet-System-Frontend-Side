@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
 
 export type {
@@ -26,6 +27,7 @@ export interface IResponse<T> {
 }
 
 export interface ISidebarItem {
+  icon: LucideIcon;
   title: string;
   url: string;
   component: ComponentType;

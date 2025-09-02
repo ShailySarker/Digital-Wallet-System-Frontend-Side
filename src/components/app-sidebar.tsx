@@ -43,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive}
-                  className="xl:text-lg text-base xl:mt-1"
+                  className="xl:text-lg text-base xl:mt-1 border-2 xl:px-3 lg:px-2 md:px-[10px] xl:py-5 lg:py-4 py-[16.5px]"
                 >
                   <Link
                     to={item.url}
@@ -51,6 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       item.url.endsWith("/profile") ? "hidden" : ""
                     }`}
                   >
+                    <span className="xl:pr-2 pr-1"><item.icon className="xl:size-5 size-4.5" /></span>
                     {item.title}
                   </Link>
                 </SidebarMenuButton>
