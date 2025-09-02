@@ -129,7 +129,7 @@ export default function TransactionFilter() {
   return (
     <div className="col-span-3 w-full space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-lg font-semibold">Filters</h1>
+        <h1 className="lg:text-xl text-lg font-semibold">Filters</h1>
         <Button size="sm" variant="outline" onClick={handleClearFilter}>
           Clear All
         </Button>
@@ -138,7 +138,7 @@ export default function TransactionFilter() {
       {data?.data?.role === "ADMIN" && (
         // {/* Search Input - Uses searchTerm parameter */}
         <div>
-          <Label className="mb-2">Search</Label>
+          <Label className="lg:mb-3 mb-2">Search</Label>
           <Input
             placeholder="Search by type, status....."
             value={searchTerm}
@@ -149,7 +149,7 @@ export default function TransactionFilter() {
       <div className="grid lg:grid-cols-2 gap-4">
         {/* Transaction Type Filter */}
         <div>
-          <Label className="mb-2">Transaction Type</Label>
+          <Label className="lg:mb-3 mb-2">Transaction Type</Label>
           <Select
             value={selectedType}
             onValueChange={(value) => handleFilterChange("type", value)}
@@ -172,7 +172,7 @@ export default function TransactionFilter() {
 
         {/* Status Filter */}
         <div>
-          <Label className="mb-2">Transaction Status</Label>
+          <Label className="lg:mb-3 mb-2">Transaction Status</Label>
           <Select
             value={selectedStatus}
             onValueChange={(value) => handleFilterChange("status", value)}
@@ -200,7 +200,7 @@ export default function TransactionFilter() {
           <div className="grid lg:grid-cols-2 gap-4">
             {/* Sender Name Filter */}
             <div>
-              <Label className="mb-2">Sender Name</Label>
+              <Label className="lg:mb-3 mb-2">Sender Name</Label>
               <Select
                 value={selectedFromWalletSender}
                 onValueChange={(value) =>
@@ -226,7 +226,7 @@ export default function TransactionFilter() {
 
             {/* Receiver Name Filter */}
             <div>
-              <Label className="mb-2">Receiver Name</Label>
+              <Label className="lg:mb-3 mb-2">Receiver Name</Label>
               <Select
                 value={selectedToWalletReceiver}
                 onValueChange={(value) =>
@@ -252,7 +252,7 @@ export default function TransactionFilter() {
 
             {/* Sender Phone Filter */}
             <div>
-              <Label className="mb-2">Sender Phone</Label>
+              <Label className="lg:mb-3 mb-2">Sender Phone</Label>
               <Select
                 value={selectedFromWalletPhone}
                 onValueChange={(value) =>
@@ -278,7 +278,7 @@ export default function TransactionFilter() {
 
             {/* Receiver Phone Filter */}
             <div>
-              <Label className="mb-2">Receiver Phone</Label>
+              <Label className="lg:mb-3 mb-2">Receiver Phone</Label>
               <Select
                 value={selectedToWalletPhone}
                 onValueChange={(value) =>
@@ -303,7 +303,7 @@ export default function TransactionFilter() {
             </div>
             {/* Sender Role Filter */}
             <div>
-              <Label className="mb-2">Sender Role</Label>
+              <Label className="lg:mb-3 mb-2">Sender Role</Label>
               <Select
                 value={selectedFromWalletRole}
                 onValueChange={(value) =>
@@ -328,7 +328,7 @@ export default function TransactionFilter() {
 
             {/* Receiver Role Filter */}
             <div>
-              <Label className="mb-2">Receiver Role</Label>
+              <Label className="lg:mb-3 mb-2">Receiver Role</Label>
               <Select
                 value={selectedToWalletRole}
                 onValueChange={(value) =>
@@ -357,7 +357,7 @@ export default function TransactionFilter() {
       {data?.data?.role === "ADMIN" && (
         // {/* Sorting Options */}
         <div>
-          <Label className="mb-2">Sort By</Label>
+          <Label className="lg:mb-3 mb-2">Sort By</Label>
           <Select
             value={sort}
             onValueChange={(value) => handleFilterChange("sort", value)}

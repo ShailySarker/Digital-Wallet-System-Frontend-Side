@@ -17,7 +17,7 @@ import { useSearchParams } from "react-router";
 
 export default function Transactions() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(5);
   const [searchParams] = useSearchParams();
 
   const type = searchParams.get("type") || undefined;
