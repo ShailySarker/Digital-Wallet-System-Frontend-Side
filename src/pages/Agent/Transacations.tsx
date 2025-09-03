@@ -433,9 +433,9 @@ export default function TransactionHistory() {
                                     : "text-red-600"
                                 }
                               >
-                                {transaction.direction === "incoming"
+                                {/* {transaction.direction === "incoming"
                                   ? "+"
-                                  : "-"}
+                                  : "-"} */}
                                 {transaction?.amount} BDT
                               </span>
                             </td>

@@ -105,10 +105,10 @@ export default function Overview() {
                               {transaction?.type}
                             </td>
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                              {transaction?.fromWalletSender}
+                              {transaction?.senderName}
                             </td>
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                              {transaction?.toWalletReceiver}
+                              {transaction?.receiverName}
                             </td>
                             <td className="p-3 font-semibold lg:text-sm text-xs">
                               {transaction?.amount} BDT
