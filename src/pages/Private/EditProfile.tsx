@@ -31,6 +31,12 @@ const updateMyProfileSchema = z.object({
     .min(5, { message: "Email must be at least 5 characters long." })
     .max(100, { message: "Email cannot exceed 100 characters." })
     .optional(),
+  phone: z
+    .string({ message: "Phone number must be string" })
+    .regex(/^(?:01\d{9})$/, {
+      message: "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
+    })
+    .optional(),
   role: z.enum([Role.USER, Role.AGENT]).default(Role.USER).optional(),
   isActive: z.enum(Object.values(isActive) as [string]).optional(),
   isApproved: z.enum(Object.values(isApproved) as [string]).optional(),
@@ -77,7 +83,7 @@ export default function EditProfile() {
     console.log(data);
     const updatedData = {
       name: data?.name ? data?.name : myProfileData?.data?.name,
-      email: data?.email ? data?.email : myProfileData?.data?.email,
+      phone: data?.phone ? data?.phone : myProfileData?.data?.phone,
       //   role: data?.role ? data?.role : myProfileData?.data?.role,
       //   isActive: data?.isActive ? data?.isActive : myProfileData?.data?.isActive,
       //   isApproved: data?.isApproved
@@ -97,14 +103,16 @@ export default function EditProfile() {
       const result = await editUser({ userId, updatedData }).unwrap();
       console.log(result);
       if (result.success) {
-        // form.reset();
+        form.reset();
         toast.success("Your profile updated successfully", { id: toastId });
         await refetch();
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
-      toast.error(`Your updating profile is failed: ${error?.data?.message}`);
+      toast.error(`Your updating profile is failed: ${error?.data?.message}`, {
+        id: toastId,
+      });
     }
   };
 
@@ -120,127 +128,95 @@ export default function EditProfile() {
           ) : myProfileDataLoading ? (
             <LazyLoader />
           ) : (
-            <div className="lg:w-1/2 md:w-2/3 mx-auto bg-accent xl:p-8 lg:p-7 md:p-6 p-5 border-2 shadow rounded-2xl">
+            <div className="xl:w-2/3 lg:w-3/4 md:w-2/3 mx-auto bg-primary/5 border-primary xl:p-8 lg:p-7 md:p-6 p-5 border-2 shadow rounded-2xl">
               {myProfileData?.data && (
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="xl:space-y-5 space-y-[18px]"
                   >
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your name"
-                              defaultValue={myProfileData?.data?.name}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription className="sr-only">
-                            //only screen reader can read This is your name.
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your email address"
-                              type="email"
-                              defaultValue={myProfileData?.data?.email}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormDescription className="sr-only">
-                            //only screen reader can read This is your email.
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormItem>
-                      <FormLabel>Phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder="Enter your phone number"
-                          value={myProfileData?.data?.phone}
-                          readOnly
-                          disabled
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                    <FormItem>
-                      <FormLabel>NID</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Enter your nid number"
-                          value={myProfileData?.data?.nidNumber}
-                          readOnly
-                          disabled
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                    <FormField
-                      control={form.control}
-                      name="role"
-                      render={() => (
-                        <FormItem>
-                          <FormLabel>Account Type</FormLabel>
-                          <Input
-                            type="text"
-                            placeholder="Enter your phone number"
-                            value={myProfileData?.data?.role}
-                            readOnly
-                            disabled
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="isApproved"
-                      render={() => (
-                        <FormItem>
-                          <FormLabel>Approve Status</FormLabel>
-                          <Input
-                            type="text"
-                            placeholder="Enter your phone number"
-                            value={myProfileData?.data?.isApproved}
-                            readOnly
-                            disabled
-                          />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    {myProfileData?.data?.role === "AGENT" && (
+                    <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-5 gap-4">
                       <FormField
                         control={form.control}
-                        name="commissionRate"
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter your name"
+                                defaultValue={myProfileData?.data?.name}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription className="sr-only">
+                              //only screen reader can read This is your name.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter your email address"
+                            type="email"
+                            value={myProfileData?.data?.email}
+                            readOnly
+                            disabled
+                          />
+                        </FormControl>
+                        <FormDescription className="sr-only">
+                          //only screen reader can read This is your email.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Phone</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter your phone number"
+                                type="tel"
+                                defaultValue={myProfileData?.data?.phone}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription className="sr-only">
+                              //only screen reader can read This is your phone.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormItem>
+                        <FormLabel>NID</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            placeholder="Enter your nid number"
+                            value={myProfileData?.data?.nidNumber}
+                            readOnly
+                            disabled
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                      <FormField
+                        control={form.control}
+                        name="role"
                         render={() => (
                           <FormItem>
-                            <FormLabel>Commission Rate</FormLabel>
+                            <FormLabel>Account Type</FormLabel>
                             <Input
                               type="text"
                               placeholder="Enter your phone number"
-                              value={myProfileData?.data?.commissionRate}
+                              value={myProfileData?.data?.role}
                               readOnly
                               disabled
                             />
@@ -248,7 +224,44 @@ export default function EditProfile() {
                           </FormItem>
                         )}
                       />
-                    )}
+                      <FormField
+                        control={form.control}
+                        name="isApproved"
+                        render={() => (
+                          <FormItem>
+                            <FormLabel>Approve Status</FormLabel>
+                            <Input
+                              type="text"
+                              placeholder="Enter your phone number"
+                              value={myProfileData?.data?.isApproved}
+                              readOnly
+                              disabled
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {myProfileData?.data?.role === "AGENT" && (
+                        <FormField
+                          control={form.control}
+                          name="commissionRate"
+                          render={() => (
+                            <FormItem>
+                              <FormLabel>Commission Rate</FormLabel>
+                              <Input
+                                type="text"
+                                placeholder="Enter your phone number"
+                                value={myProfileData?.data?.commissionRate}
+                                readOnly
+                                disabled
+                              />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                    </div>
                     <Button
                       disabled={updatingProfileDataLoading}
                       type="submit"

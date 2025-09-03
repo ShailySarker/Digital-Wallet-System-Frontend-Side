@@ -62,7 +62,7 @@ export default function LoginForm({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
-      toast.error(`Logged in failed: ${error?.data?.message || error?.data}`);
+      toast.error(`Logged in failed: ${error?.data?.message || error?.data}`,  { id: toastId });
     }
   };
 

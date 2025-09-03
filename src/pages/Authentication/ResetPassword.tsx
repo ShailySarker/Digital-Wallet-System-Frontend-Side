@@ -68,7 +68,7 @@ export default function ResetPassword() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Password reseting failed: ${error?.data?.message || error?.data}`
+        `Password reseting failed: ${error?.data?.message || error?.data}`, { id: toastId }
       );
     }
   };

@@ -39,10 +39,9 @@ export default function Withdraw() {
   });
   const onSubmit = async (data: z.infer<typeof withdrawSchema>) => {
     const amount = Number(data?.amount);
+    const withdrawInfo = { amount };
+    const toastId = toast.loading("Withdrawing money ....");
     try {
-      const withdrawInfo = { amount };
-      console.log(withdrawInfo);
-      const toastId = toast.loading("Withdrawing money ....");
       const result = await withdraw(withdrawInfo).unwrap();
       if (result?.success) {
         toast.success("Your money withdraw successfully", { id: toastId });
@@ -54,7 +53,7 @@ export default function Withdraw() {
       toast.error(
         `Your withdraw money process failed: ${
           error?.data?.message || error?.data
-        }`
+        }`, { id: toastId }
       );
     }
   };

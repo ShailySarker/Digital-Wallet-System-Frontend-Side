@@ -50,7 +50,7 @@ export default function ForgetPassword() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Sending email in failed: ${error?.data?.message || error?.data}`
+        `Sending email in failed: ${error?.data?.message || error?.data}`, { id: toastId }
       );
     }
   };

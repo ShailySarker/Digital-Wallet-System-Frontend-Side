@@ -111,7 +111,7 @@ export default function ContactDetails() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Message submission failed: ${error?.data?.message || error?.data}`
+        `Message submission failed: ${error?.data?.message || error?.data}`, { id: toastId }
       );
     }
   };

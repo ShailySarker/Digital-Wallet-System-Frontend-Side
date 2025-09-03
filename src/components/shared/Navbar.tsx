@@ -67,7 +67,7 @@ const Navbar = () => {
       toast.success("You logged out successfully", { id: toastId });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(`Logout Error:${error?.data?.message || error?.data}`);
+      toast.error(`Logout Error:${error?.data?.message || error?.data}`, { id: toastId });
     }
   };
 

@@ -57,7 +57,7 @@ export default function ChangePassword() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Changing password failed: ${error?.data?.message || error?.data}`
+        `Changing password failed: ${error?.data?.message || error?.data}`, { id: toastId }
       );
     }
   };

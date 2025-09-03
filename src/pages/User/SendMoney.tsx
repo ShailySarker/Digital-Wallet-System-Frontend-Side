@@ -46,12 +46,12 @@ export default function SendMoney() {
     },
   });
   const onSubmit = async (data: z.infer<typeof sendMoneySchema>) => {
+    const sendMoneyInfo = {
+      phone: data?.phone,
+      amount: Number(data?.amount),
+    };
+    const toastId = toast.loading("Sending money ....");
     try {
-      const sendMoneyInfo = {
-        phone: data?.phone,
-        amount: Number(data?.amount),
-      };
-      const toastId = toast.loading("Sending money ....");
       const result = await sendMoney(sendMoneyInfo).unwrap();
       if (result?.success) {
         toast.success("Your money send successfully", { id: toastId });
@@ -61,7 +61,10 @@ export default function SendMoney() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Your send money process failed: ${error?.data?.message || error?.data}`
+        `Your send money process failed: ${
+          error?.data?.message || error?.data
+        }`,
+        { id: toastId }
       );
     }
   };

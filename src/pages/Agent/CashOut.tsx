@@ -46,12 +46,12 @@ export default function CashOut() {
     },
   });
   const onSubmit = async (data: z.infer<typeof cashOutSchema>) => {
+    const cashOutInfo = {
+      phone: data?.phone,
+      amount: Number(data?.amount),
+    };
+    const toastId = toast.loading("Procesing cash out ....");
     try {
-      const cashOutInfo = {
-        phone: data?.phone,
-        amount: Number(data?.amount),
-      };
-      const toastId = toast.loading("Procesing cash out ....");
       const result = await cashOut(cashOutInfo).unwrap();
       if (result?.success) {
         toast.success("Your cashOut processed successfully", { id: toastId });
@@ -61,7 +61,8 @@ export default function CashOut() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Your cashOut process failed: ${error?.data?.message || error?.data}`
+        `Your cashOut process failed: ${error?.data?.message || error?.data}`,
+        { id: toastId }
       );
     }
   };

@@ -46,12 +46,12 @@ export default function CashIn() {
     },
   });
   const onSubmit = async (data: z.infer<typeof cashInSchema>) => {
+    const cashInInfo = {
+      phone: data?.phone,
+      amount: Number(data?.amount),
+    };
+    const toastId = toast.loading("Procesing cash in ....");
     try {
-      const cashInInfo = {
-        phone: data?.phone,
-        amount: Number(data?.amount),
-      };
-      const toastId = toast.loading("Procesing cash in ....");
       const result = await cashIn(cashInInfo).unwrap();
       if (result?.success) {
         toast.success("Your cashIn processed successfully", { id: toastId });
@@ -61,7 +61,8 @@ export default function CashIn() {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        `Your cashIn process failed: ${error?.data?.message || error?.data}`
+        `Your cashIn process failed: ${error?.data?.message || error?.data}`,
+        { id: toastId }
       );
     }
   };

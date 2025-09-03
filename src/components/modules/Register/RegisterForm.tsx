@@ -93,7 +93,7 @@ export function RegisterForm({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
-      toast.error(`Your registration failed: ${error?.data?.message}`);
+      toast.error(`Your registration failed: ${error?.data?.message}`, { id: toastId });
     }
   };
 

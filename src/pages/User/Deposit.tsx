@@ -33,10 +33,9 @@ export default function Deposit() {
   });
   const onSubmit = async (data: z.infer<typeof depositSchema>) => {
     const amount = Number(data?.amount);
+    const depositInfo = { amount };
+    const toastId = toast.loading("Depositing money ....");
     try {
-      const depositInfo = { amount };
-      console.log(depositInfo);
-      const toastId = toast.loading("Depositing money ....");
       const result = await deposit(depositInfo).unwrap();
       if (result?.success) {
         toast.success("Your money deposit successfully", { id: toastId });
@@ -48,7 +47,7 @@ export default function Deposit() {
       toast.error(
         `Your deposit money process failed: ${
           error?.data?.message || error?.data
-        }`
+        }`, { id: toastId }
       );
     }
   };
