@@ -6,7 +6,7 @@ export const transactionApi = baseApi.injectEndpoints({
       query: (params) => ({
         url: "/transaction/my-transactions",
         method: "GET",
-        params
+        params,
       }),
       providesTags: ["WALLET", "USER", "TRANSACTION"],
     }),
@@ -14,7 +14,7 @@ export const transactionApi = baseApi.injectEndpoints({
       query: (params) => ({
         url: "/transaction/commissions",
         method: "GET",
-        params
+        params,
       }),
       providesTags: ["WALLET", "USER", "TRANSACTION"],
     }),
@@ -22,7 +22,7 @@ export const transactionApi = baseApi.injectEndpoints({
       query: (params) => ({
         url: "/transaction/all-transactions",
         method: "GET",
-        params
+        params,
       }),
       providesTags: ["WALLET", "USER", "TRANSACTION"],
     }),
@@ -31,8 +31,22 @@ export const transactionApi = baseApi.injectEndpoints({
         url: "/transaction/agent-stats",
         method: "GET",
       }),
+      providesTags: ["WALLET", "USER", "TRANSACTION"],
+    }),
+    adminStats: builder.query({
+      query: () => ({
+        url: "/transaction/admin-stats",
+        method: "GET",
+      }),
+      providesTags: ["WALLET", "USER", "TRANSACTION"],
     }),
   }),
 });
 
-export const { useMyTransactionQuery, useMyCommissionQuery, useAllTransactionsQuery, useAgentStatsQuery } = transactionApi;
+export const {
+  useMyTransactionQuery,
+  useMyCommissionQuery,
+  useAllTransactionsQuery,
+  useAgentStatsQuery,
+  useAdminStatsQuery,
+} = transactionApi;

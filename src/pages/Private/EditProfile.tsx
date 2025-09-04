@@ -64,7 +64,7 @@ export default function EditProfile() {
       refetchOnReconnect: true,
     }
   );
-  console.log(myProfileData?.data?.isApproved);
+  // console.log(myProfileData?.data?.isApproved);
   const [editUser, { isLoading: updatingProfileDataLoading }] =
     useEditUserMutation();
   const form = useForm<z.infer<typeof updateMyProfileSchema>>({
@@ -80,7 +80,7 @@ export default function EditProfile() {
   });
 
   const onSubmit = async (data: z.infer<typeof updateMyProfileSchema>) => {
-    console.log(data);
+    // console.log(data);
     const updatedData = {
       name: data?.name ? data?.name : myProfileData?.data?.name,
       phone: data?.phone ? data?.phone : myProfileData?.data?.phone,
@@ -98,10 +98,10 @@ export default function EditProfile() {
     };
     const toastId = toast.loading("Updating to your profile ...");
     const userId = myProfileData?.data?._id;
-    console.log({ userId, updatedData });
+    // console.log({ userId, updatedData });
     try {
       const result = await editUser({ userId, updatedData }).unwrap();
-      console.log(result);
+      // console.log(result);
       if (result.success) {
         form.reset();
         toast.success("Your profile updated successfully", { id: toastId });
