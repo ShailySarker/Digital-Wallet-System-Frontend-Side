@@ -24,6 +24,21 @@ export const userApi = baseApi.injectEndpoints({
         params: userInfo.toString(),
       }),
     }),
+    getAllUsers: builder.query({
+      query: (params) => ({
+        url: "/user/all-users",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["USER"],
+    }),
+    getSingleUsers: builder.query({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
   }),
 });
 
@@ -31,4 +46,6 @@ export const {
   useEditUserMutation,
   useAllCategoriesOfUserQuery,
   useGetSpecificUserQuery,
+  useGetAllUsersQuery,
+  useGetSingleUsersQuery,
 } = userApi;
