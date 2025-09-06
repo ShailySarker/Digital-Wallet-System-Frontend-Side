@@ -493,6 +493,7 @@ import {
   RefreshCw,
   User2,
   List,
+  UserRoundX,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -505,6 +506,8 @@ import {
 import { CustomBadge } from "@/components/ui/CustomBadge";
 import ErrorPage from "@/components/shared/ErrorPage";
 import LazyLoader from "@/components/shared/LazyLoader";
+import { Role } from "@/constants/user.constant";
+import { toast } from "sonner";
 
 interface UserFilters {
   search?: string;
@@ -532,7 +535,7 @@ type EditUserFormValues = z.infer<typeof editUserSchema>;
 export default function Users() {
   const [filters, setFilters] = useState<UserFilters>({
     page: 1,
-    limit: 3,
+    limit: 5,
   });
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -595,7 +598,7 @@ export default function Users() {
   const clearAllFilters = () => {
     setFilters({
       page: 1,
-      limit: 3,
+      limit: 5,
     });
   };
 
@@ -610,29 +613,37 @@ export default function Users() {
   };
 
   const handleEditSubmit = async (values: EditUserFormValues) => {
+    const toastId = toast.loading("Updating to user profile ...");
+
     try {
       console.log(values);
-      await editUser({
+      const result = await editUser({
         userId: selectedUserId,
         updatedData: values,
       }).unwrap();
-      setEditModalOpen(false);
-      refetch();
-    } catch (error) {
+      if (result.success) {
+        toast.success("User profile updated successfully", { id: toastId });
+        setEditModalOpen(false);
+        await refetch();
+      }
+    } catch (error: any) {
       console.error("Failed to update user:", error);
+      toast.error(`User profile updating is failed: ${error?.data?.message}`, {
+        id: toastId,
+      });
     }
   };
 
   const getStatusVariant = (status: string) => {
     switch (status) {
-      case "ACTIVE":
+      case "UNBLOCK":
       case "APPROVE":
         return "success";
-      case "INACTIVE":
       case "PENDING":
         return "warning";
-      case "BLOCKED":
+      case "BLOCK":
       case "SUSPEND":
+        // case "true":
         return "destructive";
       default:
         return "secondary";
@@ -666,7 +677,7 @@ export default function Users() {
 
   return (
     // <div className="md:p-6 p-5 space-y-6">
-    <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12 xl:px-20 lg:px-14 md:px-10 px-5">
+    <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12 xl:px-12 lg:px-10 md:px-8 px-5">
       <h1 className="text-center xl:text-4xl lg:text-3xl md:text-2xl text-xl italic font-bold">
         User Management
       </h1>
@@ -725,7 +736,7 @@ export default function Users() {
               <CardTitle className="text-sm font-medium text-yellow-700">
                 Blocked Users
               </CardTitle>
-              <User2 className="h-4 w-4 text-yellow-700 opacity-80" />
+              <UserRoundX className="h-4 w-4 text-yellow-700 opacity-80" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-yellow-700">
@@ -760,7 +771,7 @@ export default function Users() {
           ) : (
             <div className="border-2 shadow rounded-2xl border-primary">
               {/* Filters */}
-              <Card className="border-none shadow-none">
+              <Card className="border-none shadow-none rounded-t-2xl rounded-b-none">
                 <CardContent className="xl:pt-6">
                   <div className="flex flex-col sm:flex-row gap-2">
                     {/* Search */}
@@ -821,9 +832,10 @@ export default function Users() {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="all">All Status</SelectItem>
-                              <SelectItem value="ACTIVE">ACTIVE</SelectItem>
-                              <SelectItem value="INACTIVE">INACTIVE</SelectItem>
-                              <SelectItem value="BLOCKED">BLOCKED</SelectItem>
+                              {/* <SelectItem value="ACTIVE">ACTIVE</SelectItem> */}
+                              {/* <SelectItem value="INACTIVE">INACTIVE</SelectItem> */}
+                              <SelectItem value="BLOCK">BLOCK</SelectItem>
+                              <SelectItem value="UNBLOCK">UNBLOCK</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -847,8 +859,8 @@ export default function Users() {
                             <SelectContent>
                               <SelectItem value="all">All Approval</SelectItem>
                               <SelectItem value="PENDING">PENDING</SelectItem>
-                              <SelectItem value="APPROVE">APPROVED</SelectItem>
-                              <SelectItem value="SUSPEND">SUSPENDED</SelectItem>
+                              <SelectItem value="APPROVE">APPROVE</SelectItem>
+                              <SelectItem value="SUSPEND">SUSPEND</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -939,7 +951,7 @@ export default function Users() {
                 </div>
               ) : (
                 // {/* Users Table */}
-                <Card className="border-none shadow-none">
+                <Card className="border-none shadow-none rounded-b-2xl rounded-t-none">
                   <div className="px-6 flex md:flex-row flex-col md:justify-between justify-center items-center md:gap-0 gap-2">
                     <span className="font-semibold">All Users Info:</span>
                     <div className="text-sm text-muted-foreground italic font-medium">
@@ -961,41 +973,60 @@ export default function Users() {
                           <TableHead>Phone</TableHead>
                           <TableHead>NID Number</TableHead>
                           <TableHead>Status</TableHead>
-                          <TableHead>Approval</TableHead>
+                          {/* <TableHead>Approval</TableHead> */}
                           <TableHead>Verified</TableHead>
+                          <TableHead>Deleted</TableHead>
                           <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {allUserData?.data?.map((user: any) => (
                           <TableRow key={user?._id}>
-                            <TableCell className="font-medium">
+                            <TableCell className="font-medium w-full">
                               {user?.name}
                             </TableCell>
-                            <TableCell>{user?.email}</TableCell>
-                            <TableCell>{user?.phone}</TableCell>
-                            <TableCell>{user?.nidNumber}</TableCell>
+                            <TableCell className="w-full">
+                              {user?.email}
+                            </TableCell>
+                            <TableCell className="w-full">
+                              {user?.phone}
+                            </TableCell>
+                            <TableCell className="w-full">
+                              {user?.nidNumber}
+                            </TableCell>
                             <TableCell>
                               <CustomBadge
+                                className="w-full"
                                 variant={getStatusVariant(user?.isActive)}
                               >
                                 {user?.isActive}
                               </CustomBadge>
                             </TableCell>
-                            <TableCell>
+                            {/* <TableCell>
                               <CustomBadge
                                 variant={getStatusVariant(user?.isApproved)}
                               >
                                 {user?.isApproved}
                               </CustomBadge>
+                            </TableCell> */}
+                            <TableCell className="w-full">
+                              <CustomBadge
+                                className="w-full"
+                                variant={
+                                  user?.isVerified ? "default" : "warning"
+                                }
+                              >
+                                {user?.isVerified ? "VERIFIED" : "NOT YET"}
+                              </CustomBadge>
                             </TableCell>
                             <TableCell>
                               <CustomBadge
+                                className="w-full"
                                 variant={
-                                  user?.isVerified ? "success" : "warning"
+                                  user?.isDeleted ? "destructive" : "secondary"
                                 }
                               >
-                                {user?.isVerified ? "VERIFIED" : "NOT VERIFIED"}
+                                {user?.isDeleted ? "Yes" : "No"}
                               </CustomBadge>
                             </TableCell>
                             <TableCell className="text-right">
@@ -1119,6 +1150,17 @@ export default function Users() {
 
                                 return (
                                   <PaginationItem key={pageNum}>
+                                    {/* <PaginationLink
+                                      isActive={isActive}
+                                      onClick={() => handlePageChange(pageNum)}
+                                      className={`border px-3 py-1 rounded-md ${
+                                        isActive
+                                          ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-primary-foreground"
+                                          : "hover:bg-muted"
+                                      }`}
+                                    >
+                                      {pageNum}
+                                    </PaginationLink> */}
                                     <PaginationLink
                                       isActive={isActive}
                                       onClick={() => handlePageChange(pageNum)}
@@ -1128,7 +1170,8 @@ export default function Users() {
                                           : "hover:bg-muted"
                                       }`}
                                     >
-                                      {pageNum}
+                                      {" "}
+                                      {pageNum}{" "}
                                     </PaginationLink>
                                   </PaginationItem>
                                 );
@@ -1351,31 +1394,33 @@ export default function Users() {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="isApproved"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Approval</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            value={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select approval" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="PENDING">PENDING</SelectItem>
-                              <SelectItem value="APPROVE">APPROVE</SelectItem>
-                              <SelectItem value="SUSPEND">SUSPEND</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    {singleUser?.data?.role === Role.AGENT && (
+                      <FormField
+                        control={form.control}
+                        name="isApproved"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Approval</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="w-full">
+                                  <SelectValue placeholder="Select approval" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="PENDING">PENDING</SelectItem>
+                                <SelectItem value="APPROVE">APPROVE</SelectItem>
+                                <SelectItem value="SUSPEND">SUSPEND</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
 
                     <FormItem>
                       <FormLabel>Verified</FormLabel>
@@ -1394,8 +1439,16 @@ export default function Users() {
                         <FormItem>
                           <FormLabel>Is Deleted</FormLabel>
                           <Select
-                            onValueChange={field.onChange}
-                            value={field.value?.toString()}
+                            // onValueChange={field.onChange}
+                            // value={field.value?.toString()}
+                            onValueChange={(val) =>
+                              field.onChange(val === "true")
+                            } // 👈 convert string -> boolean
+                            value={
+                              field.value !== undefined
+                                ? field.value.toString()
+                                : ""
+                            }
                           >
                             <FormControl>
                               <SelectTrigger className="w-full">

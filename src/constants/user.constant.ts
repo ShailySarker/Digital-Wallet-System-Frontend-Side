@@ -11,7 +11,8 @@ export const isApproved = {
 };
 
 export const isActive = {
-    ACTIVE : "ACTIVE",
-    INACTIVE : "INACTIVE",
-    BLOCKED : "BLOCKED"
+    // ACTIVE : "ACTIVE",
+    // INACTIVE : "INACTIVE",
+    BLOCK : "BLOCK",
+    UNBLOCK : "UNBLOCK"
 };
