@@ -619,16 +619,8 @@ export default function Users() {
       values.isDeleted === singleUser?.data?.isDeleted &&
       values.role === singleUser?.data?.role
     ) {
-      toast.error("You are not change any thing..");
-      return;
-    }
-    if (
-      values.isApproved === singleUser?.data?.isApproved &&
-      values.commissionRate === singleUser?.data?.commissionRate &&
-      values.isDeleted === singleUser?.data?.isDeleted &&
-      values.role === singleUser?.data?.role
-    ) {
-      toast.error("You are not change any thing..");
+      toast.error("You are not changing any thing..", { id: toastId });
+      setEditModalOpen(false);
       return;
     }
     try {
@@ -638,9 +630,11 @@ export default function Users() {
         updatedData: values,
       }).unwrap();
       if (result.success) {
-        toast.success("User profile updated successfully", { id: toastId });
-        setEditModalOpen(false);
         await refetch();
+        setEditModalOpen(false);
+        toast.success("User profile updated successfully", { id: toastId });
+        // setEditModalOpen(false);
+        // await refetch();
       }
     } catch (error: any) {
       console.error("Failed to update user:", error);
@@ -831,33 +825,6 @@ export default function Users() {
                           )}
                         </div>
                         <DropdownMenuSeparator />
-
-                        {/* Status Filter */}
-                        <div className="p-2">
-                          <label className="text-sm font-semibold mb-2 italic block">
-                            Status
-                          </label>
-                          <Select
-                            value={filters.isActive || "all"}
-                            onValueChange={(value) =>
-                              handleFilterChange("isActive", value)
-                            }
-                          >
-                            <SelectTrigger className="w-full border-2 border-primary">
-                              <SelectValue placeholder="Select status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="all">All Status</SelectItem>
-                              {/* <SelectItem value="ACTIVE">ACTIVE</SelectItem> */}
-                              {/* <SelectItem value="INACTIVE">INACTIVE</SelectItem> */}
-                              <SelectItem value="BLOCK">BLOCK</SelectItem>
-                              <SelectItem value="UNBLOCK">UNBLOCK</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <DropdownMenuSeparator />
-
                         {/* Approval Filter */}
                         <div className="p-2">
                           <label className="text-sm font-semibold mb-2 italic block">
@@ -880,9 +847,7 @@ export default function Users() {
                             </SelectContent>
                           </Select>
                         </div>
-
                         <DropdownMenuSeparator />
-
                         {/* Verified Filter */}
                         <div className="p-2">
                           <label className="text-sm font-semibold mb-2 italic block">
@@ -907,7 +872,6 @@ export default function Users() {
                           </Select>
                         </div>
                         <DropdownMenuSeparator />
-
                         {/* Deleted Filter */}
                         <div className="p-2">
                           <label className="text-sm font-semibold mb-2 italic block">
@@ -972,12 +936,6 @@ export default function Users() {
                     <span className="font-semibold">All Users Info:</span>
                     <div className="text-sm text-muted-foreground italic font-medium">
                       Showing {startItem} to {endItem} of {totalItems} users
-                      {/* Showing {(filters.page - 1) * filters.limit + 1} to{" "}
-                      {Math.min(
-                        filters.page * filters.limit,
-                        allUserData?.meta?.total || 0
-                      )}{" "}
-                      of {allUserData?.meta?.total || 0} users */}
                     </div>
                   </div>
                   <CardContent className="">
@@ -1018,13 +976,6 @@ export default function Users() {
                                 {user?.isActive}
                               </CustomBadge>
                             </TableCell>
-                            {/* <TableCell>
-                              <CustomBadge
-                                variant={getStatusVariant(user?.isApproved)}
-                              >
-                                {user?.isApproved}
-                              </CustomBadge>
-                            </TableCell> */}
                             <TableCell className="w-full">
                               <CustomBadge
                                 className="w-full"
@@ -1071,66 +1022,6 @@ export default function Users() {
                     </Table>
 
                     {/* Pagination */}
-                    {/* {totalPages > 1 && (
-                      <div className="mt-6 flex items-center justify-between">
-                        <Pagination>
-                          <PaginationContent>
-                            <PaginationItem>
-                              <PaginationPrevious
-                                onClick={() =>
-                                  handlePageChange(
-                                    Math.max(1, filters.page - 1)
-                                  )
-                                }
-                                className={
-                                  filters.page === 1
-                                    ? "pointer-events-none opacity-50"
-                                    : ""
-                                }
-                              />
-                            </PaginationItem>
-
-                            {Array.from(
-                              { length: Math.min(5, totalPages) },
-                              (_, i) => {
-                                const pageNum =
-                                  Math.max(
-                                    1,
-                                    Math.min(totalPages - 4, filters.page - 2)
-                                  ) + i;
-                                if (pageNum > totalPages) return null;
-
-                                return (
-                                  <PaginationItem key={pageNum}>
-                                    <PaginationLink
-                                      isActive={filters.page === pageNum}
-                                      onClick={() => handlePageChange(pageNum)}
-                                    >
-                                      {pageNum}
-                                    </PaginationLink>
-                                  </PaginationItem>
-                                );
-                              }
-                            )}
-
-                            <PaginationItem>
-                              <PaginationNext
-                                onClick={() =>
-                                  handlePageChange(
-                                    Math.min(totalPages, filters.page + 1)
-                                  )
-                                }
-                                className={
-                                  filters.page === totalPages
-                                    ? "pointer-events-none opacity-50"
-                                    : ""
-                                }
-                              />
-                            </PaginationItem>
-                          </PaginationContent>
-                        </Pagination>
-                      </div>
-                    )} */}
                     {totalPages > 1 && (
                       <div className="mt-6 flex items-center justify-between">
                         <Pagination>
@@ -1166,7 +1057,7 @@ export default function Users() {
 
                                 return (
                                   <PaginationItem key={pageNum}>
-                                    {/* <PaginationLink
+                                    <PaginationLink
                                       isActive={isActive}
                                       onClick={() => handlePageChange(pageNum)}
                                       className={`border px-3 py-1 rounded-md ${
@@ -1176,18 +1067,6 @@ export default function Users() {
                                       }`}
                                     >
                                       {pageNum}
-                                    </PaginationLink> */}
-                                    <PaginationLink
-                                      isActive={isActive}
-                                      onClick={() => handlePageChange(pageNum)}
-                                      className={`border px-3 py-1 rounded-md ${
-                                        isActive
-                                          ? "bg-primary text-white border-primary"
-                                          : "hover:bg-muted"
-                                      }`}
-                                    >
-                                      {" "}
-                                      {pageNum}{" "}
                                     </PaginationLink>
                                   </PaginationItem>
                                 );
@@ -1294,7 +1173,7 @@ export default function Users() {
 
         {/* Edit User Modal */}
         <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
-          <DialogContent className="lg:min-w-1/2 md:min-w-2/3 border-2 border-primary rounded-2xl xl:p-8 lg:p-7 md:p-6 p-5">
+          <DialogContent className="lg:min-w-2/3 md:min-w-2/3 border-2 border-primary rounded-2xl xl:p-8 lg:p-7 md:p-6 p-5">
             <DialogHeader>
               <DialogTitle className="xl:text-2xl lg:text-[22px] text-xl font-bold">
                 Edit User
@@ -1455,11 +1334,9 @@ export default function Users() {
                         <FormItem>
                           <FormLabel>Is Deleted</FormLabel>
                           <Select
-                            // onValueChange={field.onChange}
-                            // value={field.value?.toString()}
                             onValueChange={(val) =>
                               field.onChange(val === "true")
-                            } // 👈 convert string -> boolean
+                            } // convert string -> boolean
                             value={
                               field.value !== undefined
                                 ? field.value.toString()
@@ -1503,8 +1380,9 @@ export default function Users() {
                       />
                     )}
                   </div>
-                  <div className="flex justify-end space-x-4">
+                  <div className="flex justify-end space-x-4 xl:mt-6 lg:mt-5 mt-8">
                     <Button
+                      className="xl:w-44 w-36"
                       type="button"
                       variant="outline"
                       onClick={() => setEditModalOpen(false)}

@@ -59,10 +59,10 @@ export default function EditProfile() {
   });
 
   const onSubmit = async (data: z.infer<typeof updateMyProfileSchema>) => {
-    console.log(data)
+    console.log(data);
     if (
-      data?.name === undefined &&
-      data?.phone === undefined
+      data?.name === (myProfileData?.data?.name || undefined) &&
+      data?.phone === (myProfileData?.data?.phone || undefined)
     ) {
       toast.error("You are not change any thing..");
       return;

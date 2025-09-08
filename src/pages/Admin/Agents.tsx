@@ -178,7 +178,16 @@ export default function Agents() {
 
   const handleEditSubmit = async (values: EditAgentFormValues) => {
     const toastId = toast.loading("Updating to user profile ...");
-
+    if (
+      values.isApproved === singleAgent?.data?.isApproved &&
+      values.commissionRate === singleAgent?.data?.commissionRate &&
+      values.isDeleted === singleAgent?.data?.isDeleted &&
+      values.role === singleAgent?.data?.role
+    ) {
+      toast.error("You are not changing any thing..", { id: toastId });
+      setEditModalOpen(false);
+      return;
+    }
     try {
       const result = await editAgent({
         userId: selectedAgentId,
@@ -893,14 +902,18 @@ export default function Agents() {
                   </div>
                   <div className="flex justify-end space-x-4 xl:mt-6 lg:mt-5 mt-8">
                     <Button
-                    className="xl:w-44 w-36"
+                      className="xl:w-44 w-36"
                       type="button"
                       variant="outline"
                       onClick={() => setEditModalOpen(false)}
                     >
                       Cancel
                     </Button>
-                    <Button className="xl:w-44 w-36" type="submit" disabled={isEditing}>
+                    <Button
+                      className="xl:w-44 w-36"
+                      type="submit"
+                      disabled={isEditing}
+                    >
                       {isEditing ? "Updating..." : "Update Agent"}
                     </Button>
                   </div>
