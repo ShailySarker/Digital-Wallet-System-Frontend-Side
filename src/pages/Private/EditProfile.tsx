@@ -59,25 +59,20 @@ export default function EditProfile() {
   });
 
   const onSubmit = async (data: z.infer<typeof updateMyProfileSchema>) => {
-    // console.log(data);
+    console.log(data)
+    if (
+      data?.name === undefined &&
+      data?.phone === undefined
+    ) {
+      toast.error("You are not change any thing..");
+      return;
+    }
     const updatedData = {
-      name: data?.name ? data?.name : myProfileData?.data?.name,
-      phone: data?.phone ? data?.phone : myProfileData?.data?.phone,
-      //   role: data?.role ? data?.role : myProfileData?.data?.role,
-      //   isActive: data?.isActive ? data?.isActive : myProfileData?.data?.isActive,
-      //   isApproved: data?.isApproved
-      //     ? data?.isApproved
-      //     : myProfileData?.data?.isApproved,
-      //   commissionRate: data?.commissionRate
-      //     ? data?.commissionRate
-      //     : myProfileData?.data?.commissionRate,
-      //   isDeleted: data?.isDeleted
-      //     ? data?.isDeleted
-      //     : myProfileData?.data?.isDeleted,
+      name: data?.name,
+      phone: data?.phone,
     };
     const toastId = toast.loading("Updating to your profile ...");
     const userId = myProfileData?.data?._id;
-    // console.log({ userId, updatedData });
     try {
       const result = await editUser({ userId, updatedData }).unwrap();
       // console.log(result);
