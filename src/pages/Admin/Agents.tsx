@@ -101,7 +101,7 @@ type EditAgentFormValues = z.infer<typeof editAgentSchema>;
 export default function Agents() {
   const [filters, setFilters] = useState<AgentFilters>({
     page: 1,
-    limit: 2,
+    limit: 5,
   });
   const [formKey, setFormKey] = useState(0);
   const [viewModalOpen, setViewModalOpen] = useState(false);
@@ -162,7 +162,7 @@ export default function Agents() {
   const clearAllFilters = () => {
     setFilters({
       page: 1,
-      limit: 2,
+      limit: 5,
     });
   };
 
@@ -662,7 +662,7 @@ export default function Agents() {
                 <RefreshCw className="xl:size-16 lg:size-14 md:size-12 size-10 animate-spin" />
               </div>
             ) : singleAgent?.data ? (
-              <div className="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-6 xl:mt-6 lg:mt-5 mt-4 lg:mt-5 mt-4">
+              <div className="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-6 xl:mt-6 lg:mt-5 mt-4">
                 <div>
                   <h4 className="font-semibold underline pb-1 italic xl:text-lg lg:text-[17px] text-base mb-3">
                     Personal Information

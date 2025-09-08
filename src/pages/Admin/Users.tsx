@@ -614,7 +614,23 @@ export default function Users() {
 
   const handleEditSubmit = async (values: EditUserFormValues) => {
     const toastId = toast.loading("Updating to user profile ...");
-
+    if (
+      values.isActive === singleUser?.data?.isActive &&
+      values.isDeleted === singleUser?.data?.isDeleted &&
+      values.role === singleUser?.data?.role
+    ) {
+      toast.error("You are not change any thing..");
+      return;
+    }
+    if (
+      values.isApproved === singleUser?.data?.isApproved &&
+      values.commissionRate === singleUser?.data?.commissionRate &&
+      values.isDeleted === singleUser?.data?.isDeleted &&
+      values.role === singleUser?.data?.role
+    ) {
+      toast.error("You are not change any thing..");
+      return;
+    }
     try {
       console.log(values);
       const result = await editUser({

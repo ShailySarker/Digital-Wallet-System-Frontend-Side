@@ -8,7 +8,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { isActive, isApproved, Role } from "@/constants/user.constant";
 import { useEditUserMutation } from "@/redux/features/user/user.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,28 +24,12 @@ const updateMyProfileSchema = z.object({
     .min(2, { message: "Name must be at least 2 characters long." })
     .max(50, { message: "Name cannot exceed 50 characters." })
     .optional(),
-  email: z
-    .string({ error: "Email must be string" })
-    .email({ message: "Invalid email address format." })
-    .min(5, { message: "Email must be at least 5 characters long." })
-    .max(100, { message: "Email cannot exceed 100 characters." })
-    .optional(),
   phone: z
     .string({ message: "Phone number must be string" })
     .regex(/^(?:01\d{9})$/, {
       message: "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
     })
     .optional(),
-  role: z.enum([Role.USER, Role.AGENT]).default(Role.USER).optional(),
-  isActive: z.enum(Object.values(isActive) as [string]).optional(),
-  isApproved: z.enum(Object.values(isApproved) as [string]).optional(),
-  commissionRate: z
-    .number({ message: "commissionRate must be number" })
-    .int({ message: "commissionRate must be a positive number" })
-    .min(0, { message: "commissionRate must be a positive number" })
-    .max(100, { message: "commissionRate cannot more than 100" })
-    .optional(),
-  isDeleted: z.boolean({ message: "isDeleted must be boolean" }).optional(),
 });
 
 export default function EditProfile() {
@@ -71,11 +54,7 @@ export default function EditProfile() {
     resolver: zodResolver(updateMyProfileSchema),
     defaultValues: {
       name: myProfileData?.data?.name,
-      role: myProfileData?.data?.role,
-      isActive: myProfileData?.data?.isActive,
-      isApproved: myProfileData?.data?.isApproved,
-      commissionRate: myProfileData?.data?.commissionRate,
-      isDeleted: myProfileData?.data?.isDeleted,
+      phone: myProfileData?.data?.phone,
     },
   });
 
@@ -207,27 +186,35 @@ export default function EditProfile() {
                         </FormControl>
                         <FormMessage />
                       </FormItem>
-                      <FormField
-                        control={form.control}
-                        name="role"
-                        render={() => (
+                      <FormItem>
+                        <FormLabel>Account Type</FormLabel>
+                        <Input
+                          type="text"
+                          placeholder="Enter your phone number"
+                          value={myProfileData?.data?.role}
+                          readOnly
+                          disabled
+                        />
+                        <FormMessage />
+                      </FormItem>
+
+                      {myProfileData?.data?.role === "USER" && (
+                        <>
                           <FormItem>
-                            <FormLabel>Account Type</FormLabel>
+                            <FormLabel>Active Status</FormLabel>
                             <Input
                               type="text"
-                              placeholder="Enter your phone number"
-                              value={myProfileData?.data?.role}
+                              placeholder="Enter your active status"
+                              value={myProfileData?.data?.isActive}
                               readOnly
                               disabled
                             />
                             <FormMessage />
                           </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="isApproved"
-                        render={() => (
+                        </>
+                      )}
+                      {myProfileData?.data?.role === "AGENT" && (
+                        <>
                           <FormItem>
                             <FormLabel>Approve Status</FormLabel>
                             <Input
@@ -239,27 +226,18 @@ export default function EditProfile() {
                             />
                             <FormMessage />
                           </FormItem>
-                        )}
-                      />
-
-                      {myProfileData?.data?.role === "AGENT" && (
-                        <FormField
-                          control={form.control}
-                          name="commissionRate"
-                          render={() => (
-                            <FormItem>
-                              <FormLabel>Commission Rate</FormLabel>
-                              <Input
-                                type="text"
-                                placeholder="Enter your phone number"
-                                value={myProfileData?.data?.commissionRate}
-                                readOnly
-                                disabled
-                              />
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                          <FormItem>
+                            <FormLabel>Commission Rate</FormLabel>
+                            <Input
+                              type="text"
+                              placeholder="Enter your phone number"
+                              value={myProfileData?.data?.commissionRate}
+                              readOnly
+                              disabled
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        </>
                       )}
                     </div>
                     <Button
