@@ -53,7 +53,8 @@ export default function Withdraw() {
       toast.error(
         `Your withdraw money process failed: ${
           error?.data?.message || error?.data
-        }`, { id: toastId }
+        }`,
+        { id: toastId }
       );
     }
   };
@@ -88,6 +89,9 @@ export default function Withdraw() {
                   </FormControl>
                   <FormDescription className="sr-only">
                     //only screen reader can read This is your amount.
+                  </FormDescription>
+                  <FormDescription className="text-xs">
+                    Minimum: 100 TK, Maximum: 50,000 TK
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

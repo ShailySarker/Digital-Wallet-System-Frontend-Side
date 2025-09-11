@@ -549,7 +549,7 @@ export default function Users() {
     isError: allUserError,
     refetch,
   } = useGetAllUsersQuery(filters);
-  console.log(allUserData);
+  // console.log(allUserData);
   const { data: singleUser, isLoading: singleUserLoading } =
     useGetSingleUsersQuery(selectedUserId, {
       skip: !selectedUserId,
@@ -624,7 +624,7 @@ export default function Users() {
       return;
     }
     try {
-      console.log(values);
+      // console.log(values);
       const result = await editUser({
         userId: selectedUserId,
         updatedData: values,

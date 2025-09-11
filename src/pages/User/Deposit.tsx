@@ -47,7 +47,8 @@ export default function Deposit() {
       toast.error(
         `Your deposit money process failed: ${
           error?.data?.message || error?.data
-        }`, { id: toastId }
+        }`,
+        { id: toastId }
       );
     }
   };
@@ -82,6 +83,9 @@ export default function Deposit() {
                   </FormControl>
                   <FormDescription className="sr-only">
                     //only screen reader can read This is your amount.
+                  </FormDescription>
+                  <FormDescription className="text-xs">
+                    Minimum: 200 TK, Maximum: 50,000 TK
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

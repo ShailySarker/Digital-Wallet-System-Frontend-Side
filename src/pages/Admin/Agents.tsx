@@ -114,7 +114,7 @@ export default function Agents() {
     isError: allAgentError,
     refetch,
   } = useGetAllAgentsQuery(filters);
-  console.log(allAgentData);
+  // console.log(allAgentData);
   const { data: singleAgent, isLoading: singleAgentLoading } =
     useGetSingleUsersQuery(selectedAgentId, {
       skip: !selectedAgentId,
