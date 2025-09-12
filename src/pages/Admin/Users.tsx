@@ -506,7 +506,6 @@ import {
 import { CustomBadge } from "@/components/ui/CustomBadge";
 import ErrorPage from "@/components/shared/ErrorPage";
 import LazyLoader from "@/components/shared/LazyLoader";
-import { Role } from "@/constants/user.constant";
 import { toast } from "sonner";
 
 interface UserFilters {
@@ -525,7 +524,7 @@ interface UserFilters {
 const editUserSchema = z.object({
   role: z.enum(["ADMIN", "USER", "AGENT"]).optional(),
   isActive: z.enum(["UNBLOCK", "BLOCK"]).optional(),
-  isApproved: z.enum(["PENDING", "APPROVE", "SUSPEND"]).optional(),
+  // isApproved: z.enum(["PENDING", "APPROVE", "SUSPEND"]).optional(),
   isDeleted: z.boolean().optional(),
   commissionRate: z.number().optional(),
 });
@@ -560,7 +559,7 @@ export default function Users() {
     defaultValues: {
       role: undefined,
       isActive: undefined,
-      isApproved: undefined,
+      // isApproved: undefined,
       isDeleted: undefined,
       commissionRate: undefined,
     },
@@ -677,7 +676,7 @@ export default function Users() {
       form.reset({
         role: singleUser.data.role,
         isActive: singleUser.data.isActive,
-        isApproved: singleUser.data.isApproved,
+        // isApproved: singleUser.data.isApproved,
         isDeleted: singleUser.data.isDeleted,
         commissionRate: singleUser.data.commissionRate,
       });
@@ -713,7 +712,7 @@ export default function Users() {
           <Card className="rounded-2xl bg-gradient-to-l from-green-300 to-purple-50 border-green-600">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 md:pb-2">
               <CardTitle className="text-sm font-medium text-green-700">
-                Active Users
+                Active Wallets
               </CardTitle>
               <UserCheck className="h-4 w-4 text-green-700 opacity-80" />
             </CardHeader>
@@ -744,7 +743,7 @@ export default function Users() {
           <Card className="rounded-2xl bg-gradient-to-l from-yellow-300 to-purple-50 border-yellow-600">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 md:pb-2">
               <CardTitle className="text-sm font-medium text-yellow-700">
-                Blocked Users
+                Blocked Wallets
               </CardTitle>
               <UserRoundX className="h-4 w-4 text-yellow-700 opacity-80" />
             </CardHeader>
@@ -799,8 +798,8 @@ export default function Users() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
-                          variant="outline"
-                          className="lg:w-[18%] md:w-[25%] rounded-xl border-2 border-primary shadow"
+                          // variant="outline"
+                          className="lg:w-[17%] md:w-[25%] rounded-xl border-2 border-primary shadow h-10"
                         >
                           <Filter className="mr-2 h-4 w-4" />
                           Filters
@@ -828,22 +827,21 @@ export default function Users() {
                         {/* Approval Filter */}
                         <div className="p-2">
                           <label className="text-sm font-semibold mb-2 italic block">
-                            Approval
+                            Wallet Status
                           </label>
                           <Select
-                            value={filters.isApproved || "all"}
+                            value={filters.isActive || "all"}
                             onValueChange={(value) =>
-                              handleFilterChange("isApproved", value)
+                              handleFilterChange("isActive", value)
                             }
                           >
                             <SelectTrigger className="w-full border-2 border-primary">
-                              <SelectValue placeholder="Select approval" />
+                              <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="all">All Approval</SelectItem>
-                              <SelectItem value="PENDING">PENDING</SelectItem>
-                              <SelectItem value="APPROVE">APPROVE</SelectItem>
-                              <SelectItem value="SUSPEND">SUSPEND</SelectItem>
+                              <SelectItem value="all">All Status</SelectItem>
+                              <SelectItem value="BLOCK">BLOCK</SelectItem>
+                              <SelectItem value="UNBLOCK">UNBLOCK</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -897,7 +895,7 @@ export default function Users() {
                     </DropdownMenu>
 
                     {/* Items Per Page Selector */}
-                    <div className="lg:w-[18%] md:w-[25%]">
+                    <div className="lg:w-[17%] md:w-[25%] bg-primary text-white rounded-xl">
                       <div className="flex items-center justify-center gap-2 border-2 border-primary shadow rounded-xl px-3">
                         <List className="h-4 w-4" />
                         <Select
@@ -1146,9 +1144,6 @@ export default function Users() {
                       <strong>Status:</strong> {singleUser?.data?.isActive}
                     </p>
                     <p className="lg:text-base md:text-[14.5px] text-sm">
-                      <strong>Approval:</strong> {singleUser?.data?.isApproved}
-                    </p>
-                    <p className="lg:text-base md:text-[14.5px] text-sm">
                       <strong>Verified:</strong>{" "}
                       {singleUser?.data?.isVerified ? "Yes" : "No"}
                     </p>
@@ -1190,7 +1185,7 @@ export default function Users() {
               <Form {...form} key={formKey}>
                 <form
                   onSubmit={form.handleSubmit(handleEditSubmit)}
-                  className="space-y-4"
+                  className="space-y-4 xl:mt-6 lg:mt-5 mt-4"
                 >
                   <div className="grid grid-cols-2 gap-4">
                     <FormItem>
@@ -1289,34 +1284,6 @@ export default function Users() {
                         </FormItem>
                       )}
                     />
-                    {singleUser?.data?.role === Role.AGENT && (
-                      <FormField
-                        control={form.control}
-                        name="isApproved"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Approval</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger className="w-full">
-                                  <SelectValue placeholder="Select approval" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="PENDING">PENDING</SelectItem>
-                                <SelectItem value="APPROVE">APPROVE</SelectItem>
-                                <SelectItem value="SUSPEND">SUSPEND</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-
                     <FormItem>
                       <FormLabel>Verified</FormLabel>
                       <Input
@@ -1380,7 +1347,7 @@ export default function Users() {
                       />
                     )}
                   </div>
-                  <div className="flex justify-end space-x-4 xl:mt-6 lg:mt-5 mt-8">
+                  <div className="flex justify-end space-x-4 xl:mt-12 lg:mt-10 mt-8">
                     <Button
                       className="xl:w-44 w-36"
                       type="button"
@@ -1389,7 +1356,11 @@ export default function Users() {
                     >
                       Cancel
                     </Button>
-                    <Button type="submit" disabled={isEditing}>
+                    <Button
+                      className="xl:w-44 w-36"
+                      type="submit"
+                      disabled={isEditing}
+                    >
                       {isEditing ? "Updating..." : "Update User"}
                     </Button>
                   </div>

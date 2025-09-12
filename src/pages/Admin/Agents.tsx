@@ -900,7 +900,7 @@ export default function Agents() {
                       )}
                     />
                   </div>
-                  <div className="flex justify-end space-x-4 xl:mt-6 lg:mt-5 mt-8">
+                  <div className="flex justify-end space-x-4 xl:mt-12 lg:mt-10 mt-8">
                     <Button
                       className="xl:w-44 w-36"
                       type="button"

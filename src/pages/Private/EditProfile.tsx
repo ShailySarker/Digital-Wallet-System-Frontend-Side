@@ -59,7 +59,7 @@ export default function EditProfile() {
   });
 
   const onSubmit = async (data: z.infer<typeof updateMyProfileSchema>) => {
-    console.log(data);
+    // console.log(data);
     if (
       data?.name === (myProfileData?.data?.name || undefined) &&
       data?.phone === (myProfileData?.data?.phone || undefined)
@@ -77,8 +77,8 @@ export default function EditProfile() {
       const result = await editUser({ userId, updatedData }).unwrap();
       // console.log(result);
       if (result.success) {
-        form.reset();
         toast.success("Your profile updated successfully", { id: toastId });
+        // form.reset();
         await refetch();
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -117,7 +117,8 @@ export default function EditProfile() {
                           <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                              <Input className="border border-primary"
+                              <Input
+                                className="border border-primary"
                                 placeholder="Enter your name"
                                 defaultValue={myProfileData?.data?.name}
                                 {...field}
@@ -133,7 +134,8 @@ export default function EditProfile() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input className="border border-primary"
+                          <Input
+                            className="border border-primary"
                             placeholder="Enter your email address"
                             type="email"
                             value={myProfileData?.data?.email}
@@ -154,7 +156,8 @@ export default function EditProfile() {
                           <FormItem>
                             <FormLabel>Phone</FormLabel>
                             <FormControl>
-                              <Input className="border border-primary"
+                              <Input
+                                className="border border-primary"
                                 placeholder="Enter your phone number"
                                 type="tel"
                                 defaultValue={myProfileData?.data?.phone}
@@ -171,7 +174,8 @@ export default function EditProfile() {
                       <FormItem>
                         <FormLabel>NID</FormLabel>
                         <FormControl>
-                          <Input className="border border-primary"
+                          <Input
+                            className="border border-primary"
                             type="number"
                             placeholder="Enter your nid number"
                             value={myProfileData?.data?.nidNumber}
@@ -183,7 +187,8 @@ export default function EditProfile() {
                       </FormItem>
                       <FormItem>
                         <FormLabel>Account Type</FormLabel>
-                        <Input className="border border-primary"
+                        <Input
+                          className="border border-primary"
                           type="text"
                           placeholder="Enter your phone number"
                           value={myProfileData?.data?.role}
@@ -197,7 +202,8 @@ export default function EditProfile() {
                         <>
                           <FormItem>
                             <FormLabel>Active Status</FormLabel>
-                            <Input className="border border-primary"
+                            <Input
+                              className="border border-primary"
                               type="text"
                               placeholder="Enter your active status"
                               value={myProfileData?.data?.isActive}
@@ -212,7 +218,8 @@ export default function EditProfile() {
                         <>
                           <FormItem>
                             <FormLabel>Approve Status</FormLabel>
-                            <Input className="border border-primary"
+                            <Input
+                              className="border border-primary"
                               type="text"
                               placeholder="Enter your phone number"
                               value={myProfileData?.data?.isApproved}
@@ -223,7 +230,8 @@ export default function EditProfile() {
                           </FormItem>
                           <FormItem>
                             <FormLabel>Commission Rate</FormLabel>
-                            <Input className="border border-primary"
+                            <Input
+                              className="border border-primary"
                               type="text"
                               placeholder="Enter your phone number"
                               value={myProfileData?.data?.commissionRate}
