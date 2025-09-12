@@ -77,14 +77,17 @@ export default function Overview() {
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>
-                    <Link to="/user/my-transactions" className="md:block hidden">
+                    <Link
+                      to="/user/my-transactions"
+                      className="md:block hidden"
+                    >
                       <Button className="bg-primary">View All</Button>
                     </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="overflow-x-scroll w-full">
                   <table className="w-full text-left border-collapse">
-                    <thead>
+                    <thead className="bg-primary text-white">
                       <tr className="border-b">
                         <th className="py-2 px-3">Type</th>
                         <th className="py-2 px-3">Sender</th>
@@ -104,10 +107,16 @@ export default function Overview() {
                             {transaction?.type}
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.senderName}
+                            <span>{transaction?.senderName}</span> <br />
+                            <span className="text-xs opacity-70">
+                              {transaction?.senderPhone}
+                            </span>
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.receiverName}
+                            <span>{transaction?.receiverName}</span> <br />
+                            <span className="text-xs opacity-70">
+                              {transaction?.receiverPhone}
+                            </span>
                           </td>
                           <td className="p-3 font-semibold lg:text-sm text-xs">
                             {transaction?.amount} BDT
