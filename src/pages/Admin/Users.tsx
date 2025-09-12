@@ -824,7 +824,7 @@ export default function Users() {
                           )}
                         </div>
                         <DropdownMenuSeparator />
-                        {/* Approval Filter */}
+                        {/* Status Filter */}
                         <div className="p-2">
                           <label className="text-sm font-semibold mb-2 italic block">
                             Wallet Status
@@ -1141,7 +1141,7 @@ export default function Users() {
                       <strong>Role:</strong> {singleUser?.data?.role}
                     </p>
                     <p className="lg:text-base md:text-[14.5px] text-sm">
-                      <strong>Status:</strong> {singleUser?.data?.isActive}
+                      <strong>Wallet Status:</strong> {singleUser?.data?.isActive}
                     </p>
                     <p className="lg:text-base md:text-[14.5px] text-sm">
                       <strong>Verified:</strong>{" "}
@@ -1264,7 +1264,7 @@ export default function Users() {
                       name="isActive"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Status</FormLabel>
+                          <FormLabel>Wallet Status</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             value={field.value}

@@ -359,8 +359,8 @@ export default function Agents() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
-                          variant="outline"
-                          className="lg:w-[18%] md:w-[25%] rounded-xl border-2 border-primary shadow"
+                          // variant="outline"
+                          className="lg:w-[17%] md:w-[25%] rounded-xl border-2 border-primary shadow h-10"
                         >
                           <Filter className="mr-2 h-4 w-4" />
                           Filters
@@ -462,7 +462,7 @@ export default function Agents() {
                     </DropdownMenu>
 
                     {/* Items Per Page Selector */}
-                    <div className="lg:w-[18%] md:w-[25%]">
+                    <div className="lg:w-[17%] md:w-[25%] bg-primary text-white rounded-xl">
                       <div className="flex items-center justify-center gap-2 border-2 border-primary shadow rounded-xl px-3">
                         <List className="h-4 w-4" />
                         <Select
