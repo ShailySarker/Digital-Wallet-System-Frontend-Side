@@ -7,7 +7,7 @@ interface IRoleBasedData {
     role: string;
   }[];
 }
-const COLORS = ["#0088FE", '#00C49F', '#FF8042'];
+const COLORS = ['#00C49F', '#FF8042', "#FFBB28"];
 
 export default function RoleBasedPieChart({ roleBasedData }: IRoleBasedData) {
   const data = roleBasedData;

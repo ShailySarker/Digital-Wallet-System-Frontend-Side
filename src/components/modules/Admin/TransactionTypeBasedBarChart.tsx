@@ -35,7 +35,7 @@ export default function TransactionTypeBasedBarChart({
               top: 5,
               right: 0,
               left: 0,
-              bottom: 40,
+              bottom: 50,
             }}
             barSize={35}
           >
@@ -61,7 +61,7 @@ export default function TransactionTypeBasedBarChart({
             <Tooltip />
             <Bar
               dataKey="count"
-              fill="#FFBB28"
+              fill="#0088FE"
               style={{ cursor: "pointer" }}
               radius={[6, 6, 0, 0]}
             />
