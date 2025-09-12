@@ -17,7 +17,7 @@ export default function Overview() {
     isLoading: transactionsLoading,
     isError: transactionError,
   } = useMyTransactionQuery({ limit: 5 });
-  console.log(myTransaction);
+  // console.log(myTransaction);
   return (
     <div className="md:p-6 p-5 space-y-6">
       <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-xl rounded-xl">
@@ -77,7 +77,7 @@ export default function Overview() {
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>
-                    <Link to="/user/transactions" className="md:block hidden">
+                    <Link to="/user/my-transactions" className="md:block hidden">
                       <Button className="bg-primary">View All</Button>
                     </Link>
                   </CardTitle>
@@ -132,7 +132,7 @@ export default function Overview() {
                   </table>
                 </CardContent>
                 <Link
-                  to="/user/transactions"
+                  to="/user/my-transactions"
                   className="md:hidden flex justify-center"
                 >
                   <Button className="bg-primary">View All</Button>

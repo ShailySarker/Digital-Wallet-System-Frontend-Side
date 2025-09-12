@@ -180,8 +180,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Label } from "@/components/ui/label";
 
 export default function TransactionHistory() {
@@ -405,13 +411,18 @@ export default function TransactionHistory() {
                             </td>
                             <td className="p-4 capitalize font-medium lg:text-sm text-xs">
                               <span
-                                className={`px-2 py-1 rounded-full text-xs ${
-                                  transaction.direction === "incoming"
-                                    ? "bg-green-100 text-green-800"
-                                    : "bg-blue-100 text-blue-800"
-                                }`}
+                                className={`px-2 py-1 rounded-full text-xs w-full
+    ${
+      transaction.direction === "self"
+        ? "bg-green-100 text-green-800"
+        : transaction.direction === "incoming"
+        ? "bg-blue-100 text-blue-800"
+        : transaction.direction === "outgoing"
+        ? "bg-yellow-100 text-yellow-800"
+        : ""
+    }`}
                               >
-                                {transaction.direction}
+                                {transaction?.direction}
                               </span>
                             </td>
                             <td className="p-4 font-medium lg:text-sm text-xs">
@@ -428,9 +439,13 @@ export default function TransactionHistory() {
                             <td className="p-4 font-semibold lg:text-sm text-xs">
                               <span
                                 className={
-                                  transaction.direction === "incoming"
+                                  transaction.direction === "self"
                                     ? "text-green-600"
-                                    : "text-red-600"
+                                    : transaction.direction === "incoming"
+                                    ? "text-blue-600"
+                                    : transaction.direction === "outgoing"
+                                    ? "text-yellow-600"
+                                    : ""
                                 }
                               >
                                 {/* {transaction.direction === "incoming"
@@ -439,10 +454,10 @@ export default function TransactionHistory() {
                                 {transaction?.amount} BDT
                               </span>
                             </td>
-                            <td className="p-4 font-semibold lg:text-sm text-xs">
+                            <td className="p-4 font-semibold lg:text-sm text-xs text-center">
                               {transaction?.commission > 0
                                 ? `${transaction.commission} BDT`
-                                : "-"}
+                                : "--"}
                             </td>
                             <td className="p-4 capitalize font-medium lg:text-sm text-xs">
                               <span
@@ -475,162 +490,73 @@ export default function TransactionHistory() {
                   </CardContent>
 
                   {/* Pagination */}
-                  {/* {totalPage > 1 && (
-                    <div className="flex justify-center my-8">
-                      <div className="flex items-center gap-4">
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) => Math.max(prev - 1, 1))
-                          }
-                          disabled={currentPage === 1}
-                          className="flex items-center gap-1"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                          <span className="md:block hidden">Previous</span>
-                        </Button>
+                  {totalPage > 1 && (
+                    <div className="mt-6 flex items-center justify-between">
+                      <Pagination>
+                        <PaginationContent>
+                          {/* Previous */}
+                          <PaginationItem>
+                            <PaginationPrevious
+                              onClick={() =>
+                                setCurrentPage(Math.max(1, currentPage - 1))
+                              }
+                              className={`border px-3 py-1 rounded-md ${
+                                currentPage === 1
+                                  ? "pointer-events-none opacity-50"
+                                  : "hover:bg-muted"
+                              }`}
+                            />
+                          </PaginationItem>
 
-                        <div className="flex items-center gap-1">
+                          {/* Page Numbers */}
                           {Array.from(
                             { length: Math.min(5, totalPage) },
                             (_, i) => {
-                              // Show pages around current page
-                              let pageNum;
-                              if (totalPage <= 5) {
-                                pageNum = i + 1;
-                              } else if (currentPage <= 3) {
-                                pageNum = i + 1;
-                              } else if (currentPage >= totalPage - 2) {
-                                pageNum = totalPage - 4 + i;
-                              } else {
-                                pageNum = currentPage - 2 + i;
-                              }
+                              const pageNum =
+                                Math.max(
+                                  1,
+                                  Math.min(totalPage - 4, currentPage - 2)
+                                ) + i;
+
+                              if (pageNum > totalPage) return null;
+
+                              const isActive = currentPage === pageNum;
 
                               return (
-                                <Button
-                                  key={pageNum}
-                                  variant={
-                                    currentPage === pageNum
-                                      ? "default"
-                                      : "outline"
-                                  }
-                                  onClick={() => setCurrentPage(pageNum)}
-                                  className="h-8 w-8 p-0"
-                                >
-                                  {pageNum}
-                                </Button>
+                                <PaginationItem key={pageNum}>
+                                  <PaginationLink
+                                    isActive={isActive}
+                                    onClick={() => setCurrentPage(pageNum)}
+                                    className={`border px-3 py-1 rounded-md ${
+                                      isActive
+                                        ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-primary-foreground"
+                                        : "hover:bg-muted"
+                                    }`}
+                                  >
+                                    {pageNum}
+                                  </PaginationLink>
+                                </PaginationItem>
                               );
                             }
                           )}
 
-                          {totalPage > 5 && currentPage < totalPage - 2 && (
-                            <>
-                              <span className="px-1">...</span>
-                              <Button
-                                variant="outline"
-                                onClick={() => setCurrentPage(totalPage)}
-                                className="h-8 w-8 p-0"
-                              >
-                                {totalPage}
-                              </Button>
-                            </>
-                          )}
-                        </div>
-
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) =>
-                              Math.min(prev + 1, totalPage)
-                            )
-                          }
-                          disabled={currentPage === totalPage}
-                          className="flex items-center gap-1"
-                        >
-                          <span className="md:block hidden">Next</span>
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  )} */}
-
-                  {totalPage > 1 && (
-                    <div className="flex justify-center my-8">
-                      <div className="flex items-center gap-4">
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) => Math.max(prev - 1, 1))
-                          }
-                          disabled={currentPage === 1}
-                          className="flex items-center gap-1"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                          <span className="md:block hidden">Previous</span>
-                        </Button>
-
-                        <div className="flex items-center gap-1">
-                          {/* Always show first page */}
-                          {currentPage > 2 && (
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(1)}
-                              className="h-8 w-8 p-0"
-                            >
-                              1
-                            </Button>
-                          )}
-
-                          {/* Show ellipsis if needed */}
-                          {currentPage > 3 && <span className="px-1">...</span>}
-
-                          {/* Show current page and surrounding pages */}
-                          {[currentPage - 1, currentPage, currentPage + 1]
-                            .filter((page) => page >= 1 && page <= totalPage)
-                            .map((page) => (
-                              <Button
-                                key={page}
-                                variant={
-                                  currentPage === page ? "default" : "outline"
-                                }
-                                onClick={() => setCurrentPage(page)}
-                                className="h-8 w-8 p-0"
-                              >
-                                {page}
-                              </Button>
-                            ))}
-
-                          {/* Show ellipsis if needed */}
-                          {currentPage < totalPage - 2 && (
-                            <span className="px-1">...</span>
-                          )}
-
-                          {/* Always show last page if not already shown */}
-                          {currentPage < totalPage - 1 && (
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(totalPage)}
-                              className="h-8 w-8 p-0"
-                            >
-                              {totalPage}
-                            </Button>
-                          )}
-                        </div>
-
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) =>
-                              Math.min(prev + 1, totalPage)
-                            )
-                          }
-                          disabled={currentPage === totalPage}
-                          className="flex items-center gap-1"
-                        >
-                          <span className="md:block hidden">Next</span>
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
+                          {/* Next */}
+                          <PaginationItem>
+                            <PaginationNext
+                              onClick={() =>
+                                setCurrentPage(
+                                  Math.min(totalPage, currentPage + 1)
+                                )
+                              }
+                              className={`border px-3 py-1 rounded-md ${
+                                currentPage === totalPage
+                                  ? "pointer-events-none opacity-50"
+                                  : "hover:bg-muted"
+                              }`}
+                            />
+                          </PaginationItem>
+                        </PaginationContent>
+                      </Pagination>
                     </div>
                   )}
                 </div>

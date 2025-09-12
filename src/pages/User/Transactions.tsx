@@ -11,9 +11,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function TransactionHistory() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +88,7 @@ export default function TransactionHistory() {
 
   const totalPage = transactions?.meta?.totalPage || 1;
   const totalItems = transactions?.meta?.total || 0;
-
+  console.log(transactions);
   // Reset to first page when filters or sorting changes
   const handleFilterChange = () => {
     setCurrentPage(1);
@@ -227,13 +233,18 @@ export default function TransactionHistory() {
                             </td>
                             <td className="p-4 capitalize font-medium lg:text-sm text-xs">
                               <span
-                                className={`px-2 py-1 rounded-full text-xs ${
-                                  transaction.direction === "incoming"
-                                    ? "bg-green-100 text-green-800"
-                                    : "bg-blue-100 text-blue-800"
-                                }`}
+                                className={`px-2 py-1 rounded-full text-xs w-full
+    ${
+      transaction.direction === "self"
+        ? "bg-green-100 text-green-800"
+        : transaction.direction === "incoming"
+        ? "bg-blue-100 text-blue-800"
+        : transaction.direction === "outgoing"
+        ? "bg-yellow-100 text-yellow-800"
+        : ""
+    }`}
                               >
-                                {transaction.direction}
+                                {transaction?.direction}
                               </span>
                             </td>
                             <td className="p-4 font-medium lg:text-sm text-xs">
@@ -250,9 +261,13 @@ export default function TransactionHistory() {
                             <td className="p-4 font-semibold lg:text-sm text-xs">
                               <span
                                 className={
-                                  transaction.direction === "incoming"
+                                  transaction.direction === "self"
                                     ? "text-green-600"
-                                    : "text-red-600"
+                                    : transaction.direction === "incoming"
+                                    ? "text-blue-600"
+                                    : transaction.direction === "outgoing"
+                                    ? "text-yellow-600"
+                                    : ""
                                 }
                               >
                                 {/* {transaction.direction === "incoming"
@@ -293,82 +308,72 @@ export default function TransactionHistory() {
 
                   {/* Pagination */}
                   {totalPage > 1 && (
-                    <div className="flex justify-center my-8">
-                      <div className="flex items-center gap-4">
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) => Math.max(prev - 1, 1))
-                          }
-                          disabled={currentPage === 1}
-                          className="flex items-center gap-1"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                          <span className="md:block hidden">Previous</span>
-                        </Button>
+                    <div className="mt-6 flex items-center justify-between">
+                      <Pagination>
+                        <PaginationContent>
+                          {/* Previous */}
+                          <PaginationItem>
+                            <PaginationPrevious
+                              onClick={() =>
+                                setCurrentPage(Math.max(1, currentPage - 1))
+                              }
+                              className={`border px-3 py-1 rounded-md ${
+                                currentPage === 1
+                                  ? "pointer-events-none opacity-50"
+                                  : "hover:bg-muted"
+                              }`}
+                            />
+                          </PaginationItem>
 
-                        <div className="flex items-center gap-1">
-                          {/* Always show first page */}
-                          {currentPage > 2 && (
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(1)}
-                              className="h-8 w-8 p-0"
-                            >
-                              1
-                            </Button>
+                          {/* Page Numbers */}
+                          {Array.from(
+                            { length: Math.min(5, totalPage) },
+                            (_, i) => {
+                              const pageNum =
+                                Math.max(
+                                  1,
+                                  Math.min(totalPage - 4, currentPage - 2)
+                                ) + i;
+
+                              if (pageNum > totalPage) return null;
+
+                              const isActive = currentPage === pageNum;
+
+                              return (
+                                <PaginationItem key={pageNum}>
+                                  <PaginationLink
+                                    isActive={isActive}
+                                    onClick={() => setCurrentPage(pageNum)}
+                                    className={`border px-3 py-1 rounded-md ${
+                                      isActive
+                                        ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-primary-foreground"
+                                        : "hover:bg-muted"
+                                    }`}
+                                  >
+                                    {pageNum}
+                                  </PaginationLink>
+                                </PaginationItem>
+                              );
+                            }
                           )}
 
-                          {/* Show ellipsis if needed */}
-                          {currentPage > 3 && <span className="px-1">...</span>}
-
-                          {/* Show current page and surrounding pages */}
-                          {[currentPage - 1, currentPage, currentPage + 1]
-                            .filter((page) => page >= 1 && page <= totalPage)
-                            .map((page) => (
-                              <Button
-                                key={page}
-                                variant={
-                                  currentPage === page ? "default" : "outline"
-                                }
-                                onClick={() => setCurrentPage(page)}
-                                className="h-8 w-8 p-0"
-                              >
-                                {page}
-                              </Button>
-                            ))}
-
-                          {/* Show ellipsis if needed */}
-                          {currentPage < totalPage - 2 && (
-                            <span className="px-1">...</span>
-                          )}
-
-                          {/* Always show last page if not already shown */}
-                          {currentPage < totalPage - 1 && (
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(totalPage)}
-                              className="h-8 w-8 p-0"
-                            >
-                              {totalPage}
-                            </Button>
-                          )}
-                        </div>
-
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            setCurrentPage((prev) =>
-                              Math.min(prev + 1, totalPage)
-                            )
-                          }
-                          disabled={currentPage === totalPage}
-                          className="flex items-center gap-1"
-                        >
-                          <span className="md:block hidden">Next</span>
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
+                          {/* Next */}
+                          <PaginationItem>
+                            <PaginationNext
+                              onClick={() =>
+                                setCurrentPage(
+                                  Math.min(totalPage, currentPage + 1)
+                                )
+                              }
+                              className={`border px-3 py-1 rounded-md ${
+                                currentPage === totalPage
+                                  ? "pointer-events-none opacity-50"
+                                  : "hover:bg-muted"
+                              }`}
+                            />
+                          </PaginationItem>
+                        </PaginationContent>
+                      </Pagination>
                     </div>
                   )}
                 </div>
@@ -380,186 +385,3 @@ export default function TransactionHistory() {
     </div>
   );
 }
-
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// import ErrorPage from "@/components/shared/ErrorPage";
-// import LazyLoader from "@/components/shared/LazyLoader";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { useMyTransactionQuery } from "@/redux/features/transaction/transaction.api";
-// import { useState } from "react";
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationNext,
-//   PaginationPrevious,
-// } from "@/components/ui/pagination";
-// import TransactionFilter from "@/components/modules/Transaction/TransactionFilter";
-// import { useSearchParams } from "react-router";
-
-// export default function Transactions() {
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [limit] = useState(5);
-//   const [searchParams] = useSearchParams();
-
-//   // Get all filter parameters
-//   const type = searchParams.get("type") || undefined;
-//   const status = searchParams.get("status") || undefined;
-//   // const role = searchParams.get("role") || undefined;
-
-//   const {
-//     data: myTransaction,
-//     isLoading: transactionsLoading,
-//     isError: transactionError,
-//   } = useMyTransactionQuery({
-//     page: currentPage,
-//     limit,
-//     type,
-//     status,
-//   });
-//   console.log(myTransaction);
-
-//   const totalPage = myTransaction?.meta?.totalPage || 1;
-//   const totalItems = myTransaction?.meta?.total || 0;
-
-//   return (
-//     <div className="xl:mt-8 lg:mt-6 md:mt-4 mt-3 xl:mb-24 lg:mb-20 md:mb-16 mb-12 xl:px-20 lg:px-14 md:px-10 px-5">
-//       <h1 className="text-center xl:text-4xl lg:text-3xl md:text-2xl text-xl italic font-bold">
-//         My Transaction History
-//       </h1>
-//       <div>
-//         {transactionError ? (
-//           <ErrorPage />
-//         ) : transactionsLoading ? (
-//           <LazyLoader />
-//         ) : (
-//           <div className="bg-accent/50 xl:mt-12 lg:mt-10 md:mt-8 mt-6 border-2 border-primary rounded-2xl md:p-6 p-3 w-full mx-auto">
-//             <TransactionFilter />
-//             <Card className="rounded-md xl:mt-12 lg:mt-10 md:mt-8 mt-6">
-//               <CardHeader>
-//                 <CardTitle className="flex md:flex-row flex-col md:justify-between md:items-center justify-center items-center md:gap-3 gap-2">
-//                   <span>Transactions History:</span>
-//                   <span className="text-sm font-medium italic opacity-80">
-//                     {totalItems} transactions found
-//                   </span>
-//                 </CardTitle>
-//               </CardHeader>
-//               {myTransaction?.data?.length === 0 ? (
-//                 <>
-//                   <div className="xl:py-44 lg:py-36 md:py-32 py-28 w-full mx-auto">
-//                     <h1 className="italic text-center font-semibold xl:text-lg lg:text-[16.5px] md:text-[15px] text-sm">
-//                       No transaction history is available now!
-//                     </h1>
-//                   </div>
-//                 </>
-//               ) : (
-//                 <div>
-//                   <CardContent className="overflow-x-scroll w-full">
-//                     <table className="w-full text-left border-collapse">
-//                       <thead>
-//                         <tr className="border-b">
-//                           <th className="py-2 px-3">Type</th>
-//                           <th className="py-2 px-3">Sender</th>
-//                           <th className="py-2 px-3">Receiver</th>
-//                           <th className="py-2 px-3">Amount</th>
-//                           <th className="py-2 px-3">Status</th>
-//                           <th className="py-2 px-3">Date</th>
-//                         </tr>
-//                       </thead>
-//                       <tbody>
-//                         {myTransaction?.data?.map((transaction?: any) => (
-//                           <tr
-//                             key={transaction?._id}
-//                             className="border-b hover:bg-primary/60 cursor-pointer"
-//                           >
-//                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-//                               {transaction?.type}
-//                             </td>
-//                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-//                               {transaction?.fromWalletSender}
-//                             </td>
-//                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-//                               {transaction?.toWalletReceiver}
-//                             </td>
-//                             <td className="p-3 font-semibold lg:text-sm text-xs">
-//                               {transaction?.amount} BDT
-//                             </td>
-//                             <td
-//                               className={`p-3 capitalize font-medium lg:text-sm text-xs ${
-//                                 transaction?.status === "SUCCESS"
-//                                   ? "text-green-600"
-//                                   : transaction?.status === "FAILED"
-//                                   ? "text-red-600"
-//                                   : "text-yellow-600"
-//                               }`}
-//                             >
-//                               {transaction?.status}
-//                             </td>
-//                             <td className="py-2 px-3 lg:text-sm text-xs">
-//                               {new Date(
-//                                 transaction?.createdAt
-//                               ).toLocaleDateString()}
-//                             </td>
-//                           </tr>
-//                         ))}
-//                       </tbody>
-//                     </table>
-//                   </CardContent>
-//                   {/* pagination */}
-//                   {totalPage > 1 && (
-//                     <div className="flex justify-center my-8">
-//                       <div>
-//                         <Pagination>
-//                           <PaginationContent>
-//                             <PaginationItem>
-//                               <PaginationPrevious
-//                                 onClick={() =>
-//                                   setCurrentPage((prev) => prev - 1)
-//                                 }
-//                                 className={
-//                                   currentPage === 1
-//                                     ? "pointer-events-none opacity-50"
-//                                     : "cursor-pointer"
-//                                 }
-//                               />
-//                             </PaginationItem>
-//                             {Array.from(
-//                               { length: totalPage },
-//                               (_, index) => index + 1
-//                             ).map((page) => (
-//                               <PaginationItem
-//                                 key={page}
-//                                 onClick={() => setCurrentPage(page)}
-//                               >
-//                                 <PaginationLink isActive={currentPage === page}>
-//                                   {page}
-//                                 </PaginationLink>
-//                               </PaginationItem>
-//                             ))}
-//                             <PaginationItem>
-//                               <PaginationNext
-//                                 onClick={() =>
-//                                   setCurrentPage((prev) => prev + 1)
-//                                 }
-//                                 className={
-//                                   currentPage === totalPage
-//                                     ? "pointer-events-none opacity-50"
-//                                     : "cursor-pointer"
-//                                 }
-//                               />
-//                             </PaginationItem>
-//                           </PaginationContent>
-//                         </Pagination>
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-//               )}
-//             </Card>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }

@@ -20,7 +20,7 @@ export default function Overview() {
     isLoading: transactionsLoading,
     isError: transactionError,
   } = useMyTransactionQuery({ limit: 5 });
-
+  console.log(myTransaction);
   return (
     <div>
       <div className="md:p-6 p-5 space-y-6">
@@ -78,14 +78,14 @@ export default function Overview() {
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>
-                    <Link to="/agent/transactions" className="md:block hidden">
+                    <Link to="/agent/my-transactions" className="md:block hidden">
                       <Button className="bg-primary">View All</Button>
                     </Link>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="overflow-x-scroll w-full">
                   <table className="w-full text-left border-collapse">
-                    <thead>
+                    <thead className="bg-primary text-white">
                       <tr className="border-b">
                         <th className="py-2 px-3">Type</th>
                         <th className="py-2 px-3">Sender</th>
@@ -106,10 +106,12 @@ export default function Overview() {
                             {transaction?.type}
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.fromWalletSender}
+                            <span>{transaction?.senderName}</span> <br />
+                            <span className="text-xs opacity-70">{transaction?.senderPhone}</span>
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
-                            {transaction?.toWalletReceiver}
+                            <span>{transaction?.receiverName}</span> <br />
+                            <span className="text-xs opacity-70">{transaction?.receiverPhone}</span>
                           </td>
                           <td className="p-3 font-semibold lg:text-sm text-xs">
                             {transaction?.amount} BDT
@@ -137,7 +139,7 @@ export default function Overview() {
                   </table>
                 </CardContent>
                 <Link
-                  to="/agent/transactions"
+                  to="/agent/my-transactions"
                   className="md:hidden flex justify-center"
                 >
                   <Button className="bg-primary">View All</Button>

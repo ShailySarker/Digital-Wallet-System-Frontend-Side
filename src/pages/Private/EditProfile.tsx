@@ -117,7 +117,7 @@ export default function EditProfile() {
                           <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input className="border border-primary"
                                 placeholder="Enter your name"
                                 defaultValue={myProfileData?.data?.name}
                                 {...field}
@@ -133,7 +133,7 @@ export default function EditProfile() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
+                          <Input className="border border-primary"
                             placeholder="Enter your email address"
                             type="email"
                             value={myProfileData?.data?.email}
@@ -154,7 +154,7 @@ export default function EditProfile() {
                           <FormItem>
                             <FormLabel>Phone</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input className="border border-primary"
                                 placeholder="Enter your phone number"
                                 type="tel"
                                 defaultValue={myProfileData?.data?.phone}
@@ -171,7 +171,7 @@ export default function EditProfile() {
                       <FormItem>
                         <FormLabel>NID</FormLabel>
                         <FormControl>
-                          <Input
+                          <Input className="border border-primary"
                             type="number"
                             placeholder="Enter your nid number"
                             value={myProfileData?.data?.nidNumber}
@@ -183,7 +183,7 @@ export default function EditProfile() {
                       </FormItem>
                       <FormItem>
                         <FormLabel>Account Type</FormLabel>
-                        <Input
+                        <Input className="border border-primary"
                           type="text"
                           placeholder="Enter your phone number"
                           value={myProfileData?.data?.role}
@@ -197,7 +197,7 @@ export default function EditProfile() {
                         <>
                           <FormItem>
                             <FormLabel>Active Status</FormLabel>
-                            <Input
+                            <Input className="border border-primary"
                               type="text"
                               placeholder="Enter your active status"
                               value={myProfileData?.data?.isActive}
@@ -212,7 +212,7 @@ export default function EditProfile() {
                         <>
                           <FormItem>
                             <FormLabel>Approve Status</FormLabel>
-                            <Input
+                            <Input className="border border-primary"
                               type="text"
                               placeholder="Enter your phone number"
                               value={myProfileData?.data?.isApproved}
@@ -223,7 +223,7 @@ export default function EditProfile() {
                           </FormItem>
                           <FormItem>
                             <FormLabel>Commission Rate</FormLabel>
-                            <Input
+                            <Input className="border border-primary"
                               type="text"
                               placeholder="Enter your phone number"
                               value={myProfileData?.data?.commissionRate}
