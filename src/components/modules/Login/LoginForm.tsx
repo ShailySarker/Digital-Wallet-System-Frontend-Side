@@ -27,8 +27,7 @@ const loginSchema = z.object({
   phone: z
     .string({ message: "Phone number must be string" })
     .regex(/^(?:01\d{9})$/, {
-      message:
-        "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
+      message: "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
     }),
 });
 
@@ -62,7 +61,9 @@ export default function LoginForm({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error);
-      toast.error(`Logged in failed: ${error?.data?.message || error?.data}`,  { id: toastId });
+      toast.error(`Logged in failed: ${error?.data?.message || error?.data}`, {
+        id: toastId,
+      });
     }
   };
 
@@ -155,8 +156,9 @@ export default function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our{" "}
+        <Link to="/terms-of-service">Terms of Service</Link>{" "}
+        and <Link to="/privacy-policy">Privacy Policy</Link>.
       </div>
     </div>
   );
