@@ -938,7 +938,7 @@ export default function Users() {
                   </div>
                   <CardContent className="">
                     <Table className="p-6 border-2 border-primary shadow rounded-xl">
-                      <TableHeader className="bg-primary">
+                      <TableHeader className="bg-primary text-white">
                         <TableRow>
                           <TableHead>Name</TableHead>
                           <TableHead>Email</TableHead>

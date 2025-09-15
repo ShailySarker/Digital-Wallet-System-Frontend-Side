@@ -25,12 +25,14 @@ export default function Transactions() {
 
   // Get all filter parameters
   const type = searchParams.get("type") || undefined;
-  const status = searchParams.get("status") || undefined;
+  const status = searchParams.get("status")?.toUpperCase() || undefined;
   const fromWalletSender = searchParams.get("fromWalletSender") || undefined;
+  const fromWalletEmail = searchParams.get("fromWalletEmail") || undefined;
   const fromWalletPhone = searchParams.get("fromWalletPhone") || undefined;
-  const toWalletReceiver = searchParams.get("toWalletReceiver") || undefined;
-  const toWalletPhone = searchParams.get("toWalletPhone") || undefined;
   const fromWalletRole = searchParams.get("fromWalletRole") || undefined;
+  const toWalletReceiver = searchParams.get("toWalletReceiver") || undefined;
+  const toWalletEmail = searchParams.get("toWalletEmail") || undefined;
+  const toWalletPhone = searchParams.get("toWalletPhone") || undefined;
   const toWalletRole = searchParams.get("toWalletRole") || undefined;
   const searchTerm = searchParams.get("searchTerm") || undefined;
   const sort = searchParams.get("sort") || "-createdAt";
@@ -45,10 +47,12 @@ export default function Transactions() {
     type,
     status,
     fromWalletSender,
+    fromWalletEmail,
     fromWalletPhone,
-    toWalletReceiver,
-    toWalletPhone,
     fromWalletRole,
+    toWalletReceiver,
+    toWalletEmail,
+    toWalletPhone,
     toWalletRole,
     searchTerm,
     sort,
@@ -72,8 +76,11 @@ export default function Transactions() {
     toWalletPhone,
     fromWalletRole,
     toWalletRole,
+    fromWalletEmail,
+    toWalletEmail,
     searchTerm,
     sort,
+    limit,
   ]);
 
   const setCurrentPage = (page: number) => {
@@ -121,7 +128,7 @@ export default function Transactions() {
                     <CardContent className="overflow-x-scroll w-full">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="border-b">
+                          <tr className="border-b bg-primary text-white">
                             <th className="py-2 px-3">Sender</th>
                             <th className="py-2 px-3">Receiver</th>
                             <th className="py-2 px-3">Type</th>
@@ -174,7 +181,7 @@ export default function Transactions() {
                       </table>
                     </CardContent>
                     {/* pagination */}
-                    {totalPage > 1 && (
+                    {/* {totalPage > 1 && (
                       <div className="flex justify-center my-8">
                         <div>
                           <Pagination>
@@ -223,6 +230,74 @@ export default function Transactions() {
                             </PaginationContent>
                           </Pagination>
                         </div>
+                      </div>
+                    )} */}
+                    {totalPage > 1 && (
+                      <div className="mt-6 flex items-center justify-between">
+                        <Pagination>
+                          <PaginationContent>
+                            {/* Previous */}
+                            <PaginationItem>
+                              <PaginationPrevious
+                                onClick={() =>
+                                  setCurrentPage(Math.max(1, currentPage - 1))
+                                }
+                                className={`border px-3 py-1 rounded-md ${
+                                  currentPage === 1
+                                    ? "pointer-events-none opacity-50"
+                                    : "hover:bg-muted"
+                                }`}
+                              />
+                            </PaginationItem>
+
+                            {/* Page Numbers (max 5 at a time) */}
+                            {Array.from(
+                              { length: Math.min(5, totalPage) },
+                              (_, i) => {
+                                const pageNum =
+                                  Math.max(
+                                    1,
+                                    Math.min(totalPage - 4, currentPage - 2)
+                                  ) + i;
+
+                                if (pageNum > totalPage) return null;
+                                const isActive = currentPage === pageNum;
+
+                                return (
+                                  <PaginationItem key={pageNum}>
+                                    <PaginationLink
+                                      isActive={isActive}
+                                      onClick={() => setCurrentPage(pageNum)}
+                                      className={`border px-3 py-1 rounded-md ${
+                                        isActive
+                                          ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-primary-foreground"
+                                          : "hover:bg-muted"
+                                      }`}
+                                    >
+                                      {pageNum}
+                                    </PaginationLink>
+                                  </PaginationItem>
+                                );
+                              }
+                            )}
+
+                            {/* Next */}
+                            <PaginationItem>
+                              <PaginationNext
+                                onClick={() =>
+                                  setCurrentPage(
+                                    Math.min(totalPage, currentPage + 1)
+                                  )
+                                }
+                                className={`border px-3 py-1 rounded-md ${
+                                  currentPage === totalPage
+                                    ? "pointer-events-none opacity-50"
+                                    : "hover:bg-muted"
+                                }`}
+                              />
+                            </PaginationItem>
+                          </PaginationContent>
+                        </Pagination>
                       </div>
                     )}
                   </div>
