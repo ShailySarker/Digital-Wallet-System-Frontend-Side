@@ -33,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { toast } from "sonner";
+import NavbarTourGuide from "../modules/TourGuides/NavbarTourGuide";
 
 const Navbar = () => {
   const { data } = useMyProfileQuery(undefined);
@@ -45,12 +46,12 @@ const Navbar = () => {
   const dashboardRoute = data?.data?.role.toLowerCase();
 
   const publicRoutes = [
-    { path: "/", name: "Home" },
-    { path: "/about", name: "About" },
-    { path: "/features", name: "Features" },
-    { path: "/pricing", name: "Pricing" },
-    { path: "/contact", name: "Contact" },
-    { path: "/faq", name: "Faq" },
+    { path: "/", name: "Home", tourAction: "homePage" },
+    { path: "/about", name: "About", tourAction: "aboutPage" },
+    { path: "/features", name: "Features", tourAction: "featuresPage" },
+    { path: "/pricing", name: "Pricing", tourAction: "pricingtPage" },
+    { path: "/contact", name: "Contact", tourAction: "contactPage" },
+    { path: "/faq", name: "Faq", tourAction: "faqPage" },
   ];
 
   const privateRoutes = [
@@ -67,7 +68,9 @@ const Navbar = () => {
       toast.success("You logged out successfully", { id: toastId });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(`Logout Error:${error?.data?.message || error?.data}`, { id: toastId });
+      toast.error(`Logout Error:${error?.data?.message || error?.data}`, {
+        id: toastId,
+      });
     }
   };
 
@@ -85,8 +88,8 @@ const Navbar = () => {
                   key={route.path}
                   href={route.path}
                   className={`${navigationMenuTriggerStyle()} ${
-                    isActive(route.path) ? "text-primary" : ""
-                  }`}
+                    route.tourAction
+                  } ${isActive(route.path) ? "text-primary" : ""}`}
                 >
                   <span className="xl:text-base lg:text-[14.5px] hover:text-primary cursor-pointer">
                     {route.name}
@@ -97,6 +100,7 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex lg:gap-2 gap-2">
+          <NavbarTourGuide />
           <ModeToggle />
 
           <div className="hidden items-center xl:gap-3 lg:gap-2 lg:flex">
@@ -137,12 +141,12 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="items-center xl:gap-2 lg:gap-2 lg:flex">
-                <Link to="/login" className="cursor-pointer">
+                <Link to="/login" className="cursor-pointer loginButton">
                   <Button className="xl:text-base lg:text-[14.5px] ">
                     Login
                   </Button>
                 </Link>
-                <Link to="/register" className="cursor-pointer">
+                <Link to="/register" className="cursor-pointer registerButton">
                   <Button
                     className="xl:text-base lg:text-[14.5px]"
                     variant="outline"
@@ -189,9 +193,7 @@ const Navbar = () => {
                       <Link
                         key={route.path}
                         to={route.path}
-                        className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary cursor-pointer ${
-                          isActive(route.path) ? "text-primary" : ""
-                        }`}
+                        className={`md:text-[15px] text-[14.5px] font-medium hover:text-primary cursor-pointer ${route.tourAction} ${isActive(route.path) ? "text-primary" : ""}`}
                       >
                         {route.name}
                       </Link>
@@ -226,12 +228,15 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div className="md:mt-10 mt-8 flex flex-col gap-3 w-full">
-                    <Link to="/login" className="cursor-pointer">
+                    <Link to="/login" className="cursor-pointer loginButton">
                       <Button className="md:text-[15px] text-[14.5px] w-full">
                         Login
                       </Button>
                     </Link>
-                    <Link to="/register" className="cursor-pointer">
+                    <Link
+                      to="/register"
+                      className="cursor-pointer registerButton"
+                    >
                       <Button
                         className="md:text-[15px] text-[14.5px] w-full"
                         variant="outline"

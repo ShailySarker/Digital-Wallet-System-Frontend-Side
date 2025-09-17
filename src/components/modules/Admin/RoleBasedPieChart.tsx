@@ -1,4 +1,11 @@
-import { PieChart, Pie, Cell, Legend, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface IRoleBasedData {
@@ -7,7 +14,7 @@ interface IRoleBasedData {
     role: string;
   }[];
 }
-const COLORS = ['#00C49F', '#FF8042', "#FFBB28"];
+const COLORS = ["#FF8042", "#FFBB28", "#00C49F"];
 
 export default function RoleBasedPieChart({ roleBasedData }: IRoleBasedData) {
   const data = roleBasedData;
@@ -19,7 +26,15 @@ export default function RoleBasedPieChart({ roleBasedData }: IRoleBasedData) {
       <CardContent className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={data} cx="50%" cy="50%" labelLine={false} outerRadius={100} dataKey="count" nameKey="role">
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              outerRadius={100}
+              dataKey="count"
+              nameKey="role"
+            >
               {data?.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index]} />
               ))}

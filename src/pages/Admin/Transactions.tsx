@@ -96,7 +96,6 @@ export default function Transactions() {
       </h1>
       <div className="xl:mt-12 lg:mt-10 md:mt-8 mt-6 flex flex-col gap-6">
         {/* Statistics Cards */}
-        {}
         <TransactionsTopper />
         <div>
           {transactionError ? (

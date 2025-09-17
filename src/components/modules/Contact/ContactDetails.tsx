@@ -69,7 +69,7 @@ const contactSchema = z.object({
     }),
   subject: z
     .string({ message: "Subject must be string" })
-    .min(5, { message: "Subject must be at least 2 characters long." })
+    .min(5, { message: "Subject must be at least 5 characters long." })
     .max(50, { message: "Subject cannot exceed 50 characters." }),
   message: z
     .string({ message: "Message must be string" })
