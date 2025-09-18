@@ -166,7 +166,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
+          <div className="grid gap-8 grid-cols-2 lg:col-span-2 lg:grid-cols-4">
             <div>
               <p className="font-medium text-foreground/90">Services</p>
 
@@ -189,10 +189,10 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    to="/pricing"
-                    className="text-foreground/90 transition hover:text-foreground/60"
+                    to="/setting"
+                    className="text-foreground/90 transition hover:text-foreground/60 restartTourGuide"
                   >
-                    Pricing
+                    Setting
                   </Link>
                 </li>
               </ul>

@@ -17,6 +17,7 @@ const Pricing = React.lazy(() => import("../pages/Public/Pricing"));
 const Features = React.lazy(() => import("../pages/Public/Features"));
 const Contact = React.lazy(() => import("../pages/Public/Contact"));
 const FAQ = React.lazy(() => import("../pages/Public/FAQ"));
+const Setting = React.lazy(() => import("../pages/Public/Setting"));
 const Login = React.lazy(() => import("../pages/Authentication/Login"));
 const Register = React.lazy(() => import("../pages/Authentication/Register"));
 const Verify = React.lazy(() => import("../pages/Authentication/Verify"));
@@ -81,6 +82,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LazyLoader />}>
             <FAQ />
+          </Suspense>
+        ),
+      },
+      {
+        path: "setting",
+        element: (
+          <Suspense fallback={<LazyLoader />}>
+            <Setting />
           </Suspense>
         ),
       },

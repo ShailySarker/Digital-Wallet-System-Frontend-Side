@@ -34,7 +34,7 @@ const steps: Step[] = [
       "Discover the powerful features Digi Wallet offers to make your life easier.",
   },
   {
-    target: ".pricingtPage",
+    target: ".pricingPage",
     content: "Explore our flexible plans and packages tailored to your needs.",
   },
   {
@@ -44,6 +44,10 @@ const steps: Step[] = [
   {
     target: ".faqPage",
     content: "Find quick answers to common questions in our FAQ section.",
+  },
+  {
+    target: ".restartTourGuide",
+    content: "Need a refresher? Click here to restart the guided tour anytime.",
   },
 ];
 
