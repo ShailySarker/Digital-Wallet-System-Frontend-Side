@@ -84,8 +84,8 @@ The **Public Landing Section** serves as the **first point of interaction** for 
 - Withdraw money
 - Send money to another user (search by phone/email)
 - Transaction history with:
-    - Pagination
-    - Filtering
+   - Filtering
+   - Pagination
 - Profile management 
     - Edit Profile
     - Change Password
@@ -98,11 +98,11 @@ The **Public Landing Section** serves as the **first point of interaction** for 
 - Add money to a user’s wallet
 - Withdraw money from a user’s wallet
 - View all transactions handled by the agent
-    - Pagination
    - Filtering
+   - Pagination
 - Commission history 
-    - Pagination
    - Filtering
+   - Pagination
 - Profile management 
     - Edit Profile
     - Change Password
@@ -112,15 +112,19 @@ The **Public Landing Section** serves as the **first point of interaction** for 
 
 - Overview with total users, agents, transaction count, and volume
 - Manage users (view, block/unblock) 
-   - Pagination
-    - Filtering
-- Manage agents (approve, suspend)
-   - Pagination
+   - Searching
    - Filtering
+   - Pagination
+   - Page Limit
+- Manage agents (approve, suspend)
+   - Searching
+   - Filtering
+   - Pagination
+   - Page Limit
 - View all transactions (with advanced filters)
    - Searching
-    - Filtering
-    - Pagination
+   - Filtering
+   - Pagination
 - Profile management 
     - Edit Profile
     - Change Password
