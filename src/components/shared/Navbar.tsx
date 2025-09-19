@@ -49,7 +49,7 @@ const Navbar = () => {
     { path: "/", name: "Home", tourAction: "homePage" },
     { path: "/about", name: "About", tourAction: "aboutPage" },
     { path: "/features", name: "Features", tourAction: "featuresPage" },
-    { path: "/pricing", name: "Pricing", tourAction: "pricingtPage" },
+    { path: "/pricing", name: "Pricing", tourAction: "pricingPage" },
     { path: "/contact", name: "Contact", tourAction: "contactPage" },
     { path: "/faq", name: "Faq", tourAction: "faqPage" },
   ];
@@ -63,7 +63,8 @@ const Navbar = () => {
   const handleLogout = async () => {
     const toastId = toast.loading("Logging out .....");
     try {
-      await logout({});
+      await logout(undefined);
+      // await logout({});
       dispatch(authApi.util.resetApiState());
       toast.success("You logged out successfully", { id: toastId });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

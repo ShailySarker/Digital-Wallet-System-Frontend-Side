@@ -192,7 +192,7 @@ export default function Footer() {
                     to="/setting"
                     className="text-foreground/90 transition hover:text-foreground/60 restartTourGuide"
                   >
-                    Setting
+                    Settings
                   </Link>
                 </li>
               </ul>
