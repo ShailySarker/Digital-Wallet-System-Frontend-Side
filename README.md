@@ -33,14 +33,37 @@ https://digital-wallet-system-frontend-side.vercel.app
 
 ### **1️⃣ Public Landing Section**
 
-Accessible without login, including:
+The **Public Landing Section** serves as the **first point of interaction** for visitors, offering an engaging and informative introduction to the **Digital Wallet System**. It is **accessible without authentication** and designed to create a **strong first impression** with a clean, responsive, and user-friendly interface. This section ensures an **inviting, informative, and professional** experience that encourages users to explore the platform before signing up or logging in.
 
-- **Home Page —** A polished landing page with a theme-colored navigation bar containing at least 3 functional routes, a sticky navbar (and mega menu if applicable), and a hero banner with a tagline and call-to-action buttons. Include a matching footer, skeleton loading for data delays, smooth transitions, and ensure all links and buttons work. The design must be responsive for all devices.
-- **About Page** — Service story, mission, and team details
-- **Features Page** — List of features with visuals/icons
-- **Pricing Page** (optional) — Service fees and possible subscription tiers
-- **Contact Page** — Inquiry form (simulated submission)
-- **FAQ Page** — Common questions and answers
+---
+
+#### ✨ Key Components
+
+#### 🏠 Home Page
+- A professionally designed landing page featuring a **theme-colored navigation bar** with at least three fully functional routes.  
+- Includes a **sticky header** (and an optional mega menu for enhanced navigation) for seamless browsing.  
+- Features a striking **hero banner** highlighting the platform’s tagline and key **call-to-action buttons**.  
+- Incorporates **skeleton loaders** for smooth data loading, **animated transitions**, and a **fully responsive layout** for desktop, tablet, and mobile devices.
+
+#### ℹ️ About Page
+- Showcases the **service’s mission, vision, and story**, building trust and credibility.  
+- Introduces the **team behind the platform**, giving visitors insight into the people powering the system.
+
+#### 🚀 Features Page
+- A visually appealing showcase of the wallet’s **core features**, enhanced with icons and engaging visuals.  
+- Helps users quickly understand the platform’s primary offerings.
+
+#### 💰 Pricing Page
+- Provides a clear and structured overview of **service fees, transaction charges, and optional subscription tiers**.  
+- Enables users to make **informed financial decisions** before signing up.
+
+#### 📩 Contact Page
+- A **user-friendly inquiry form** for visitors to submit questions or feedback.  
+- Includes **simulated submission** to demonstrate functionality.
+
+#### ❓ FAQ Page
+- A well-organized list of **frequently asked questions** to provide quick answers to common queries.  
+- Helps users find important information effortlessly.
 
 ---
 
@@ -62,8 +85,10 @@ Accessible without login, including:
 - Send money to another user (search by phone/email)
 - Transaction history with:
     - Pagination
-    - Filtering by type/date range
-- Profile management — update name, phone, and password
+    - Filtering
+- Profile management 
+    - Edit Profile
+    - Change Password
 
 ---
 
@@ -73,20 +98,32 @@ Accessible without login, including:
 - Add money to a user’s wallet
 - Withdraw money from a user’s wallet
 - View all transactions handled by the agent
-- Commission history (optional)
-- Profile management — update personal info and password
-
+    - Pagination
+   - Filtering
+- Commission history 
+    - Pagination
+   - Filtering
+- Profile management 
+    - Edit Profile
+    - Change Password
 ---
 
 ### **5️⃣ Admin Dashboard**
 
 - Overview with total users, agents, transaction count, and volume
-- Manage users (view, block/unblock)
+- Manage users (view, block/unblock) 
+   - Pagination
+    - Filtering
 - Manage agents (approve, suspend)
+   - Pagination
+   - Filtering
 - View all transactions (with advanced filters)
-- Implement search bars and multiple filters (category, status, amount, etc.) on listing pages with pagination for better usability.
-- Adjust system fees/limits (optional)
-- Profile management — update admin account settings
+   - Searching
+    - Filtering
+    - Pagination
+- Profile management 
+    - Edit Profile
+    - Change Password
 
 ---
 
@@ -97,27 +134,18 @@ Accessible without login, including:
 - Form validations (required fields, numeric checks, positive amounts) and anvanced filtering.
 - Pagination for long lists
 - Use data visualization components like cards, bar charts, pie charts, and tables—all dynamically updated.
-- **Toast Notifications**
-    - Show success/error messages with any toast package/library.
-    - Makes UI feedback snappy.
-- **Guided Tour (driver.js / shepherd.js / react-joyride)**
-    - At least **5 steps**, highlight key features.
-    - Steps to include (you make your choice):
-        1. Navigation menu – explain section switching.
-        2. Dashboard stats cards – quick data summary.
-        3. Chart section – visualize trends.
-        4. Table search/filter – find and filter records.
-        5. Theme toggle – switch light/dark mode.
-    - Attach steps to actual DOM elements.
+- Show success/error messages with sonner toast package/library.
+
+- **Guided Tour (react-joyride)**
     - Run tour only once for new users (use `localStorage`).
     - “Restart Tour” option in **Settings**.
-    - Tooltip styling and UX improvements encouraged.
+    - Give a overview of navbar, login, register, settings, light and dark mode
 - **UI/UX Considerations:**
     - Fully responsive design for all devices
     - Interactive and Maintain consistent side margins and appropriate spacing between sections throughout the project. Avoid any clashing color combinations, especially in dark mode.
     - Clear color theme, typography, and iconography
-    - Improve performance through lazy-loading or skeleton loaders and ensure accessibility standards are met.
-    - Avoid placeholder text; populate the project with real or realistic data to give a professional finish.
+    - Improve performance through lazy-loading and ensure accessibility standards are met.
+    - Avoid placeholder text; populate the project with realistic data to give a professional finish.
 
 ---
 
