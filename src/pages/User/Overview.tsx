@@ -101,7 +101,7 @@ export default function Overview() {
                       {myTransaction?.data?.map((transaction?: any) => (
                         <tr
                           key={transaction?._id}
-                          className="border-b hover:bg-primary/60 cursor-pointer"
+                          className="border-b hover:bg-primary/20 cursor-pointer"
                         >
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
                             {transaction?.type}

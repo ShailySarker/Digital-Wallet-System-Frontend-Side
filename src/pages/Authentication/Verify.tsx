@@ -68,7 +68,7 @@ export default function Verify() {
       }
     } catch (error: any) {
       console.log(error);
-      toast(`Verifying OTP failed: ${error?.data?.message}`);
+      toast(`Verifying OTP failed: ${error?.data?.message}`, { id: toastId });
       setConfirmed(false);
     }
   };

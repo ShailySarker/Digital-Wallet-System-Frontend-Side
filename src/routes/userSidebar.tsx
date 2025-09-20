@@ -39,7 +39,7 @@ const userSidebar = [
   {
     icon: ArrowDownUp,
     title: "Transactions",
-    url: "/user/transactions",
+    url: "/user/my-transactions",
     component: Transactions,
   },
 ];
