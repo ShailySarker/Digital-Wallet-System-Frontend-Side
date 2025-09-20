@@ -53,7 +53,7 @@ export default function DashboardLayout() {
       {/* <SidebarInset className="overflow-auto"> */}
         <div className="sticky top-0 z-50 flex justify-between items-center bg-accent xl:py-[19px] lg:py-4 md:py-[14px] py-3 px-5">
           <div className="">
-            <SidebarTrigger className="lg:h-9 lg:w-9 h-8 w-8 bg-primary text-white rounded-sm hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center hover:outline-2" />
+            <SidebarTrigger className="lg:h-9 lg:w-9 h-8 w-8 bg-primary text-white rounded-sm hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center hover:outline-2 hover:border" />
           </div>
           <div className="flex items-center lg:gap-3 gap-2">
             <ModeToggle />
