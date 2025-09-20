@@ -8,8 +8,6 @@ import adminSidebar from "./adminSidebar";
 import userSidebar from "./userSidebar";
 import agentSidebar from "./agentSidebar";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import NotFound from "@/pages/NotFound";
-import Unauthorized from "@/pages/Unauthorized";
 
 const Home = React.lazy(() => import("../pages/Public/Home"));
 const About = React.lazy(() => import("../pages/Public/About"));
@@ -31,6 +29,8 @@ const ResetPassword = React.lazy(
   () => import("../pages/Authentication/ResetPassword")
 );
 const EditProfile = React.lazy(() => import("../pages/Private/EditProfile"));
+const NotFound = React.lazy(() => import("@/pages/NotFound"));
+const Unauthorized = React.lazy(() => import("@/pages/Unauthorized"));
 
 export const router = createBrowserRouter([
   {
