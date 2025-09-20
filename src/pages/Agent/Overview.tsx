@@ -78,7 +78,10 @@ export default function Overview() {
                 <CardHeader>
                   <CardTitle className="flex md:flex-row md:justify-between md:items-center justify-center gap-3">
                     <span>Recent Transactions History</span>
-                    <Link to="/agent/my-transactions" className="md:block hidden">
+                    <Link
+                      to="/agent/my-transactions"
+                      className="md:block hidden"
+                    >
                       <Button className="bg-primary">View All</Button>
                     </Link>
                   </CardTitle>
@@ -100,18 +103,22 @@ export default function Overview() {
                       {myTransaction?.data?.map((transaction?: any) => (
                         <tr
                           key={transaction?._id}
-                          className="border-b hover:bg-primary/60 cursor-pointer"
+                          className="border-b hover:bg-primary/20 cursor-pointer"
                         >
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
                             {transaction?.type}
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
                             <span>{transaction?.senderName}</span> <br />
-                            <span className="text-xs opacity-70">{transaction?.senderPhone}</span>
+                            <span className="text-xs opacity-70">
+                              {transaction?.senderPhone}
+                            </span>
                           </td>
                           <td className="p-3 capitalize font-medium lg:text-sm text-xs">
                             <span>{transaction?.receiverName}</span> <br />
-                            <span className="text-xs opacity-70">{transaction?.receiverPhone}</span>
+                            <span className="text-xs opacity-70">
+                              {transaction?.receiverPhone}
+                            </span>
                           </td>
                           <td className="p-3 font-semibold lg:text-sm text-xs">
                             {transaction?.amount} BDT
@@ -132,6 +139,12 @@ export default function Overview() {
                             {new Date(
                               transaction?.createdAt
                             ).toLocaleDateString()}
+                            <br />
+                            <span className="text-xs opacity-70">
+                              {new Date(
+                                transaction?.createdAt
+                              ).toLocaleTimeString()}
+                            </span>
                           </td>
                         </tr>
                       ))}

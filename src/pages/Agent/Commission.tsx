@@ -142,7 +142,7 @@ export default function Commission() {
                         {myCommission?.data?.map((commission: any) => (
                           <tr
                             key={commission?._id}
-                            className="border-b hover:bg-primary/60 cursor-pointer"
+                            className="border-b hover:bg-primary/20 cursor-pointer"
                           >
                             <td className="p-3 capitalize font-medium lg:text-sm text-xs">
                               {commission?.type}
@@ -174,6 +174,12 @@ export default function Commission() {
                               {new Date(
                                 commission?.createdAt
                               ).toLocaleDateString()}
+                              <br />
+                              <span className="text-xs opacity-70">
+                                {new Date(
+                                  commission?.createdAt
+                                ).toLocaleTimeString()}
+                              </span>
                             </td>
                           </tr>
                         ))}
