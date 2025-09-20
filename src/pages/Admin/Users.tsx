@@ -953,28 +953,22 @@ export default function Users() {
                       </TableHeader>
                       <TableBody>
                         {allUserData?.data?.map((user: any) => (
-                          <TableRow key={user?._id}>
-                            <TableCell className="font-medium w-full">
+                          <TableRow key={user?._id} className="hover:bg-primary/20 w-full">
+                            <TableCell className="font-medium">
                               {user?.name}
                             </TableCell>
-                            <TableCell className="w-full">
-                              {user?.email}
-                            </TableCell>
-                            <TableCell className="w-full">
-                              {user?.phone}
-                            </TableCell>
-                            <TableCell className="w-full">
-                              {user?.nidNumber}
-                            </TableCell>
+                            <TableCell>{user?.email}</TableCell>
+                            <TableCell>{user?.phone}</TableCell>
+                            <TableCell>{user?.nidNumber}</TableCell>
                             <TableCell>
                               <CustomBadge
-                                className="w-full"
+                              className="w-full"
                                 variant={getStatusVariant(user?.isActive)}
                               >
                                 {user?.isActive}
                               </CustomBadge>
                             </TableCell>
-                            <TableCell className="w-full">
+                            <TableCell>
                               <CustomBadge
                                 className="w-full"
                                 variant={
@@ -1141,7 +1135,8 @@ export default function Users() {
                       <strong>Role:</strong> {singleUser?.data?.role}
                     </p>
                     <p className="lg:text-base md:text-[14.5px] text-sm">
-                      <strong>Wallet Status:</strong> {singleUser?.data?.isActive}
+                      <strong>Wallet Status:</strong>{" "}
+                      {singleUser?.data?.isActive}
                     </p>
                     <p className="lg:text-base md:text-[14.5px] text-sm">
                       <strong>Verified:</strong>{" "}

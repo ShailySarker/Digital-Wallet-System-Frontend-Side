@@ -519,7 +519,7 @@ export default function Agents() {
                       </TableHeader>
                       <TableBody>
                         {allAgentData?.data?.map((user: any) => (
-                          <TableRow key={user?._id} className="w-full">
+                          <TableRow key={user?._id} className="hover:bg-primary/20 w-full">
                             <TableCell className="font-medium">
                               {user?.name}
                             </TableCell>

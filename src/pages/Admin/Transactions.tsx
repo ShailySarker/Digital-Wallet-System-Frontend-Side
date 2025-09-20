@@ -173,6 +173,12 @@ export default function Transactions() {
                                 {new Date(
                                   transaction?.createdAt
                                 ).toLocaleDateString()}
+                                <br />
+                                <span className="text-xs opacity-70">
+                                  {new Date(
+                                    transaction?.createdAt
+                                  ).toLocaleTimeString()}
+                                </span>
                               </td>
                             </tr>
                           ))}
