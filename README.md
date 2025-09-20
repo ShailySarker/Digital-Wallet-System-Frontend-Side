@@ -186,3 +186,9 @@ VITE_BASE_URL = https://digital-wallet-system-backend-side.vercel.app/api/v1
 npm run dev
 
 ```
+
+## 📜 License
+
+### MIT
+
+This frontend implementation is released under the **MIT License**, allowing free use, modification, and distribution with proper attribution. It provides a **secure, role-based, and user-friendly** interface for the Digital Wallet System, featuring **modular code architecture**, **state management with Redux Toolkit**, and **RTK Query integration**. The codebase follows **modern React best practices**, ensuring **maintainability, scalability, and responsive design** for a seamless user experience across all roles (***User***, ***Agent***, and ***Admin***).
