@@ -254,7 +254,7 @@ export default function SendMoney() {
         Send Money
       </h1>
 
-      <div className="bg-accent/50 xl:mt-12 lg:mt-10 md:mt-8 mt-6 border-2 border-primary rounded-2xl xl:p-20 lg:p-10 md:p-8 p-5 lg:w-1/2 md:w-2/3 w-full mx-auto">
+      <div className="bg-accent/50 xl:mt-12 lg:mt-10 md:mt-8 mt-6 border-2 border-primary rounded-2xl xl:p-16 lg:p-10 md:p-8 p-5 lg:w-1/2 md:w-2/3 w-full mx-auto">
         {/* Wallet Balance Display */}
         {/* {myWallet && (
           <Card className="mb-6 bg-primary/10 border-primary">

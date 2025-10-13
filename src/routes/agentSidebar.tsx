@@ -1,9 +1,8 @@
 import CashIn from "@/pages/Agent/CashIn";
-import CashOut from "@/pages/Agent/CashOut";
 import Commission from "@/pages/Agent/Commission";
 import Overview from "@/pages/Agent/Overview";
 import Transacations from "@/pages/Agent/Transacations";
-import { ArrowDownToLine, ArrowDownUp, ArrowUpFromLine, Home, SquarePlus } from "lucide-react";
+import { ArrowDownToLine, ArrowDownUp, Home, SquarePlus } from "lucide-react";
 
 const agentSidebar = [
   {
@@ -18,12 +17,12 @@ const agentSidebar = [
     url: "/agent/cash-in",
     component: CashIn,
   },
-  {
-    icon: ArrowUpFromLine,
-    title: "Cash Out",
-    url: "/agent/cash-out",
-    component: CashOut,
-  },
+  // {
+  //   icon: ArrowUpFromLine,
+  //   title: "Cash Out",
+  //   url: "/agent/cash-out",
+  //   component: CashOut,
+  // },
   {
     icon: SquarePlus,
     title: "Commission",

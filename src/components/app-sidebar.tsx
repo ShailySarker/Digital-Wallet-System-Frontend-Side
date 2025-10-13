@@ -34,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <Logo />
         </Link>
       </SidebarHeader>
-      <SidebarContent className="mx-3">
+      {/* <SidebarContent className="mx-3">
         {data?.navMain?.map((item, index) => {
           const isActive = location.pathname === item.url;
           return (
@@ -51,7 +51,47 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       item.url.endsWith("/profile") ? "hidden" : ""
                     }`}
                   >
-                    <span className="xl:pr-2 pr-1"><item.icon className="xl:size-5 size-4.5" /></span>
+                    <span className="xl:pr-2 pr-1">
+                      <item.icon className="xl:size-5 size-4.5" />
+                    </span>
+                    {item.title}
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          );
+        })}
+      </SidebarContent> */}
+      <SidebarContent className="mx-3">
+        {data?.navMain?.map((item, index) => {
+          const isActive = location.pathname === item.url;
+          return (
+            <SidebarGroupContent key={index} className="w-full bg-none">
+              <SidebarMenu>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  className={`xl:text-lg text-base xl:mt-1 border-2 xl:px-3 lg:px-2 md:px-[10px] xl:py-5 lg:py-4 py-[16.5px] transition-colors duration-200
+    ${
+      isActive
+        ? "!bg-primary !text-white !border-primary"
+        : "bg-accent text-gray-300 hover:bg-muted"
+    }
+  `}
+                >
+                  <Link
+                    to={item.url}
+                    className={`${
+                      item.url.endsWith("/profile") ? "hidden" : ""
+                    }`}
+                  >
+                    <span className="xl:pr-2 pr-1">
+                      <item.icon
+                        className={`xl:size-5 size-4.5 ${
+                          isActive ? "text-white" : "text-gray-300"
+                        }`}
+                      />
+                    </span>
                     {item.title}
                   </Link>
                 </SidebarMenuButton>
@@ -60,6 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           );
         })}
       </SidebarContent>
+
       <SidebarFooter className="mx-1">
         <div
           // to={`/${loggedInUserInfo?.data?.role}/profile`}

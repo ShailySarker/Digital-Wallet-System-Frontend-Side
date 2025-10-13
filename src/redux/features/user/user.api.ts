@@ -48,6 +48,22 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"],
     }),
+    getAgents: builder.query({
+      query: (params) => ({
+        url: "/user/get-agents",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["USER"],
+    }),
+    getUsers: builder.query({
+      query: (params) => ({
+        url: "/user/get-users",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["USER"],
+    }),
     getSingleUsers: builder.query({
       query: (id) => ({
         url: `/user/${id}`,
@@ -66,4 +82,6 @@ export const {
   useGetAllAgentsQuery,
   useGetAllUserAndAgentQuery,
   useGetSingleUsersQuery,
+  useGetAgentsQuery,
+  useGetUsersQuery,
 } = userApi;
