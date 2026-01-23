@@ -131,6 +131,7 @@ const Navbar = () => {
                     <DropdownMenuItem>
                       <Button
                         onClick={handleLogout}
+                        variant="destructive"
                         // variant="outline"
                         className="cursor-pointer w-full justify-center xl:text-base lg:text-[14.5px]"
                       >

@@ -50,7 +50,7 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-      {/* <SidebarInset className="overflow-auto"> */}
+        {/* <SidebarInset className="overflow-auto"> */}
         <div className="sticky top-0 z-50 flex justify-between items-center bg-accent xl:py-[19px] lg:py-4 md:py-[14px] py-3 px-5">
           <div className="">
             <SidebarTrigger className="lg:h-9 lg:w-9 h-8 w-8 bg-primary text-white rounded-sm hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center hover:outline-2 hover:border" />
@@ -83,6 +83,7 @@ export default function DashboardLayout() {
                     <Button
                       onClick={handleLogout}
                       // variant="outline"
+                      variant="destructive"
                       className="cursor-pointer w-full justify-center xl:text-base lg:text-[14.5px]"
                     >
                       Logout
