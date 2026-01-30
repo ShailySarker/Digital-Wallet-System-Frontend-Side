@@ -20,14 +20,20 @@ import LazyLoader from "@/components/shared/LazyLoader";
 
 const updateMyProfileSchema = z.object({
   name: z
-    .string({ error: "Name must be string" })
+    .string()
     .min(2, { message: "Name must be at least 2 characters long." })
     .max(50, { message: "Name cannot exceed 50 characters." })
     .optional(),
   phone: z
-    .string({ message: "Phone number must be string" })
+    .string()
     .regex(/^(?:01\d{9})$/, {
       message: "Phone number must be valid for Bangladesh. Format: 01XXXXXXXXX",
+    })
+    .optional(),
+  nidNumber: z
+    .string({ message: "NID number must be string" })
+    .regex(/^\d{10}$|^\d{13}$|^\d{17}$/, {
+      message: "NID number must be 10 or 13 digits long.",
     })
     .optional(),
 });
@@ -55,6 +61,7 @@ export default function EditProfile() {
     defaultValues: {
       name: myProfileData?.data?.name,
       phone: myProfileData?.data?.phone,
+      nidNumber: myProfileData?.data?.nidNumber,
     },
   });
 
@@ -62,14 +69,22 @@ export default function EditProfile() {
     // console.log(data);
     if (
       data?.name === (myProfileData?.data?.name || undefined) &&
-      data?.phone === (myProfileData?.data?.phone || undefined)
+      data?.phone === (myProfileData?.data?.phone || undefined) &&
+      data?.nidNumber === (myProfileData?.data?.nidNumber || undefined)
     ) {
-      toast.error("You are not change any thing..");
+      toast.error("You have not changed anything.");
       return;
     }
+
+    if (!data?.phone || !data?.nidNumber) {
+      toast.error("Phone number and NID Number are required.");
+      return;
+    }
+
     const updatedData = {
       name: data?.name,
       phone: data?.phone,
+      nidNumber: data?.nidNumber,
     };
     const toastId = toast.loading("Updating to your profile ...");
     const userId = myProfileData?.data?._id;
@@ -171,20 +186,27 @@ export default function EditProfile() {
                           </FormItem>
                         )}
                       />
-                      <FormItem>
-                        <FormLabel>NID</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="border border-primary"
-                            type="number"
-                            placeholder="Enter your nid number"
-                            value={myProfileData?.data?.nidNumber}
-                            readOnly
-                            disabled
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormField
+                        control={form.control}
+                        name="nidNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>NID</FormLabel>
+                            <FormControl>
+                              <Input
+                                className="border border-primary"
+                                type="text"
+                                placeholder="Enter your NID number"
+                                defaultValue={myProfileData?.data?.nidNumber}
+                                readOnly={!!myProfileData?.data?.nidNumber}
+                                disabled={!!myProfileData?.data?.nidNumber}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       <FormItem>
                         <FormLabel>Account Type</FormLabel>
                         <Input

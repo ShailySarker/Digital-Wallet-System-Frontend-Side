@@ -35,18 +35,18 @@ const userSidebar = [
     url: "/user/my-transactions",
     component: Transactions,
   },
-  {
-    icon: ArrowDownUp,
-    title: "Transactions",
-    url: "/user/my-transactions",
-    component: Transactions,
-  },
-  {
-    icon: ArrowDownUp,
-    title: "Transactions",
-    url: "/user/my-transactions",
-    component: Transactions,
-  },
+  // {
+  //   icon: ArrowDownUp,
+  //   title: "Subscriptions",
+  //   url: "/user/my-subscription-plan",
+  //   component: Transactions,
+  // },
+  // {
+  //   icon: ArrowDownUp,
+  //   title: "Payments",
+  //   url: "/user/my-payment",
+  //   component: Transactions,
+  // },
 ];
 
 export default userSidebar;

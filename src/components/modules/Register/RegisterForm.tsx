@@ -51,7 +51,7 @@ const registerSchema = z.object({
     .string({ error: "nidNumber must be a string of digits" })
     .regex(
       /^([0-9]{10}|[0-9]{17})$/,
-      "nidNumber must be a string of exactly 10 or 17 digits long"
+      "nidNumber must be a string of exactly 10 or 17 digits long",
     ),
 });
 
@@ -256,11 +256,11 @@ export function RegisterForm({
                 </form>
               </Form>
             </div>
-            <div className="text-center text-sm xl:mt-3 mt-2 italic">
+            <div className="text-center text-muted-foreground text-sm xl:mt-3 mt-2 italic">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="underline font-bold underline-offset-4"
+                className="underline text-primary font-bold underline-offset-4"
               >
                 Login
               </Link>
@@ -277,8 +277,8 @@ export function RegisterForm({
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to our{" "}
-        <Link to="/terms-of-service">Terms of Service</Link> {" "}
-        and <Link to="/privacy-policy">Privacy Policy</Link>.
+        <Link to="/terms-of-service">Terms of Service</Link> and{" "}
+        <Link to="/privacy-policy">Privacy Policy</Link>.
       </div>
     </div>
   );

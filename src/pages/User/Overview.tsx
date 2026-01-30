@@ -2,7 +2,7 @@
 import { useMyWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router";
-import { ArrowDownCircle, ArrowUpCircle, Send } from "lucide-react";
+import { ArrowDownUpIcon, ArrowUpCircle, Send } from "lucide-react";
 import { useMyProfileQuery } from "@/redux/features/auth/auth.api";
 import { useMyTransactionQuery } from "@/redux/features/transaction/transaction.api";
 import ErrorPage from "@/components/shared/ErrorPage";
@@ -35,11 +35,11 @@ export default function Overview() {
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Link to="/user/deposit" className="w-full">
+        <Link to="/user/my-transactions" className="w-full">
           <Card className="hover:shadow-lg transition rounded-xl cursor-pointer bg-primary/5 border-primary">
             <CardContent className="flex flex-col items-center md:p-4">
-              <ArrowDownCircle className="w-9 h-9 text-indigo-500 mb-2" />
-              <p className="font-semibold">Deposit Money</p>
+              <ArrowDownUpIcon className="w-9 h-9 text-indigo-500 mb-2" />
+              <p className="font-semibold">My Transactions</p>
             </CardContent>
           </Card>
         </Link>
@@ -132,12 +132,12 @@ export default function Overview() {
                           </td>
                           <td className="py-2 px-3 lg:text-sm text-xs">
                             {new Date(
-                              transaction?.createdAt
+                              transaction?.createdAt,
                             ).toLocaleDateString()}
                             <br />
                             <span className="text-xs opacity-70">
                               {new Date(
-                                transaction?.createdAt
+                                transaction?.createdAt,
                               ).toLocaleTimeString()}
                             </span>
                           </td>
